@@ -1,0 +1,232 @@
+{
+  "schema": 1,
+  "id": "ch4-l39-gravity-well",
+  "chapter": 4,
+  "index": 39,
+  "name": "Gravity Well",
+  "bounds": {
+    "w": 5533,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5293,
+    "y": 64,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 664,
+      "h": 92
+    },
+    {
+      "id": "d1",
+      "x": 664,
+      "y": 448,
+      "w": 85,
+      "h": 92
+    },
+    {
+      "id": "f2",
+      "x": 749,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "k3",
+      "x": 749,
+      "y": 0,
+      "w": 1000,
+      "h": 64
+    },
+    {
+      "id": "k4",
+      "x": 1839,
+      "y": 0,
+      "w": 700,
+      "h": 64
+    },
+    {
+      "id": "f5",
+      "x": 2389,
+      "y": 448,
+      "w": 2044,
+      "h": 92
+    },
+    {
+      "id": "k6",
+      "x": 4033,
+      "y": 0,
+      "w": 1300,
+      "h": 64
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 38,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 453,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d1",
+      "delayFrames": 4
+    },
+    {
+      "type": "gravityFlip",
+      "triggerX": 949
+    },
+    {
+      "type": "spike",
+      "x": 1299,
+      "y": 64,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1459,
+      "y": 64,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2069,
+      "y": 64,
+      "w": 46,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2299,
+      "y": 64,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "gravityFlip",
+      "triggerX": 2449
+    },
+    {
+      "type": "spike",
+      "x": 2649,
+      "y": 424,
+      "w": 43,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 2912,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2842,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 3225,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3448,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3568,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "crusher",
+      "x": 3869,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 3799,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "gravityFlip",
+      "triggerX": 4233
+    },
+    {
+      "type": "spike",
+      "x": 4583,
+      "y": 64,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 4793,
+      "y": 64,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 5033,
+      "y": 64,
+      "w": 44,
+      "h": 24
+    }
+  ],
+  "hints": [
+    "Down is a matter of opinion.",
+    "Gravity flips three times. On the ceiling, spikes hang down and a hole drops you into the sky.",
+    "After each flip, hop the hanging spikes like floor spikes. The door hangs from the ceiling at the end."
+  ],
+  "taunts": {
+    "overrides": ["Gravity is a habit. Break it."]
+  }
+}

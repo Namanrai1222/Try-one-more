@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "id": "ch4-l40-just-one-more",
+  "chapter": 4,
+  "index": 40,
+  "name": "Just One More",
+  "bounds": {
+    "w": 7973,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 7613,
+    "y": 344,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 476,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 476,
+      "y": 408,
+      "w": 320,
+      "h": 132
+    },
+    {
+      "id": "f2",
+      "x": 796,
+      "y": 368,
+      "w": 150,
+      "h": 172
+    },
+    {
+      "id": "i3",
+      "x": 1031,
+      "y": 368,
+      "w": 100,
+      "h": 24
+    },
+    {
+      "id": "i4",
+      "x": 1216,
+      "y": 338,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "i5",
+      "x": 1396,
+      "y": 358,
+      "w": 160,
+      "h": 24
+    },
+    {
+      "id": "f6",
+      "x": 1646,
+      "y": 408,
+      "w": 1213,
+      "h": 132
+    },
+    {
+      "id": "c7",
+      "x": 2569,
+      "y": 284,
+      "w": 650,
+      "h": 24
+    },
+    {
+      "id": "f8",
+      "x": 2929,
+      "y": 408,
+      "w": 867,
+      "h": 132
+    },
+    {
+      "id": "d9",
+      "x": 3796,
+      "y": 408,
+      "w": 82,
+      "h": 132
+    },
+    {
+      "id": "f10",
+      "x": 3878,
+      "y": 408,
+      "w": 172,
+      "h": 132
+    },
+    {
+      "id": "f11",
+      "x": 4050,
+      "y": 408,
+      "w": 464,
+      "h": 132,
+      "ice": true
+    },
+    {
+      "id": "f12",
+      "x": 4609,
+      "y": 408,
+      "w": 174,
+      "h": 132
+    },
+    {
+      "id": "f13",
+      "x": 4783,
+      "y": 408,
+      "w": 650,
+      "h": 132
+    },
+    {
+      "id": "f14",
+      "x": 4893,
+      "y": 238,
+      "w": 360,
+      "h": 24
+    },
+    {
+      "id": "f15",
+      "x": 5348,
+      "y": 238,
+      "w": 312,
+      "h": 24
+    },
+    {
+      "id": "f16",
+      "x": 5750,
+      "y": 238,
+      "w": 160,
+      "h": 24
+    },
+    {
+      "id": "f17",
+      "x": 6010,
+      "y": 328,
+      "w": 140,
+      "h": 212
+    },
+    {
+      "id": "t18",
+      "x": 6150,
+      "y": 348,
+      "w": 70,
+      "h": 192
+    },
+    {
+      "id": "t19",
+      "x": 6220,
+      "y": 368,
+      "w": 70,
+      "h": 172
+    },
+    {
+      "id": "t20",
+      "x": 6290,
+      "y": 388,
+      "w": 70,
+      "h": 152
+    },
+    {
+      "id": "t21",
+      "x": 6360,
+      "y": 408,
+      "w": 70,
+      "h": 132
+    },
+    {
+      "id": "f22",
+      "x": 6430,
+      "y": 408,
+      "w": 1543,
+      "h": 132
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 616,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "i4",
+      "delayFrames": 14
+    },
+    {
+      "type": "spike",
+      "x": 1456,
+      "y": 334,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "crusher",
+      "x": 1886,
+      "y": 206,
+      "w": 64,
+      "h": 32,
+      "triggerX": 1816,
+      "fallTo": 376,
+      "speed": 14
+    },
+    {
+      "type": "spike",
+      "x": 2245,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2365,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2679,
+      "y": 384,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3059,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "saw",
+      "x": 3468,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 3398,
+      "fallTo": 368,
+      "speed": 20
+    },
+    {
+      "type": "collapse",
+      "target": "d9",
+      "delayFrames": 3
+    },
+    {
+      "type": "spike",
+      "x": 4270,
+      "y": 384,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "spring",
+      "x": 4759,
+      "y": 396,
+      "w": 24,
+      "h": 12,
+      "power": 17,
+      "hidden": false
+    },
+    {
+      "type": "fakeGoal",
+      "x": 5353,
+      "y": 344,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 5063,
+      "y": 214,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "coin",
+      "x": 5478,
+      "y": 194,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "collapse",
+      "target": "t18",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t19",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t20",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t21",
+      "delayFrames": 14
+    },
+    {
+      "type": "crusher",
+      "x": 6654,
+      "y": 136,
+      "w": 56,
+      "h": 32,
+      "triggerX": 6594,
+      "fallTo": 376,
+      "speed": 5
+    },
+    {
+      "type": "spike",
+      "x": 6916,
+      "y": 384,
+      "w": 46,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 7151,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "fakeGoal",
+      "x": 7353,
+      "y": 344,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "goalShift",
+      "dx": 200,
+      "triggerDistance": 70
+    }
+  ],
+  "hints": [
+    "You have seen all of this before. Just not all at once.",
+    "Steps, sinking islands, a falling block, a low ceiling, ice, a spring, falling stairs and a door that moves.",
+    "Stop for the first block. Take the spring, not the door below. Bounce down the stairs; the last door hops once."
+  ],
+  "taunts": {
+    "overrides": ["Just one more. You said that 40 levels ago."]
+  }
+}

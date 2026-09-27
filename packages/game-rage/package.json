@@ -1,0 +1,33 @@
+{
+  "name": "@jom/game-rage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./levels": "./levels/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "solve": "node scripts/solve.ts",
+    "daily:check": "node scripts/daily-check.ts",
+    "fairness": "node scripts/fairness.ts"
+  },
+  "dependencies": {
+    "@jom/clip": "workspace:*",
+    "@jom/engine": "workspace:*",
+    "@jom/platform-sdk": "workspace:*",
+    "@jom/ui": "workspace:*",
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "@jom/config": "workspace:*",
+    "@types/node": "24.13.6",
+    "@types/three": "0.186.0",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "vitest": "5.0.1"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "id": "mp-race-01-front-runner",
+  "chapter": 0,
+  "index": 1,
+  "name": "Front Runner",
+  "bounds": { "w": 1920, "h": 540 },
+  "spawn": { "x": 48, "y": 400 },
+  "goal": { "x": 1840, "y": 384, "w": 40, "h": 64 },
+  "solids": [
+    { "id": "a", "x": 0, "y": 448, "w": 700, "h": 92 },
+    { "id": "b", "x": 790, "y": 448, "w": 510, "h": 92 },
+    { "id": "c", "x": 1390, "y": 448, "w": 530, "h": 92 }
+  ],
+  "traps": [
+    { "type": "spike", "x": 480, "y": 424, "w": 40, "h": 24 },
+    {
+      "type": "saw",
+      "x": 1000,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 930,
+      "fallTo": 408,
+      "speed": 20,
+      "gate": "leader"
+    },
+    { "type": "spike", "x": 1180, "y": 424, "w": 48, "h": 24, "gate": "leader" },
+    { "type": "coin", "x": 1560, "y": 404, "w": 32, "h": 32, "gate": "leader" },
+    {
+      "type": "saw",
+      "x": 1720,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1650,
+      "fallTo": 408,
+      "speed": 20,
+      "gate": "leader"
+    }
+  ],
+  "taunts": { "overrides": ["Being in front is a penalty here."] }
+}

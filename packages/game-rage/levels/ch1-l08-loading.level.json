@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "id": "ch1-l08-loading",
+  "chapter": 1,
+  "index": 8,
+  "name": "Loading",
+  "bounds": {
+    "w": 2930,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2850,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 480,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 560,
+      "y": 448,
+      "w": 542,
+      "h": 92
+    },
+    {
+      "id": "x-tile-1",
+      "x": 1102,
+      "y": 448,
+      "w": 84,
+      "h": 92
+    },
+    {
+      "id": "b-x2",
+      "x": 1186,
+      "y": 448,
+      "w": 201,
+      "h": 92
+    },
+    {
+      "id": "b-x3",
+      "x": 1459,
+      "y": 448,
+      "w": 1471,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 16,
+      "y": 400,
+      "w": 96,
+      "h": 48,
+      "erupt": {
+        "on": "time",
+        "frame": 100
+      }
+    },
+    {
+      "type": "spike",
+      "x": 881,
+      "y": 424,
+      "w": 51,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "x-tile-1",
+      "delayFrames": 9
+    },
+    {
+      "type": "spike",
+      "x": 1653,
+      "y": 424,
+      "w": 50,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2141,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2378,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2498,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "metaTrap": {
+    "kind": "fakeLoading",
+    "frames": 150
+  },
+  "taunts": {
+    "overrides": ["It was never loading."]
+  },
+  "hints": [
+    "It was never loading.",
+    "The loading screen is part of the level, and the floor under you arms itself. A spike hides by the door.",
+    "Press Right at once. Jump the spikes, the loose tile and the gaps, then walk to the door."
+  ],
+  "meta": {
+    "targetDeaths": 4,
+    "targetClearMs": 12000
+  }
+}

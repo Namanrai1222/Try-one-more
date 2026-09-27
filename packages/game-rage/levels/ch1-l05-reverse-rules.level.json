@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "id": "ch1-l05-reverse-rules",
+  "chapter": 1,
+  "index": 5,
+  "name": "Reverse Rules",
+  "bounds": {
+    "w": 3295,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3215,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 966,
+      "h": 92
+    },
+    {
+      "id": "floor-x1",
+      "x": 1051,
+      "y": 448,
+      "w": 747,
+      "h": 92
+    },
+    {
+      "id": "floor-x2",
+      "x": 1878,
+      "y": 448,
+      "w": 1417,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 470,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 690,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1267,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1511,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2087,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2491,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2711,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2831,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["You could have just walked."]
+  },
+  "hints": [
+    "What would you normally do here? Do not.",
+    "The spikes only come up when you jump. Near the door, one hides, and after a death another one moves.",
+    "Walk through the jump spikes; jump only gaps. By the door, jump the spikes that are really there, hidden one included."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 14000
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "id": "ch2-l15-well-done",
+  "chapter": 2,
+  "index": 15,
+  "name": "Well Done",
+  "bounds": {
+    "w": 3721,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3641,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 600,
+      "h": 92
+    },
+    {
+      "id": "drop",
+      "x": 600,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1100,
+      "y": 448,
+      "w": 1026,
+      "h": 92
+    },
+    {
+      "id": "c-x1",
+      "x": 2218,
+      "y": 448,
+      "w": 1503,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "fakeClear",
+      "x": 850,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "targets": ["drop"]
+    },
+    {
+      "type": "spike",
+      "x": 1617,
+      "y": 424,
+      "w": 52,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 1913,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1843,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 2947,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3175,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3295,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["It said well done. It lied."]
+  },
+  "hints": [
+    "It said well done. It lied.",
+    "The first door is a fake finish: touching it drops the floor. Near the real door a spike hides, and one moves.",
+    "Jump the first door. Then jump the spikes, let the saw land and jump it, then the gap."
+  ],
+  "meta": {
+    "targetDeaths": 4,
+    "targetClearMs": 16000
+  }
+}

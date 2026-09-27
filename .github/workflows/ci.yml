@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: format · typecheck · lint · test · build · budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      # Reads the pnpm version from package.json "packageManager".
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Format
+        run: pnpm format:check
+
+      - name: No hardcoded colours (DESIGNING.md §9)
+        run: pnpm check:hex
+
+      - name: Fonts match their source and the 40KB budget
+        run: pnpm --filter @jom/web fonts && git diff --exit-code -- apps/web/public/fonts
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      # Includes the determinism harness (TECH_STACK.md §5). If it goes red, stop and fix it first.
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Bundle budgets and isolation
+        run: pnpm check:bundle
+
+      - name: Dependency audit (high and critical block the merge)
+        run: pnpm audit --audit-level high

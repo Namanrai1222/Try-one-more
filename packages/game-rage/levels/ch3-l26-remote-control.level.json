@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "id": "ch3-l26-remote-control",
+  "chapter": 3,
+  "index": 26,
+  "name": "Remote Control",
+  "bounds": {
+    "w": 3702,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3622,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 590,
+      "y": 448,
+      "w": 510,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1190,
+      "y": 448,
+      "w": 654,
+      "h": 92
+    },
+    {
+      "id": "c-x1",
+      "x": 1944,
+      "y": 448,
+      "w": 463,
+      "h": 92
+    },
+    {
+      "id": "c-x2",
+      "x": 2502,
+      "y": 448,
+      "w": 1200,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "shuffle",
+      "every": 180
+    },
+    {
+      "type": "spike",
+      "x": 1500,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2165,
+      "y": 424,
+      "w": 43,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2988,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3257,
+      "y": 424,
+      "w": 47,
+      "h": 24
+    }
+  ],
+  "taunts": {
+    "overrides": ["Read the buttons. They changed. Again."]
+  },
+  "hints": [
+    "Read the buttons.",
+    "Every three seconds the controls reshuffle; the line at the top says what each key does. A spike hides by the door.",
+    "Check the key line before each jump. When the controls change, pause instead of guessing."
+  ],
+  "meta": {
+    "targetDeaths": 9,
+    "targetClearMs": 16000
+  }
+}

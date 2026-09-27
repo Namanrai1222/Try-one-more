@@ -1,0 +1,2 @@
+# Chunked: a large staged set otherwise overflows the Windows command-line limit (8191 chars).
+pnpm exec lint-staged --max-arg-length 4000

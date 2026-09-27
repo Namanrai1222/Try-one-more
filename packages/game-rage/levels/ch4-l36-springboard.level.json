@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "id": "ch4-l36-springboard",
+  "chapter": 4,
+  "index": 36,
+  "name": "Springboard",
+  "bounds": {
+    "w": 5179,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5019,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 736,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 736,
+      "y": 448,
+      "w": 700,
+      "h": 92
+    },
+    {
+      "id": "f2",
+      "x": 846,
+      "y": 278,
+      "w": 380,
+      "h": 24
+    },
+    {
+      "id": "f3",
+      "x": 1316,
+      "y": 278,
+      "w": 430,
+      "h": 24
+    },
+    {
+      "id": "f4",
+      "x": 1856,
+      "y": 448,
+      "w": 160,
+      "h": 92
+    },
+    {
+      "id": "d5",
+      "x": 2016,
+      "y": 448,
+      "w": 85,
+      "h": 92
+    },
+    {
+      "id": "f6",
+      "x": 2101,
+      "y": 448,
+      "w": 807,
+      "h": 92
+    },
+    {
+      "id": "f7",
+      "x": 2908,
+      "y": 448,
+      "w": 600,
+      "h": 92
+    },
+    {
+      "id": "f8",
+      "x": 3018,
+      "y": 268,
+      "w": 364,
+      "h": 24
+    },
+    {
+      "id": "f9",
+      "x": 3477,
+      "y": 268,
+      "w": 410,
+      "h": 24
+    },
+    {
+      "id": "f10",
+      "x": 3982,
+      "y": 268,
+      "w": 170,
+      "h": 24
+    },
+    {
+      "id": "f11",
+      "x": 4262,
+      "y": 448,
+      "w": 917,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 37,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 472,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spring",
+      "x": 712,
+      "y": 436,
+      "w": 24,
+      "h": 12,
+      "power": 17,
+      "hidden": false
+    },
+    {
+      "type": "fakeGoal",
+      "x": 1356,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 1046,
+      "y": 254,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1546,
+      "y": 254,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "d5",
+      "delayFrames": 2
+    },
+    {
+      "type": "saw",
+      "x": 2341,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2271,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "coin",
+      "x": 2672,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spring",
+      "x": 2884,
+      "y": 436,
+      "w": 24,
+      "h": 12,
+      "power": 17,
+      "hidden": false
+    },
+    {
+      "type": "fakeGoal",
+      "x": 3428,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 3188,
+      "y": 244,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3687,
+      "y": 244,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4437,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4557,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4783,
+      "y": 424,
+      "w": 38,
+      "h": 24
+    }
+  ],
+  "hints": [
+    "The ground is lying to you. Look up.",
+    "The doors on the ground are fake and the ground ends. Springs throw you onto the tracks above.",
+    "Run onto each spring and hold Right to land on the upper track. Then hop the gaps and hidden spikes."
+  ],
+  "taunts": {
+    "overrides": ["The ground was a suggestion."]
+  }
+}

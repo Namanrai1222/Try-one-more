@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "id": "ch4-l33-heavy-rain",
+  "chapter": 4,
+  "index": 33,
+  "name": "Heavy Rain",
+  "bounds": {
+    "w": 6357,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 6197,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 2054,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 2144,
+      "y": 448,
+      "w": 2196,
+      "h": 92
+    },
+    {
+      "id": "d2",
+      "x": 4340,
+      "y": 448,
+      "w": 90,
+      "h": 92
+    },
+    {
+      "id": "f3",
+      "x": 4430,
+      "y": 448,
+      "w": 1927,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "crusher",
+      "x": 320,
+      "y": 176,
+      "w": 56,
+      "h": 32,
+      "triggerX": 260,
+      "fallTo": 416,
+      "speed": 5
+    },
+    {
+      "type": "crusher",
+      "x": 679,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 609,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "saw",
+      "x": 1113,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1043,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 1412,
+      "y": 424,
+      "w": 37,
+      "h": 24
+    },
+    {
+      "type": "crusher",
+      "x": 1717,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 1647,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "crusher",
+      "x": 2403,
+      "y": 176,
+      "w": 56,
+      "h": 32,
+      "triggerX": 2343,
+      "fallTo": 416,
+      "speed": 5
+    },
+    {
+      "type": "saw",
+      "x": 2761,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2691,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 3086,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "crusher",
+      "x": 3385,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 3315,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "crusher",
+      "x": 3814,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 3744,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "coin",
+      "x": 4118,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "collapse",
+      "target": "d2",
+      "delayFrames": 4
+    },
+    {
+      "type": "saw",
+      "x": 4673,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 4623,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "crusher",
+      "x": 5045,
+      "y": 176,
+      "w": 56,
+      "h": 32,
+      "triggerX": 4985,
+      "fallTo": 416,
+      "speed": 5
+    },
+    {
+      "type": "spike",
+      "x": 5305,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "crusher",
+      "x": 5609,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 5539,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "fakeGoal",
+      "x": 5957,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    }
+  ],
+  "hints": [
+    "When something starts to fall, you can always stop.",
+    "Grey blocks drop when you pass under them. The slow ones can be outrun. The fast ones cannot.",
+    "Stop the moment a block starts moving, let it land, then jump it. Saws: wait for them to land too."
+  ],
+  "taunts": {
+    "overrides": ["Forecast: heavy. Mostly you."]
+  }
+}

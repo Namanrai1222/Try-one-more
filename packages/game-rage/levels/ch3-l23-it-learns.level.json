@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "id": "ch3-l23-it-learns",
+  "chapter": 3,
+  "index": 23,
+  "name": "It Learns",
+  "bounds": {
+    "w": 3055,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2975,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 716,
+      "h": 92
+    },
+    {
+      "id": "a-x1",
+      "x": 810,
+      "y": 448,
+      "w": 786,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 1696,
+      "y": 448,
+      "w": 1359,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 1296,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1896,
+      "y": 424,
+      "w": 48,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "saw",
+      "x": 2096,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2026,
+      "fallTo": 408,
+      "speed": 20,
+      "when": {
+        "from": 3
+      }
+    },
+    {
+      "type": "coin",
+      "x": 1631,
+      "y": 320,
+      "w": 32,
+      "h": 32,
+      "when": {
+        "from": 4
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2346,
+      "y": 424,
+      "w": 48,
+      "h": 24,
+      "when": {
+        "from": 5
+      }
+    },
+    {
+      "type": "fakeGoal",
+      "x": 2875,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "when": {
+        "from": 6
+      }
+    },
+    {
+      "type": "spike",
+      "x": 481,
+      "y": 424,
+      "w": 39,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2604,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["Every time you die, it gets an idea."]
+  },
+  "hints": [
+    "Every time you die, it gets an idea.",
+    "Each death adds a new trap. The first attempt is the easiest one you will get. A spike hides by the door.",
+    "Make the first try count: jump the spikes and the gaps, and run to the door."
+  ],
+  "meta": {
+    "targetDeaths": 9,
+    "targetClearMs": 14000
+  }
+}

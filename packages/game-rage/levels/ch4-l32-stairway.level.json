@@ -1,0 +1,294 @@
+{
+  "schema": 1,
+  "id": "ch4-l32-stairway",
+  "chapter": 4,
+  "index": 32,
+  "name": "Stairway",
+  "bounds": {
+    "w": 4929,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 4769,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 481,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 481,
+      "y": 408,
+      "w": 100,
+      "h": 132
+    },
+    {
+      "id": "f2",
+      "x": 581,
+      "y": 368,
+      "w": 100,
+      "h": 172
+    },
+    {
+      "id": "f3",
+      "x": 681,
+      "y": 328,
+      "w": 100,
+      "h": 212
+    },
+    {
+      "id": "f4",
+      "x": 781,
+      "y": 288,
+      "w": 100,
+      "h": 252
+    },
+    {
+      "id": "f5",
+      "x": 881,
+      "y": 248,
+      "w": 1161,
+      "h": 292
+    },
+    {
+      "id": "f6",
+      "x": 2142,
+      "y": 248,
+      "w": 332,
+      "h": 292
+    },
+    {
+      "id": "i7",
+      "x": 2564,
+      "y": 248,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "i8",
+      "x": 2744,
+      "y": 228,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "f9",
+      "x": 2924,
+      "y": 248,
+      "w": 300,
+      "h": 292
+    },
+    {
+      "id": "t10",
+      "x": 3224,
+      "y": 288,
+      "w": 70,
+      "h": 252
+    },
+    {
+      "id": "t11",
+      "x": 3294,
+      "y": 328,
+      "w": 70,
+      "h": 212
+    },
+    {
+      "id": "t12",
+      "x": 3364,
+      "y": 368,
+      "w": 70,
+      "h": 172
+    },
+    {
+      "id": "t13",
+      "x": 3434,
+      "y": 408,
+      "w": 70,
+      "h": 132
+    },
+    {
+      "id": "t14",
+      "x": 3504,
+      "y": 448,
+      "w": 70,
+      "h": 92
+    },
+    {
+      "id": "f15",
+      "x": 3574,
+      "y": 448,
+      "w": 742,
+      "h": 92
+    },
+    {
+      "id": "d16",
+      "x": 4316,
+      "y": 448,
+      "w": 81,
+      "h": 92
+    },
+    {
+      "id": "f17",
+      "x": 4397,
+      "y": 448,
+      "w": 532,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 50,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1201,
+      "y": 224,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "saw",
+      "x": 1481,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1411,
+      "fallTo": 208,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 1808,
+      "y": 224,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "coin",
+      "x": 2272,
+      "y": 204,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "collapse",
+      "target": "i7",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "i8",
+      "delayFrames": 14
+    },
+    {
+      "type": "spike",
+      "x": 3064,
+      "y": 224,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "t10",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t11",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t12",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t13",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "t14",
+      "delayFrames": 14
+    },
+    {
+      "type": "spike",
+      "x": 3729,
+      "y": 424,
+      "w": 41,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3956,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4076,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d16",
+      "delayFrames": 3
+    },
+    {
+      "type": "spike",
+      "x": 4557,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "hints": [
+    "Stairs are only safe going up.",
+    "Hidden spikes wait on the way up. On the way down, each step drops a moment after you land.",
+    "Climb with small hops. Going down, never stand still: bounce from step to step or jump several at once."
+  ],
+  "taunts": {
+    "overrides": ["Taking the stairs was supposed to be healthy."]
+  }
+}

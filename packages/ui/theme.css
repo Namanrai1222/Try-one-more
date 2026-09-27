@@ -1,0 +1,46 @@
+/*
+ * Tailwind v4 theme for Just One More — the equivalent of a shared Tailwind preset.
+ * Import after `@import 'tailwindcss'` and `@jom/ui/tokens.css`.
+ *
+ * Every default palette, font, and radius is reset, so the only utilities that exist
+ * are the DESIGNING.md tokens. `bg-red-500` simply does not compile to anything.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-shadow: var(--paper-shadow);
+  --color-red-pen: var(--red-pen);
+  --color-marigold: var(--marigold);
+  --color-carbon: var(--carbon);
+  --color-chalk: var(--chalk);
+  --color-saw: var(--saw);
+  --color-sky: var(--sky);
+  --color-jade: var(--jade);
+  --color-orchid: var(--orchid);
+  --color-lemon: var(--lemon);
+  --color-cobalt: var(--cobalt);
+  --color-vermilion: var(--vermilion);
+
+  --font-*: initial;
+  --font-display: var(--family-display);
+  --font-body: var(--family-body);
+  --font-mono: var(--family-mono);
+
+  --text-*: initial;
+  --text-xs: var(--t-xs);
+  --text-sm: var(--t-sm);
+  --text-md: var(--t-md);
+  --text-lg: var(--t-lg);
+  --text-xl: var(--t-xl);
+  --text-2xl: var(--t-2xl);
+
+  --radius-*: initial;
+  --radius-button: var(--radius-sm);
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  --spacing: 4px;
+}

@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "id": "ch2-l11-mirror-hands",
+  "chapter": 2,
+  "index": 11,
+  "name": "Mirror Hands",
+  "bounds": {
+    "w": 3499,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3419,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 900,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 1010,
+      "y": 448,
+      "w": 684,
+      "h": 92
+    },
+    {
+      "id": "b-x1",
+      "x": 1769,
+      "y": 448,
+      "w": 1730,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "invert",
+      "triggerX": 520
+    },
+    {
+      "type": "spike",
+      "x": 1300,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 1983,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 2192,
+      "y": 424,
+      "w": 45,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2833,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3055,
+      "y": 424,
+      "w": 41,
+      "h": 24
+    }
+  ],
+  "taunts": {
+    "overrides": ["Left is right now. Right is also wrong."]
+  },
+  "hints": [
+    "Your hands are about to disagree with you.",
+    "After a few steps, Left and Right swap; the line at the top says which is which. A spike hides near the door.",
+    "Once they swap, hold Left to go right. Jump the gaps, the spikes and the coin."
+  ],
+  "meta": {
+    "targetDeaths": 7,
+    "targetClearMs": 16000
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "id": "ch4-l37-black-ice",
+  "chapter": 4,
+  "index": 37,
+  "name": "Black Ice",
+  "bounds": {
+    "w": 5216,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5056,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 260,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 260,
+      "y": 448,
+      "w": 600,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "f2",
+      "x": 950,
+      "y": 448,
+      "w": 100,
+      "h": 92
+    },
+    {
+      "id": "f3",
+      "x": 1050,
+      "y": 448,
+      "w": 480,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "f4",
+      "x": 1630,
+      "y": 448,
+      "w": 160,
+      "h": 92
+    },
+    {
+      "id": "d5",
+      "x": 1790,
+      "y": 448,
+      "w": 86,
+      "h": 92
+    },
+    {
+      "id": "f6",
+      "x": 1876,
+      "y": 448,
+      "w": 152,
+      "h": 92
+    },
+    {
+      "id": "f7",
+      "x": 2028,
+      "y": 448,
+      "w": 664,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "f8",
+      "x": 2782,
+      "y": 448,
+      "w": 140,
+      "h": 92
+    },
+    {
+      "id": "f9",
+      "x": 2922,
+      "y": 448,
+      "w": 540,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "f10",
+      "x": 3462,
+      "y": 448,
+      "w": 411,
+      "h": 92
+    },
+    {
+      "id": "f11",
+      "x": 3873,
+      "y": 448,
+      "w": 664,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "f12",
+      "x": 4627,
+      "y": 448,
+      "w": 589,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 560,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1250,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d5",
+      "delayFrames": 4
+    },
+    {
+      "type": "spike",
+      "x": 2248,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2452,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3102,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3222,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "coin",
+      "x": 3641,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 4073,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4273,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "fakeGoal",
+      "x": 4816,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    }
+  ],
+  "view": {
+    "dark": 170
+  },
+  "hints": [
+    "Slow down. You will not be able to.",
+    "The pale floors are ice: slow to start and almost no brakes. Hidden spikes pop up on the ice too.",
+    "Build speed early and jump every gap at full speed. On ice, jump the moment anything pops up."
+  ],
+  "taunts": {
+    "overrides": ["Black ice. Black mood."]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "id": "ch2-l20-spin-cycle",
+  "chapter": 2,
+  "index": 20,
+  "name": "Spin Cycle",
+  "bounds": {
+    "w": 2369,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2289,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 300,
+      "h": 92
+    },
+    {
+      "id": "ice",
+      "x": 300,
+      "y": 448,
+      "w": 400,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "b",
+      "x": 800,
+      "y": 448,
+      "w": 400,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1300,
+      "y": 448,
+      "w": 1069,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "invert",
+      "triggerX": 860
+    },
+    {
+      "type": "spike",
+      "x": 1500,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1940,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "view": {
+    "spin": 6
+  },
+  "taunts": {
+    "overrides": ["It's not you. The level is turning. It's also you."]
+  },
+  "hints": [
+    "It is not you. The level is turning.",
+    "The camera spins, the start is ice, and after the first gap Left and Right swap. One spike hides till you are close.",
+    "Watch your body, not the room. After the swap, hold Left to go right; jump the gap and spike."
+  ],
+  "meta": {
+    "targetDeaths": 10,
+    "targetClearMs": 15000
+  }
+}

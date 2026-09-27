@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "id": "ch2-l17-lights-out-backwards",
+  "chapter": 2,
+  "index": 17,
+  "name": "Lights Out, Backwards",
+  "bounds": {
+    "w": 3664,
+    "h": 540
+  },
+  "spawn": {
+    "x": 3592,
+    "y": 400
+  },
+  "goal": {
+    "x": 40,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 3244,
+      "y": 448,
+      "w": 420,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 2764,
+      "y": 448,
+      "w": 380,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 2564,
+      "y": 448,
+      "w": 100,
+      "h": 92
+    },
+    {
+      "id": "d",
+      "x": 2170,
+      "y": 448,
+      "w": 324,
+      "h": 92
+    },
+    {
+      "id": "d-x1",
+      "x": 1637,
+      "y": 448,
+      "w": 462,
+      "h": 92
+    },
+    {
+      "id": "x-tile-2",
+      "x": 1553,
+      "y": 448,
+      "w": 84,
+      "h": 92
+    },
+    {
+      "id": "d-x3",
+      "x": 507,
+      "y": 448,
+      "w": 1046,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 417,
+      "y": 448,
+      "w": 90,
+      "h": 92
+    },
+    {
+      "id": "d-x3-rb2",
+      "x": 0,
+      "y": 448,
+      "w": 417,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 2916,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "c",
+      "delayFrames": 12
+    },
+    {
+      "type": "spike",
+      "x": 1003,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1838,
+      "y": 424,
+      "w": 41,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "x-tile-2",
+      "delayFrames": 8
+    },
+    {
+      "type": "spike",
+      "x": 706,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 2
+    }
+  ],
+  "view": {
+    "dark": 120
+  },
+  "taunts": {
+    "overrides": ["Same level. Other way. Same result."]
+  },
+  "hints": [
+    "You have been here before. The other way round.",
+    "It is level 16 mirrored: you start on the right and head left. The hidden spike is there too.",
+    "Hold Left and keep moving. Jump gaps and spikes, and jump straight off short platforms."
+  ],
+  "meta": {
+    "targetDeaths": 9,
+    "targetClearMs": 16000
+  }
+}

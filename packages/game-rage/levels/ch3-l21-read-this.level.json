@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "id": "ch3-l21-read-this",
+  "chapter": 3,
+  "index": 21,
+  "name": "Read This",
+  "bounds": {
+    "w": 2873,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2673,
+    "y": 46,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 793,
+      "h": 92
+    },
+    {
+      "id": "t1",
+      "x": 773,
+      "y": 380,
+      "w": 180,
+      "h": 24,
+      "text": "Jump."
+    },
+    {
+      "id": "t2",
+      "x": 993,
+      "y": 310,
+      "w": 200,
+      "h": 24,
+      "text": "Higher."
+    },
+    {
+      "id": "t3",
+      "x": 1233,
+      "y": 240,
+      "w": 220,
+      "h": 24,
+      "text": "No, higher."
+    },
+    {
+      "id": "t4",
+      "x": 1493,
+      "y": 170,
+      "w": 200,
+      "h": 24,
+      "text": "This one is fine."
+    },
+    {
+      "id": "t5",
+      "x": 1733,
+      "y": 110,
+      "w": 340,
+      "h": 24,
+      "text": "Well done. Almost."
+    },
+    {
+      "id": "t6",
+      "x": 2193,
+      "y": 110,
+      "w": 160,
+      "h": 24,
+      "text": "Keep going."
+    },
+    {
+      "id": "t7",
+      "x": 2453,
+      "y": 110,
+      "w": 320,
+      "h": 24,
+      "text": "Fine. Done."
+    }
+  ],
+  "traps": [
+    {
+      "type": "collapse",
+      "target": "t4",
+      "delayFrames": 24
+    },
+    {
+      "type": "spike",
+      "x": 1923,
+      "y": 86,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "t6",
+      "delayFrames": 20
+    },
+    {
+      "type": "spike",
+      "x": 380,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["You climbed an insult. Proudly."]
+  },
+  "hints": [
+    "Read what the platforms say. Then do not trust all of it.",
+    "A hidden spike, then two platforms that drop soon after you land, and a spike on the top one.",
+    "Jump off \"This one is fine.\" at once, jump the spike, then run off \"Keep going.\" too."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 13000
+  }
+}

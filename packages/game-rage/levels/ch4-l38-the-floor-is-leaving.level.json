@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "id": "ch4-l38-the-floor-is-leaving",
+  "chapter": 4,
+  "index": 38,
+  "name": "The Floor Is Leaving",
+  "bounds": {
+    "w": 4763,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 4603,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 467,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 547,
+      "y": 448,
+      "w": 310,
+      "h": 92
+    },
+    {
+      "id": "f2",
+      "x": 942,
+      "y": 448,
+      "w": 130,
+      "h": 92
+    },
+    {
+      "id": "d3",
+      "x": 1072,
+      "y": 448,
+      "w": 92,
+      "h": 92
+    },
+    {
+      "id": "f4",
+      "x": 1164,
+      "y": 448,
+      "w": 354,
+      "h": 92
+    },
+    {
+      "id": "f5",
+      "x": 1608,
+      "y": 448,
+      "w": 420,
+      "h": 92
+    },
+    {
+      "id": "f6",
+      "x": 2108,
+      "y": 448,
+      "w": 340,
+      "h": 92
+    },
+    {
+      "id": "f7",
+      "x": 2538,
+      "y": 448,
+      "w": 436,
+      "h": 92
+    },
+    {
+      "id": "f8",
+      "x": 3059,
+      "y": 448,
+      "w": 486,
+      "h": 92
+    },
+    {
+      "id": "f9",
+      "x": 3635,
+      "y": 448,
+      "w": 322,
+      "h": 92
+    },
+    {
+      "id": "f10",
+      "x": 4037,
+      "y": 448,
+      "w": 726,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 47,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 667,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d3",
+      "delayFrames": 4
+    },
+    {
+      "type": "spike",
+      "x": 1314,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1748,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1868,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2258,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "crusher",
+      "x": 2728,
+      "y": 176,
+      "w": 56,
+      "h": 32,
+      "triggerX": 2668,
+      "fallTo": 416,
+      "speed": 5
+    },
+    {
+      "type": "spike",
+      "x": 3179,
+      "y": 424,
+      "w": 36,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3355,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "coin",
+      "x": 3785,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 4167,
+      "y": 424,
+      "w": 46,
+      "h": 24
+    },
+    {
+      "type": "fakeGoal",
+      "x": 4363,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "timer",
+      "frames": 186,
+      "targets": ["f0"]
+    },
+    {
+      "type": "timer",
+      "frames": 295,
+      "targets": ["f1"]
+    },
+    {
+      "type": "timer",
+      "frames": 354,
+      "targets": ["f2"]
+    },
+    {
+      "type": "timer",
+      "frames": 380,
+      "targets": ["d3"]
+    },
+    {
+      "type": "timer",
+      "frames": 478,
+      "targets": ["f4"]
+    },
+    {
+      "type": "timer",
+      "frames": 620,
+      "targets": ["f5"]
+    },
+    {
+      "type": "timer",
+      "frames": 737,
+      "targets": ["f6"]
+    },
+    {
+      "type": "timer",
+      "frames": 883,
+      "targets": ["f7"]
+    },
+    {
+      "type": "timer",
+      "frames": 1041,
+      "targets": ["f8"]
+    },
+    {
+      "type": "timer",
+      "frames": 1156,
+      "targets": ["f9"]
+    }
+  ],
+  "hints": [
+    "Do not stop. Ever.",
+    "Each piece of floor drops soon after you should have left it. The countdown is for the next one.",
+    "Keep holding Right and hop everything without braking. The only safe floor is the one ahead."
+  ],
+  "taunts": {
+    "overrides": ["The floor left. It had somewhere better to be."]
+  }
+}

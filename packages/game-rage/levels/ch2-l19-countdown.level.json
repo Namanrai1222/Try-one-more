@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "id": "ch2-l19-countdown",
+  "chapter": 2,
+  "index": 19,
+  "name": "Countdown",
+  "bounds": {
+    "w": 2996,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2916,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 400,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 400,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 980,
+      "y": 448,
+      "w": 520,
+      "h": 92
+    },
+    {
+      "id": "d",
+      "x": 1580,
+      "y": 448,
+      "w": 471,
+      "h": 92
+    },
+    {
+      "id": "d-x1",
+      "x": 2125,
+      "y": 448,
+      "w": 871,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 1200,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "timer",
+      "frames": 815,
+      "targets": ["a", "b", "c", "d", "d-x1"]
+    },
+    {
+      "type": "spike",
+      "x": 1828,
+      "y": 424,
+      "w": 47,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2567,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["The floor had a deadline. So did you."]
+  },
+  "hints": [
+    "The floor has a deadline.",
+    "The floors disappear when the countdown top right runs out. A spike hides near the door.",
+    "Do not stop. Jump every gap and spike in one run."
+  ],
+  "meta": {
+    "targetDeaths": 7,
+    "targetClearMs": 14000
+  }
+}

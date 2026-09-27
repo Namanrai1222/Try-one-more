@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "id": "ch3-l30-the-end",
+  "chapter": 3,
+  "index": 30,
+  "name": "The End",
+  "bounds": {
+    "w": 3697,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3617,
+    "y": 384,
+    "w": 40,
+    "h": 64,
+    "look": "alt"
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 400,
+      "h": 92
+    },
+    {
+      "id": "ice",
+      "x": 400,
+      "y": 448,
+      "w": 500,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "b",
+      "x": 1000,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1600,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "d",
+      "x": 2200,
+      "y": 448,
+      "w": 1497,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "coin",
+      "x": 1160,
+      "y": 400,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 1400,
+      "y": 360,
+      "w": 48,
+      "h": 88,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "saw",
+      "x": 1800,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1730,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "invert",
+      "triggerX": 1880
+    },
+    {
+      "type": "fakeGoal",
+      "x": 2450,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 2878,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3145,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3265,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["That's all of them. For now."]
+  },
+  "hints": [
+    "Everything, one more time.",
+    "Hop the coin, walk through the tall spike, let the saw land. After the saw the keys swap, and a spike hides by the door.",
+    "After the saw, hold Left to go right. Jump the last gap and the bright door. The red door is real."
+  ],
+  "meta": {
+    "targetDeaths": 15,
+    "targetClearMs": 20000
+  }
+}

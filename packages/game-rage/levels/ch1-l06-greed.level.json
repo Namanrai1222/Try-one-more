@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "id": "ch1-l06-greed",
+  "chapter": 1,
+  "index": 6,
+  "name": "Greed",
+  "bounds": {
+    "w": 2820,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2740,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 320,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 392,
+      "y": 448,
+      "w": 706,
+      "h": 92
+    },
+    {
+      "id": "b-x1",
+      "x": 1174,
+      "y": 448,
+      "w": 1646,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "coin",
+      "x": 364,
+      "y": 330,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "type": "coin",
+      "x": 891,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "coin",
+      "x": 1376,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 1609,
+      "y": 424,
+      "w": 47,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2127,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "coin",
+      "x": 2397,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "taunts": {
+    "overrides": ["It was shiny. We understand."]
+  },
+  "hints": [
+    "Not everything shiny is a reward.",
+    "Every coin kills: the one over the gap and the ones on the floor. A spike also hides near the door.",
+    "Tiny hop under the first coin. Jump cleanly over the floor coins and the spikes."
+  ],
+  "meta": {
+    "targetDeaths": 7,
+    "targetClearMs": 12000
+  }
+}

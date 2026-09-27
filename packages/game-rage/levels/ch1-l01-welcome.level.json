@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "id": "ch1-l01-welcome",
+  "chapter": 1,
+  "index": 1,
+  "name": "Welcome",
+  "bounds": {
+    "w": 2846,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2586,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "start",
+      "x": 0,
+      "y": 448,
+      "w": 128,
+      "h": 92
+    },
+    {
+      "id": "step-1",
+      "x": 128,
+      "y": 448,
+      "w": 64,
+      "h": 92
+    },
+    {
+      "id": "step-2",
+      "x": 192,
+      "y": 448,
+      "w": 64,
+      "h": 92
+    },
+    {
+      "id": "step-3",
+      "x": 256,
+      "y": 448,
+      "w": 64,
+      "h": 92
+    },
+    {
+      "id": "end",
+      "x": 320,
+      "y": 448,
+      "w": 288,
+      "h": 92
+    },
+    {
+      "id": "end-x1",
+      "x": 692,
+      "y": 448,
+      "w": 1100,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 1792,
+      "y": 448,
+      "w": 87,
+      "h": 92
+    },
+    {
+      "id": "end-x1-rb2",
+      "x": 1879,
+      "y": 448,
+      "w": 967,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "collapse",
+      "target": "step-3",
+      "delayFrames": 3,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 258,
+      "y": 428,
+      "w": 60,
+      "h": 20,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "goalShift",
+      "dx": 128,
+      "triggerDistance": 110,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "spike",
+      "x": 914,
+      "y": 424,
+      "w": 50,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1542,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 2
+    },
+    {
+      "type": "spike",
+      "x": 2084,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2204,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["Already? On the first level?"]
+  },
+  "hints": [
+    "The third step has opinions.",
+    "The third step drops the first time, then something sits on it. By the door, a spike hides and a tile drops.",
+    "Jump the third step, gap and spikes. Near the door, hop the hidden spike, leap the loose tile, and keep walking."
+  ],
+  "meta": {
+    "targetDeaths": 5,
+    "targetClearMs": 12000
+  }
+}

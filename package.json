@@ -1,0 +1,36 @@
+{
+  "name": "just-one-more",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "turbo run dev --filter=@jom/web",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:bundle": "node tooling/scripts/check-bundle.mjs",
+    "check:hex": "node tooling/scripts/check-no-hex.mjs",
+    "verify": "pnpm format:check && pnpm check:hex && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:bundle",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "9.1.7",
+    "lint-staged": "17.5.1",
+    "prettier": "3.9.9",
+    "turbo": "2.11.3",
+    "typescript": "6.0.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,mjs,js}": [
+      "prettier --write"
+    ],
+    "*.{json,md,css,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "id": "ch2-l18-shadow",
+  "chapter": 2,
+  "index": 18,
+  "name": "Shadow",
+  "bounds": {
+    "w": 3533,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3453,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 700,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 800,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1400,
+      "y": 448,
+      "w": 605,
+      "h": 92
+    },
+    {
+      "id": "c-x1",
+      "x": 2077,
+      "y": 448,
+      "w": 1456,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "clone"
+    },
+    {
+      "type": "spike",
+      "x": 1000,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1771,
+      "y": 424,
+      "w": 42,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 2260,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 2834,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3093,
+      "y": 424,
+      "w": 45,
+      "h": 24
+    }
+  ],
+  "taunts": {
+    "overrides": ["It's you. It's in the way.", "You were never this slow. Apparently."]
+  },
+  "hints": [
+    "It is you. It is in the way.",
+    "From the second attempt, a copy of your last attempt runs beside you as a solid body. A spike hides by the door.",
+    "Where your copy stops, it blocks you. Jump over it, then the gaps, spikes and coin."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 15000
+  }
+}

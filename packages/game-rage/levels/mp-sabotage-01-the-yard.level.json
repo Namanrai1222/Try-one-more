@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "id": "mp-sabotage-01-the-yard",
+  "chapter": 0,
+  "index": 1,
+  "name": "The Yard",
+  "bounds": { "w": 2400, "h": 540 },
+  "spawn": { "x": 48, "y": 400 },
+  "goal": { "x": 2320, "y": 384, "w": 40, "h": 64 },
+  "solids": [
+    { "id": "a", "x": 0, "y": 448, "w": 800, "h": 92 },
+    { "id": "b", "x": 890, "y": 448, "w": 710, "h": 92 },
+    { "id": "c", "x": 1690, "y": 448, "w": 710, "h": 92 }
+  ],
+  "traps": [
+    { "type": "spike", "x": 300, "y": 424, "w": 40, "h": 24, "gate": 1 },
+    {
+      "type": "saw",
+      "x": 560,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 490,
+      "fallTo": 408,
+      "speed": 20,
+      "gate": 2
+    },
+    { "type": "spike", "x": 1050, "y": 424, "w": 48, "h": 24, "gate": 3 },
+    { "type": "coin", "x": 1300, "y": 404, "w": 32, "h": 32, "gate": 4 },
+    {
+      "type": "saw",
+      "x": 1900,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1830,
+      "fallTo": 408,
+      "speed": 20,
+      "gate": 5
+    },
+    { "type": "spike", "x": 2150, "y": 424, "w": 48, "h": 24, "gate": 6 }
+  ],
+  "taunts": { "overrides": ["Your friends did that. On purpose."] }
+}

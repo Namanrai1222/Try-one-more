@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "id": "ch1-l09-upside-down",
+  "chapter": 1,
+  "index": 9,
+  "name": "Upside Down",
+  "bounds": {
+    "w": 2743,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2643,
+    "y": 64,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "ceiling-a",
+      "x": 0,
+      "y": 0,
+      "w": 2423,
+      "h": 64
+    },
+    {
+      "id": "ceiling-b",
+      "x": 2495,
+      "y": 0,
+      "w": 248,
+      "h": 64
+    },
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 536,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 536,
+      "y": 448,
+      "w": 91,
+      "h": 92
+    },
+    {
+      "id": "floor-rb2",
+      "x": 627,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "floor-x1",
+      "x": 1203,
+      "y": 448,
+      "w": 1060,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "gravityFlip",
+      "triggerX": 2203
+    },
+    {
+      "type": "spike",
+      "x": 1398,
+      "y": 424,
+      "w": 37,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 1723,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1653,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 312,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 3
+    }
+  ],
+  "taunts": {
+    "overrides": ["Down was up. You were told nothing."]
+  },
+  "hints": [
+    "Down was up.",
+    "First a hidden spike, a dropping tile, a gap, spikes and a saw. Then gravity flips and you land on the ceiling.",
+    "Let the saw land and jump it. Walk until you flip, jump the ceiling gap (jumps go down)."
+  ],
+  "meta": {
+    "targetDeaths": 4,
+    "targetClearMs": 11000
+  }
+}

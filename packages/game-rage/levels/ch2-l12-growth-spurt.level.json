@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "id": "ch2-l12-growth-spurt",
+  "chapter": 2,
+  "index": 12,
+  "name": "Growth Spurt",
+  "bounds": {
+    "w": 3706,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3626,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 1766,
+      "h": 92
+    },
+    {
+      "id": "floor-x1",
+      "x": 1866,
+      "y": 448,
+      "w": 1315,
+      "h": 92
+    },
+    {
+      "id": "floor-x1-rb1",
+      "x": 3280,
+      "y": 448,
+      "w": 426,
+      "h": 92
+    },
+    {
+      "id": "low-1",
+      "x": 220,
+      "y": 370,
+      "w": 120,
+      "h": 30
+    },
+    {
+      "id": "low-2",
+      "x": 800,
+      "y": 370,
+      "w": 300,
+      "h": 30
+    }
+  ],
+  "traps": [
+    {
+      "type": "grow",
+      "triggerX": 500
+    },
+    {
+      "type": "spike",
+      "x": 1518,
+      "y": 424,
+      "w": 39,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2093,
+      "y": 424,
+      "w": 38,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2948,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["You fit through there a second ago."]
+  },
+  "hints": [
+    "You fit through there a second ago.",
+    "Halfway along you grow and will not fit under the next low slab. Near the door: a hidden spike and a gap.",
+    "Jump up onto the second slab and cross it. Then jump the spikes and the gap while big."
+  ],
+  "meta": {
+    "targetDeaths": 5,
+    "targetClearMs": 16000
+  }
+}

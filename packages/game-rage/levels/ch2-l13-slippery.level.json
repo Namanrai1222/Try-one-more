@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "id": "ch2-l13-slippery",
+  "chapter": 2,
+  "index": 13,
+  "name": "Slippery",
+  "bounds": {
+    "w": 3293,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3213,
+    "y": 306,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "ice",
+      "x": 0,
+      "y": 448,
+      "w": 2873,
+      "h": 92,
+      "ice": true
+    },
+    {
+      "id": "grip",
+      "x": 2873,
+      "y": 448,
+      "w": 100,
+      "h": 92
+    },
+    {
+      "id": "ledge",
+      "x": 2973,
+      "y": 370,
+      "w": 320,
+      "h": 170
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 1973,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2373,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 968,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 1212,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 1438,
+      "y": 424,
+      "w": 49,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 392,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["Brakes are a privilege."]
+  },
+  "hints": [
+    "Brakes are a privilege.",
+    "The floor is ice: you keep sliding after you let go. A hidden spike, spikes and a coin wait on it.",
+    "Jump each hazard early, and use the rough patch at the end to stop before the ledge."
+  ],
+  "meta": {
+    "targetDeaths": 8,
+    "targetClearMs": 16000
+  }
+}

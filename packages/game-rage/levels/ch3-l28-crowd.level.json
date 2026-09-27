@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "id": "ch3-l28-crowd",
+  "chapter": 3,
+  "index": 28,
+  "name": "Crowd",
+  "bounds": {
+    "w": 3647,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3567,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 500,
+      "h": 92
+    },
+    {
+      "id": "tile",
+      "x": 500,
+      "y": 448,
+      "w": 100,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 600,
+      "y": 448,
+      "w": 1222,
+      "h": 92
+    },
+    {
+      "id": "b-x1",
+      "x": 1900,
+      "y": 448,
+      "w": 1265,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 3165,
+      "y": 448,
+      "w": 82,
+      "h": 92
+    },
+    {
+      "id": "b-x1-rb2",
+      "x": 3247,
+      "y": 448,
+      "w": 400,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "collapse",
+      "target": "tile",
+      "delayFrames": 4
+    },
+    {
+      "type": "saw",
+      "x": 1000,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 930,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 1400,
+      "y": 360,
+      "w": 48,
+      "h": 88,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2074,
+      "y": 424,
+      "w": 51,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 2346,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 2906,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 3
+    }
+  ],
+  "view": {
+    "ghosts": true
+  },
+  "taunts": {
+    "overrides": ["Every one of them is you. None of them made it."]
+  },
+  "hints": [
+    "Every one of them is you.",
+    "The loose tile drops fast, a saw falls further on, and the tall spike rises when you jump. Another spike hides by the door.",
+    "Jump the tile, let the saw land and jump it, walk through the tall spike, then jump the rest."
+  ],
+  "meta": {
+    "targetDeaths": 9,
+    "targetClearMs": 16000
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "schema": 1,
+  "id": "ch4-l34-island-hopping",
+  "chapter": 4,
+  "index": 34,
+  "name": "Island Hopping",
+  "bounds": {
+    "w": 5602,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5442,
+    "y": 364,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 260,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 350,
+      "y": 448,
+      "w": 130,
+      "h": 92
+    },
+    {
+      "id": "i2",
+      "x": 570,
+      "y": 428,
+      "w": 110,
+      "h": 24
+    },
+    {
+      "id": "i3",
+      "x": 760,
+      "y": 398,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "i4",
+      "x": 940,
+      "y": 438,
+      "w": 110,
+      "h": 24
+    },
+    {
+      "id": "i5",
+      "x": 1145,
+      "y": 408,
+      "w": 160,
+      "h": 24
+    },
+    {
+      "id": "i6",
+      "x": 1385,
+      "y": 448,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "f7",
+      "x": 1565,
+      "y": 448,
+      "w": 592,
+      "h": 92
+    },
+    {
+      "id": "i8",
+      "x": 2252,
+      "y": 448,
+      "w": 80,
+      "h": 24
+    },
+    {
+      "id": "i9",
+      "x": 2417,
+      "y": 408,
+      "w": 80,
+      "h": 24
+    },
+    {
+      "id": "i10",
+      "x": 2582,
+      "y": 438,
+      "w": 80,
+      "h": 24
+    },
+    {
+      "id": "i11",
+      "x": 2752,
+      "y": 418,
+      "w": 100,
+      "h": 24
+    },
+    {
+      "id": "f12",
+      "x": 2942,
+      "y": 428,
+      "w": 152,
+      "h": 112
+    },
+    {
+      "id": "f13",
+      "x": 3194,
+      "y": 428,
+      "w": 472,
+      "h": 112
+    },
+    {
+      "id": "d14",
+      "x": 3666,
+      "y": 428,
+      "w": 80,
+      "h": 112
+    },
+    {
+      "id": "f15",
+      "x": 3746,
+      "y": 428,
+      "w": 158,
+      "h": 112
+    },
+    {
+      "id": "i16",
+      "x": 3994,
+      "y": 398,
+      "w": 160,
+      "h": 24
+    },
+    {
+      "id": "i17",
+      "x": 4244,
+      "y": 368,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "i18",
+      "x": 4424,
+      "y": 408,
+      "w": 90,
+      "h": 24
+    },
+    {
+      "id": "f19",
+      "x": 4609,
+      "y": 428,
+      "w": 993,
+      "h": 112
+    }
+  ],
+  "traps": [
+    {
+      "type": "collapse",
+      "target": "i4",
+      "delayFrames": 14
+    },
+    {
+      "type": "spike",
+      "x": 1205,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1723,
+      "y": 424,
+      "w": 49,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1957,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "i8",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "i9",
+      "delayFrames": 14
+    },
+    {
+      "type": "collapse",
+      "target": "i10",
+      "delayFrames": 14
+    },
+    {
+      "type": "spike",
+      "x": 3344,
+      "y": 404,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3464,
+      "y": 404,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d14",
+      "delayFrames": 2
+    },
+    {
+      "type": "spike",
+      "x": 4054,
+      "y": 374,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "i18",
+      "delayFrames": 14
+    },
+    {
+      "type": "coin",
+      "x": 4805,
+      "y": 384,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 5004,
+      "y": 404,
+      "w": 46,
+      "h": 24
+    },
+    {
+      "type": "fakeGoal",
+      "x": 5202,
+      "y": 364,
+      "w": 40,
+      "h": 64
+    }
+  ],
+  "hints": [
+    "Not every island is land.",
+    "Some islands sink a moment after you touch them, and the wide ones hide a spike in the middle.",
+    "Hop straight on from any island that sinks. On the wide islands, jump again as the spike appears."
+  ],
+  "taunts": {
+    "overrides": ["Nice island. Was."]
+  }
+}

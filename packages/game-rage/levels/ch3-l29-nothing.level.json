@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "id": "ch3-l29-nothing",
+  "chapter": 3,
+  "index": 29,
+  "name": "Nothing",
+  "bounds": {
+    "w": 3056,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2976,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 3056,
+      "h": 92
+    },
+    {
+      "id": "p1",
+      "x": 500,
+      "y": 330,
+      "w": 120,
+      "h": 20
+    },
+    {
+      "id": "p2",
+      "x": 1000,
+      "y": 280,
+      "w": 120,
+      "h": 20
+    },
+    {
+      "id": "p3",
+      "x": 1450,
+      "y": 330,
+      "w": 120,
+      "h": 20
+    }
+  ],
+  "taunts": {
+    "overrides": ["There was nothing there. Right up until there was."]
+  },
+  "hints": [
+    "There is nothing here. Probably.",
+    "Almost nothing. The platforms are just platforms. The very end is another story: a spike hides there too.",
+    "Walk right calmly. Near the end, jump the spikes, then let the saw land before jumping it."
+  ],
+  "meta": {
+    "targetDeaths": 1,
+    "targetClearMs": 15000
+  },
+  "traps": [
+    {
+      "type": "spike",
+      "x": 1860,
+      "y": 424,
+      "w": 34,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 2146,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2076,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 2618,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    }
+  ]
+}

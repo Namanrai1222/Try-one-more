@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "id": "ch4-l31-encore",
+  "chapter": 4,
+  "index": 31,
+  "name": "Encore",
+  "bounds": {
+    "w": 5554,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5214,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "f0",
+      "x": 0,
+      "y": 448,
+      "w": 491,
+      "h": 92
+    },
+    {
+      "id": "f1",
+      "x": 491,
+      "y": 408,
+      "w": 340,
+      "h": 132
+    },
+    {
+      "id": "f2",
+      "x": 831,
+      "y": 368,
+      "w": 130,
+      "h": 172
+    },
+    {
+      "id": "f3",
+      "x": 1051,
+      "y": 448,
+      "w": 170,
+      "h": 92
+    },
+    {
+      "id": "d4",
+      "x": 1221,
+      "y": 448,
+      "w": 91,
+      "h": 92
+    },
+    {
+      "id": "f5",
+      "x": 1312,
+      "y": 448,
+      "w": 557,
+      "h": 92
+    },
+    {
+      "id": "i6",
+      "x": 1949,
+      "y": 448,
+      "w": 100,
+      "h": 24
+    },
+    {
+      "id": "i7",
+      "x": 2134,
+      "y": 418,
+      "w": 100,
+      "h": 24
+    },
+    {
+      "id": "i8",
+      "x": 2319,
+      "y": 448,
+      "w": 100,
+      "h": 24
+    },
+    {
+      "id": "f9",
+      "x": 2504,
+      "y": 448,
+      "w": 1052,
+      "h": 92
+    },
+    {
+      "id": "f10",
+      "x": 3556,
+      "y": 400,
+      "w": 390,
+      "h": 140
+    },
+    {
+      "id": "f11",
+      "x": 4046,
+      "y": 448,
+      "w": 421,
+      "h": 92
+    },
+    {
+      "id": "d12",
+      "x": 4467,
+      "y": 448,
+      "w": 91,
+      "h": 92
+    },
+    {
+      "id": "f13",
+      "x": 4558,
+      "y": 448,
+      "w": 996,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 641,
+      "y": 384,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d4",
+      "delayFrames": 4
+    },
+    {
+      "type": "saw",
+      "x": 1533,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1463,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 2662,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2782,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "coin",
+      "x": 3062,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 3288,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 3756,
+      "y": 376,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4236,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "d12",
+      "delayFrames": 2
+    },
+    {
+      "type": "spike",
+      "x": 4738,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "fakeGoal",
+      "x": 4954,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "goalShift",
+      "dx": 180,
+      "triggerDistance": 70
+    }
+  ],
+  "hints": [
+    "The door moves. So does everything else.",
+    "Spikes hide until you are close, some floor tiles drop, and after a death one spike moves.",
+    "Keep making short, early jumps. Skip the first door; the real one hops away once, so keep running."
+  ],
+  "taunts": {
+    "overrides": ["You finished the game. The game did not finish you."]
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "id": "ch1-l02-trust",
+  "chapter": 1,
+  "index": 2,
+  "name": "Trust",
+  "bounds": {
+    "w": 2941,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 2861,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 288,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 384,
+      "y": 448,
+      "w": 256,
+      "h": 92
+    },
+    {
+      "id": "block",
+      "x": 544,
+      "y": 384,
+      "w": 96,
+      "h": 64
+    },
+    {
+      "id": "d",
+      "x": 704,
+      "y": 448,
+      "w": 501,
+      "h": 92
+    },
+    {
+      "id": "d-x1",
+      "x": 1293,
+      "y": 448,
+      "w": 171,
+      "h": 92
+    },
+    {
+      "id": "x-tile-2",
+      "x": 1464,
+      "y": 448,
+      "w": 90,
+      "h": 92
+    },
+    {
+      "id": "d-x3",
+      "x": 1554,
+      "y": 448,
+      "w": 686,
+      "h": 92
+    },
+    {
+      "id": "d-x3-rb1",
+      "x": 2311,
+      "y": 448,
+      "w": 630,
+      "h": 92
+    }
+  ],
+  "taunts": {
+    "overrides": ["See? Nothing happened. Remember that."]
+  },
+  "hints": [
+    "Nothing here is a trick. Really.",
+    "What you see is all there is: gaps, a block, spikes and a tile that drops.",
+    "Hold Right. Jump each gap and spike, and jump straight off the loose tile."
+  ],
+  "meta": {
+    "targetDeaths": 3,
+    "targetClearMs": 12000
+  },
+  "traps": [
+    {
+      "type": "spike",
+      "x": 972,
+      "y": 424,
+      "w": 33,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "x-tile-2",
+      "delayFrames": 8
+    },
+    {
+      "type": "spike",
+      "x": 1784,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2507,
+      "y": 424,
+      "w": 35,
+      "h": 24
+    }
+  ]
+}

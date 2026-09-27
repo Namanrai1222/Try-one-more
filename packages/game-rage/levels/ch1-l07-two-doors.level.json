@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "id": "ch1-l07-two-doors",
+  "chapter": 1,
+  "index": 7,
+  "name": "Two Doors",
+  "bounds": {
+    "w": 2745,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goals": [
+    {
+      "x": 2305,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "primary",
+      "when": {
+        "parity": "even"
+      }
+    },
+    {
+      "x": 2605,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "alt",
+      "when": {
+        "parity": "odd"
+      }
+    }
+  ],
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 713,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 713,
+      "y": 448,
+      "w": 89,
+      "h": 92
+    },
+    {
+      "id": "floor-rb2",
+      "x": 802,
+      "y": 448,
+      "w": 702,
+      "h": 92
+    },
+    {
+      "id": "floor-x1",
+      "x": 1577,
+      "y": 448,
+      "w": 1168,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "fakeGoal",
+      "x": 2305,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "primary",
+      "when": {
+        "parity": "odd"
+      }
+    },
+    {
+      "type": "fakeGoal",
+      "x": 2605,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "alt",
+      "when": {
+        "parity": "even"
+      }
+    },
+    {
+      "type": "spike",
+      "x": 1280,
+      "y": 424,
+      "w": 43,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 1867,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1797,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 474,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 2
+    }
+  ],
+  "taunts": {
+    "overrides": ["Wrong door. Obviously."]
+  },
+  "hints": [
+    "Two doors. One of them is honest. It changes.",
+    "Which door is real swaps every attempt. First: a hidden spike, a dropping tile, spikes, a gap and a falling saw.",
+    "Odd attempts: jump the near door, walk into the far one. Even attempts: the near door is real."
+  ],
+  "meta": {
+    "targetDeaths": 4,
+    "targetClearMs": 11000
+  }
+}

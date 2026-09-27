@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "id": "ch4-l35-low-ceiling",
+  "chapter": 4,
+  "index": 35,
+  "name": "Low Ceiling",
+  "bounds": {
+    "w": 5764,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 5604,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "c0",
+      "x": 463,
+      "y": 324,
+      "w": 670,
+      "h": 24
+    },
+    {
+      "id": "f1",
+      "x": 0,
+      "y": 448,
+      "w": 1830,
+      "h": 92
+    },
+    {
+      "id": "f2",
+      "x": 1900,
+      "y": 448,
+      "w": 320,
+      "h": 92
+    },
+    {
+      "id": "c3",
+      "x": 1710,
+      "y": 324,
+      "w": 700,
+      "h": 24
+    },
+    {
+      "id": "f4",
+      "x": 2290,
+      "y": 448,
+      "w": 1127,
+      "h": 92
+    },
+    {
+      "id": "d5",
+      "x": 3417,
+      "y": 448,
+      "w": 89,
+      "h": 92
+    },
+    {
+      "id": "c6",
+      "x": 3127,
+      "y": 320,
+      "w": 709,
+      "h": 24
+    },
+    {
+      "id": "c7",
+      "x": 4645,
+      "y": 324,
+      "w": 568,
+      "h": 24
+    },
+    {
+      "id": "f8",
+      "x": 3506,
+      "y": 448,
+      "w": 2258,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 260,
+      "y": 424,
+      "w": 41,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 583,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 773,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 963,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "saw",
+      "x": 1378,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1308,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 2040,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2571,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 2691,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    },
+    {
+      "type": "coin",
+      "x": 2908,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 3237,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "d5",
+      "delayFrames": 4
+    },
+    {
+      "type": "spike",
+      "x": 3676,
+      "y": 424,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "crusher",
+      "x": 4063,
+      "y": 246,
+      "w": 64,
+      "h": 32,
+      "triggerX": 3993,
+      "fallTo": 416,
+      "speed": 14
+    },
+    {
+      "type": "spike",
+      "x": 4406,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 4765,
+      "y": 424,
+      "w": 36,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 4911,
+      "y": 424,
+      "w": 36,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 5057,
+      "y": 424,
+      "w": 36,
+      "h": 24
+    },
+    {
+      "type": "fakeGoal",
+      "x": 5364,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    }
+  ],
+  "hints": [
+    "Mind your head.",
+    "Under the low ceilings a full jump hits your head and drops you short. Small hops go further.",
+    "Tap jump under the ceilings. Stop at the grey block, let it land, then jump it."
+  ],
+  "taunts": {
+    "overrides": ["Low ceiling. Lower standards."]
+  }
+}

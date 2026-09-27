@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# build output
+.next/
+out/
+dist/
+coverage/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# env — real values never enter git (SECURITY.md §2)
+.env
+.env.*
+!.env.example
+
+# platform
+.vercel/
+
+# logs / OS
+*.log
+.DS_Store
+Thumbs.db

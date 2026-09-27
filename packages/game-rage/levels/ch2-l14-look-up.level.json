@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "id": "ch2-l14-look-up",
+  "chapter": 2,
+  "index": 14,
+  "name": "Look Up",
+  "bounds": {
+    "w": 3586,
+    "h": 540
+  },
+  "spawn": {
+    "x": 2146,
+    "y": 400
+  },
+  "goal": {
+    "x": 60,
+    "y": 46,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 681,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 681,
+      "y": 448,
+      "w": 90,
+      "h": 92
+    },
+    {
+      "id": "floor-rb2",
+      "x": 771,
+      "y": 448,
+      "w": 642,
+      "h": 92
+    },
+    {
+      "id": "floor-x1",
+      "x": 1487,
+      "y": 448,
+      "w": 2099,
+      "h": 92
+    },
+    {
+      "id": "ledge",
+      "x": 50,
+      "y": 110,
+      "w": 2006,
+      "h": 20
+    }
+  ],
+  "traps": [
+    {
+      "type": "spring",
+      "x": 10,
+      "y": 436,
+      "w": 24,
+      "h": 12,
+      "power": 22,
+      "hidden": true
+    },
+    {
+      "type": "fakeGoal",
+      "x": 3506,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 1198,
+      "y": 424,
+      "w": 34,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 1706,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 447,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 2
+    }
+  ],
+  "taunts": {
+    "overrides": ["Look up.", "The door was never down here."]
+  },
+  "hints": [
+    "Look up.",
+    "The door on the right is fake. The real one is on the high ledge to the left, past a hidden spike and a loose tile.",
+    "Walk left, jumping the coin, gap and spikes. Something in the far corner throws you up."
+  ],
+  "meta": {
+    "targetDeaths": 5,
+    "targetClearMs": 15000
+  }
+}

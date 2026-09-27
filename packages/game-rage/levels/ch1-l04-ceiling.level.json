@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "id": "ch1-l04-ceiling",
+  "chapter": 1,
+  "index": 4,
+  "name": "Ceiling",
+  "bounds": {
+    "w": 3508,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3428,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 600,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 680,
+      "y": 448,
+      "w": 520,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1280,
+      "y": 448,
+      "w": 630,
+      "h": 92
+    },
+    {
+      "id": "c-x1",
+      "x": 1983,
+      "y": 448,
+      "w": 1525,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "crusher",
+      "x": 0,
+      "y": -160,
+      "w": 3508,
+      "h": 300,
+      "triggerX": 0,
+      "fallTo": 148,
+      "speed": 0.3
+    },
+    {
+      "type": "spike",
+      "x": 1686,
+      "y": 424,
+      "w": 45,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2154,
+      "y": 424,
+      "w": 47,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2819,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3046,
+      "y": 424,
+      "w": 46,
+      "h": 24
+    }
+  ],
+  "taunts": {
+    "overrides": ["The ceiling was not a metaphor."]
+  },
+  "hints": [
+    "Do not stop to think.",
+    "The whole ceiling is coming down from the start. Near the door, a spike hides until you are close.",
+    "Hold Right from the first frame. Jump gaps and spikes with short, early hops. Never go back."
+  ],
+  "meta": {
+    "targetDeaths": 4,
+    "targetClearMs": 15000
+  }
+}

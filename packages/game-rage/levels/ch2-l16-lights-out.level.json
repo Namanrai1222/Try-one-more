@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "id": "ch2-l16-lights-out",
+  "chapter": 2,
+  "index": 16,
+  "name": "Lights Out",
+  "bounds": {
+    "w": 3664,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3584,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 420,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 520,
+      "y": 448,
+      "w": 380,
+      "h": 92
+    },
+    {
+      "id": "c",
+      "x": 1000,
+      "y": 448,
+      "w": 100,
+      "h": 92
+    },
+    {
+      "id": "d",
+      "x": 1170,
+      "y": 448,
+      "w": 324,
+      "h": 92
+    },
+    {
+      "id": "d-x1",
+      "x": 1565,
+      "y": 448,
+      "w": 462,
+      "h": 92
+    },
+    {
+      "id": "x-tile-2",
+      "x": 2027,
+      "y": 448,
+      "w": 84,
+      "h": 92
+    },
+    {
+      "id": "d-x3",
+      "x": 2111,
+      "y": 448,
+      "w": 1046,
+      "h": 92
+    },
+    {
+      "id": "rb-trapdoor-1",
+      "x": 3157,
+      "y": 448,
+      "w": 90,
+      "h": 92
+    },
+    {
+      "id": "d-x3-rb2",
+      "x": 3247,
+      "y": 448,
+      "w": 417,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "spike",
+      "x": 700,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "c",
+      "delayFrames": 12
+    },
+    {
+      "type": "spike",
+      "x": 2613,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 1785,
+      "y": 424,
+      "w": 41,
+      "h": 24
+    },
+    {
+      "type": "collapse",
+      "target": "x-tile-2",
+      "delayFrames": 8
+    },
+    {
+      "type": "spike",
+      "x": 2918,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "collapse",
+      "target": "rb-trapdoor-1",
+      "delayFrames": 2
+    }
+  ],
+  "view": {
+    "dark": 120
+  },
+  "meta": {
+    "targetDeaths": 9,
+    "targetClearMs": 16000
+  },
+  "taunts": {
+    "overrides": ["It was dark. You were not careful."]
+  },
+  "hints": [
+    "Remember the layout. You will not see it.",
+    "Gaps, spikes, a spike that hides until you are close, and short platforms that drop soon after you land.",
+    "Keep running, and never stand on a short platform: jump straight off it."
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "id": "ch3-l24-error",
+  "chapter": 3,
+  "index": 24,
+  "name": "Error",
+  "bounds": {
+    "w": 3668,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 3588,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "start",
+      "x": 0,
+      "y": 448,
+      "w": 260,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 330,
+      "y": 448,
+      "w": 1345,
+      "h": 92
+    },
+    {
+      "id": "b-x1",
+      "x": 1771,
+      "y": 448,
+      "w": 1897,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "timer",
+      "frames": 150,
+      "targets": ["start"]
+    },
+    {
+      "type": "spike",
+      "x": 900,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 1300,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 1230,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "coin",
+      "x": 1986,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 2240,
+      "y": 424,
+      "w": 43,
+      "h": 24
+    },
+    {
+      "type": "spike",
+      "x": 2881,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3123,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3243,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "metaTrap": {
+    "kind": "fakeError",
+    "frames": 180
+  },
+  "taunts": {
+    "overrides": ["Waiting was the wrong answer."]
+  },
+  "hints": [
+    "Waiting was the wrong answer.",
+    "The error screen is fake, and the floor under you vanishes after a couple of seconds. A spike hides by the door.",
+    "Press Right at once. Jump the gaps, spikes and coin; stop when the saw drops, then jump it."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 16000
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "id": "ch3-l22-door-door-door",
+  "chapter": 3,
+  "index": 22,
+  "name": "Door, Door, Door",
+  "bounds": {
+    "w": 2708,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 1488,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "floor",
+      "x": 0,
+      "y": 448,
+      "w": 2708,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "goalShift",
+      "dx": 400,
+      "triggerDistance": 80
+    },
+    {
+      "type": "spike",
+      "x": 1938,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "goalShift",
+      "dx": 500,
+      "triggerDistance": 80
+    },
+    {
+      "type": "spike",
+      "x": 1188,
+      "y": 424,
+      "w": 44,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 1688,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "saw",
+      "x": 2168,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 2098,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 405,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 640,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 760,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "taunts": {
+    "overrides": ["The third one. Always the third one."]
+  },
+  "hints": [
+    "Doors do not always stay put.",
+    "The door runs away twice. A hidden spike, a moving spike, a coin and a saw wait along the way.",
+    "Jump the spike and the coin. When the door moves again, jump the spike, then let the saw land."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 12000
+  }
+}

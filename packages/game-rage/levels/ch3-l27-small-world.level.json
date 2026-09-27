@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "id": "ch3-l27-small-world",
+  "chapter": 3,
+  "index": 27,
+  "name": "Small World",
+  "bounds": {
+    "w": 4563,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goal": {
+    "x": 4483,
+    "y": 384,
+    "w": 40,
+    "h": 64
+  },
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 1809,
+      "h": 92
+    },
+    {
+      "id": "a-x1",
+      "x": 1903,
+      "y": 448,
+      "w": 506,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 2509,
+      "y": 448,
+      "w": 2054,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "fakeGoal",
+      "x": 880,
+      "y": 384,
+      "w": 40,
+      "h": 64
+    },
+    {
+      "type": "spike",
+      "x": 3109,
+      "y": 424,
+      "w": 48,
+      "h": 24
+    },
+    {
+      "type": "saw",
+      "x": 3409,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 3339,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "spike",
+      "x": 1401,
+      "y": 424,
+      "w": 34,
+      "h": 24
+    },
+    {
+      "type": "coin",
+      "x": 1605,
+      "y": 404,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 3770,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "erupt": {
+        "on": "near",
+        "distance": 90
+      }
+    },
+    {
+      "type": "spike",
+      "x": 3990,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "to": 1
+      }
+    },
+    {
+      "type": "spike",
+      "x": 4110,
+      "y": 424,
+      "w": 40,
+      "h": 24,
+      "when": {
+        "from": 2
+      }
+    }
+  ],
+  "view": {
+    "frameW": 960
+  },
+  "taunts": {
+    "overrides": ["The level was bigger than it looked. So is your ego."]
+  },
+  "hints": [
+    "The level is bigger than it looks.",
+    "The door at the edge of the screen is fake. The level keeps going, and a spike near the end hides until you are close.",
+    "Jump that door and run on. Jump the spikes, coin and gaps; let the saw land before jumping it."
+  ],
+  "meta": {
+    "targetDeaths": 6,
+    "targetClearMs": 21000
+  }
+}

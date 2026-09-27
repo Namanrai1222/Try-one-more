@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "id": "ch1-l10-all-at-once",
+  "chapter": 1,
+  "index": 10,
+  "name": "All At Once",
+  "bounds": {
+    "w": 960,
+    "h": 540
+  },
+  "spawn": {
+    "x": 48,
+    "y": 400
+  },
+  "goals": [
+    {
+      "x": 880,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "alt"
+    }
+  ],
+  "solids": [
+    {
+      "id": "a",
+      "x": 0,
+      "y": 448,
+      "w": 160,
+      "h": 92
+    },
+    {
+      "id": "trap-tile",
+      "x": 160,
+      "y": 448,
+      "w": 64,
+      "h": 92
+    },
+    {
+      "id": "b",
+      "x": 224,
+      "y": 448,
+      "w": 736,
+      "h": 92
+    }
+  ],
+  "traps": [
+    {
+      "type": "collapse",
+      "target": "trap-tile",
+      "delayFrames": 8
+    },
+    {
+      "type": "coin",
+      "x": 176,
+      "y": 330,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "spike",
+      "x": 400,
+      "y": 338,
+      "w": 64,
+      "h": 110,
+      "erupt": {
+        "on": "jump",
+        "frames": 24
+      }
+    },
+    {
+      "type": "saw",
+      "x": 600,
+      "y": -64,
+      "w": 40,
+      "h": 40,
+      "triggerX": 540,
+      "fallTo": 408,
+      "speed": 20
+    },
+    {
+      "type": "fakeGoal",
+      "x": 760,
+      "y": 384,
+      "w": 40,
+      "h": 64,
+      "look": "primary"
+    }
+  ],
+  "taunts": {
+    "overrides": ["That was the exam. You studied, right?"]
+  },
+  "hints": [
+    "Everything so far, in order. Take them one at a time.",
+    "Tiny hop over the loose tile (the coin kills). Walk through the spike spot. Let the saw land.",
+    "Jump the saw once it is on the floor, then jump the bright door. The red door is the real one."
+  ],
+  "meta": {
+    "targetDeaths": 8,
+    "targetClearMs": 8000
+  }
+}
