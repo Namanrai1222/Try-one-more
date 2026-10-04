@@ -12,8 +12,8 @@
     "load-test": "node scripts/load-test.ts"
   },
   "dependencies": {
-    "@colyseus/core": "0.18.16",
-    "@colyseus/ws-transport": "0.18.3",
+    "@colyseus/core": "0.18.18",
+    "@colyseus/ws-transport": "0.18.4",
     "@jom/engine": "workspace:*",
     "@jom/game-push-party": "workspace:*",
     "@jom/game-rage": "workspace:*",
@@ -26,6 +26,6 @@
     "@types/node": "24.13.6",
     "eslint": "9.39.5",
     "typescript": "6.0.3",
-    "vitest": "5.0.1"
+    "vitest": "5.0.3"
   }
 }
