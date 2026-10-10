@@ -41,4 +41,14 @@ describe('security headers (SECURITY.md §7)', () => {
     );
     expect(headers['X-Content-Type-Options']).toBe('nosniff');
   });
+
+  it('allows CrazyGames embedding only with the submission header profile', () => {
+    const embedded = Object.fromEntries(
+      securityHeaders({ embedded: true }).map((h) => [h.key, h.value]),
+    );
+    expect(embedded['X-Frame-Options']).toBeUndefined();
+    expect(embedded['Content-Security-Policy']).toContain('https://*.crazygames.com');
+    expect(embedded['Content-Security-Policy']).not.toContain("frame-ancestors 'none'");
+    expect(headers['X-Frame-Options']).toBe('DENY');
+  });
 });

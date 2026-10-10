@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 /** Registers the offline shell (`public/sw.js`). Production only: dev builds change every save. */
 export function ServiceWorker() {
   useEffect(() => {
+    if (window.location.pathname === '/crazygames' || window.self !== window.top) return;
     if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) return;
     navigator.serviceWorker.register('/sw.js').catch(() => {
       // No offline play, nothing else changes.

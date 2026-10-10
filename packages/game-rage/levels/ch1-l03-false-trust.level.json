@@ -156,6 +156,6 @@
   ],
   "meta": {
     "targetDeaths": 5,
-    "targetClearMs": 13000
+    "targetClearMs": 15000
   }
 }

@@ -12,8 +12,15 @@ export interface Sfx {
   dispose(): void;
 }
 
-export function createSfx(muted: boolean): Sfx {
+export function createSfx(muted: boolean, hostMuted: () => boolean = () => false): Sfx {
   let ctx: AudioContext | null = null;
+  const unlock = () => {
+    if (!ctx || sfx.muted || hostMuted() || ctx.state === 'running' || ctx.state === 'closed')
+      return;
+    void ctx.resume().catch(() => {});
+  };
+  document.addEventListener('pointerup', unlock);
+  document.addEventListener('keydown', unlock);
 
   const tone = (
     type: OscillatorType,
@@ -23,13 +30,13 @@ export function createSfx(muted: boolean): Sfx {
     gain: number,
     delay = 0,
   ) => {
-    if (sfx.muted) return;
+    if (sfx.muted || hostMuted() || document.hidden || !document.hasFocus()) return;
     try {
       ctx ??= new AudioContext();
     } catch {
       return; // no Web Audio: play silently
     }
-    if (ctx.state === 'suspended') void ctx.resume();
+    if (ctx.state === 'suspended') void ctx.resume().catch(() => {});
     const t = ctx.currentTime + delay;
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
@@ -55,7 +62,11 @@ export function createSfx(muted: boolean): Sfx {
       tone('sine', 523, 523, 0.12, 0.08);
       tone('sine', 659, 659, 0.16, 0.08, 0.12);
     },
-    dispose: () => void ctx?.close(),
+    dispose() {
+      document.removeEventListener('pointerup', unlock);
+      document.removeEventListener('keydown', unlock);
+      void ctx?.close().catch(() => {});
+    },
   };
   return sfx;
 }

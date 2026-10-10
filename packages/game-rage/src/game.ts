@@ -71,7 +71,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
 
   const view = createView(container);
   const input = createInputSource(view.canvas);
-  const sfx = createSfx(progress.muted);
+  const sfx = createSfx(progress.muted, ctx.isAudioMuted);
 
   // Daily mode plays today's generated level instead of the chapters.
   const day = options.daily;
@@ -324,6 +324,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
     run++;
     presses = lastMask = deathEnd = clearEnd = 0;
     paused = false;
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     taunt = null;
     armMetaTrap();
     driver.reset();
@@ -336,6 +337,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
   function setPaused(value: boolean): void {
     if (state.cleared || paused === value) return;
     paused = value;
+    if (!value && document.activeElement instanceof HTMLElement) document.activeElement.blur();
     driver.reset();
     emit();
   }
@@ -353,19 +355,24 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
   };
 
   const onKey = (e: KeyboardEvent) => {
-    // During a demo the keys belong to the recording; Escape hands the level back.
+    if (e.repeat) return;
+    // A focused menu button owns Enter/Space; do not also skip to the next level.
+    if (e.code === 'Enter' && e.target instanceof Element && e.target.closest('button, a')) return;
+    // During a demo the keys belong to the recording; Escape hands the level back off-portal.
     if (demo) {
-      if (e.code === 'Escape') load(index, false, resumeAttempt);
+      if (!options.portal && e.code === 'Escape') load(index, false, resumeAttempt);
       return;
     }
-    if (e.code === 'Escape' || e.code === 'KeyP') setPaused(!paused);
+    if ((e.code === 'Escape' && !options.portal) || e.code === 'KeyP') setPaused(!paused);
     else if (e.code === 'KeyR' && !paused) load(index);
     else if (e.code === 'Enter' && state.cleared) load(index + 1 < pool.length ? index + 1 : 0);
   };
   const onVisibility = () => {
     if (document.hidden) setPaused(true);
   };
+  const onBlur = () => setPaused(true);
   window.addEventListener('keydown', onKey);
+  window.addEventListener('blur', onBlur);
   document.addEventListener('visibilitychange', onVisibility);
 
   load(index);
@@ -406,6 +413,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
       clearTimeout(demoOutro);
       cancelAnimationFrame(raf);
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener('blur', onBlur);
       document.removeEventListener('visibilitychange', onVisibility);
       input.destroy();
       view.dispose();

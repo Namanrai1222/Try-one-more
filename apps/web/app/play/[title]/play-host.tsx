@@ -14,6 +14,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { challengePath } from '../../c/path';
+import { createCrazyBridge, loadCrazySdk } from '../../crazygames/sdk';
 
 function safeLocalStorage(): StorageLike | null {
   try {
@@ -56,7 +57,7 @@ const died = (n: number) => (n === 1 ? 'once' : `${n} times`);
  * Hosts the game on a full-screen surface and draws the HUD and menus as accessible DOM
  * around it. The game bundle — and Three.js with it — is fetched only here, via dynamic import.
  */
-export function PlayHost() {
+export function PlayHost({ portal = false }: { portal?: boolean }) {
   const surface = useRef<HTMLDivElement>(null);
   const game = useRef<GameController | null>(null);
   const lastDeath = useRef(0);
@@ -78,6 +79,7 @@ export function PlayHost() {
     if (!container) return;
 
     let cancelled = false;
+    let bridge = createCrazyBridge(null);
     // No analytics vendor yet: events queue locally; dev logs them.
     const telemetry = createTelemetryBus({
       storage: safeLocalStorage(),
@@ -102,8 +104,11 @@ export function PlayHost() {
       storage,
       emit: (name, props) => telemetry.emit(name, props),
     });
+    ctx.isAudioMuted = () => bridge.isAudioMuted();
 
     const onHud = (next: HudState) => {
+      if (cancelled) return;
+      bridge.setPlaying(next.status === 'playing' && !next.demo);
       setHud(next);
       // The demo handed the level back: say so, briefly.
       if (wasWatching.current && !next.demo) {
@@ -119,26 +124,32 @@ export function PlayHost() {
       }
     };
 
-    import('@jom/game-rage')
-      .then(({ mountGame }) =>
-        mountGame(container, {
+    Promise.all([import('@jom/game-rage'), portal ? loadCrazySdk() : Promise.resolve(null)])
+      .then(([{ mountGame }, sdk]) => {
+        if (cancelled) return null;
+        bridge = createCrazyBridge(sdk);
+        return mountGame(container, {
+          portal,
           levelIndex,
           challenge: challenge !== null,
           daily,
           onHud,
           ctx,
-        }),
-      )
+        });
+      })
       .then((mounted) => {
+        if (!mounted) return;
         if (cancelled) {
           mounted.destroy();
           return;
         }
         game.current = mounted;
+        bridge.loaded();
         setVs(challenge);
         setStatus('ready');
       })
       .catch(() => {
+        bridge.loaded();
         recordRealError(storage); // meta-traps stay quiet after a genuine failure
         if (!cancelled) setStatus('error');
       });
@@ -152,9 +163,10 @@ export function PlayHost() {
       clearTimeout(tauntTimer.current);
       game.current?.destroy();
       game.current = null;
+      bridge.destroy();
       telemetry.destroy();
     };
-  }, []);
+  }, [portal]);
 
   // Help for a stuck player, paced so it never spoils a level early: a hint after 3 deaths (up
   // to 3 hints, one at a time), and "Watch how" after 6 deaths or once every hint is read.
@@ -219,14 +231,14 @@ export function PlayHost() {
   };
 
   return (
-    <main className="fixed inset-0 overflow-hidden bg-carbon text-chalk">
+    <main className="game-surface fixed inset-0 overflow-hidden bg-carbon text-chalk">
       <div ref={surface} className="absolute inset-0 touch-none select-none" />
 
       {status === 'error' && <ErrorScreen real />}
 
       {hud && (
         <>
-          <header className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4">
+          <header className="game-hud pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4">
             <div className="font-mono text-sm leading-snug">
               <p>
                 {hud.daily
@@ -352,15 +364,17 @@ export function PlayHost() {
           )}
 
           {firstRun && !touch && (
-            <p className="pointer-events-none absolute inset-x-4 bottom-6 text-center font-mono text-sm text-chalk/80">
-              ← → to move · Space to jump · Esc to pause · R to restart
+            <p
+              className={`game-keyboard-hint pointer-events-none absolute inset-x-4 ${portal ? 'bottom-20' : 'bottom-6'} mx-auto w-fit max-w-[calc(100%-2rem)] bg-ink/85 px-3 py-2 text-center font-mono text-sm text-chalk`}
+            >
+              ← → to move · Space to jump · {portal ? 'P' : 'Esc'} to pause · R to restart
             </p>
           )}
 
-          {touch && !hud.demo && hud.status === 'playing' && (
+          {(touch || portal) && !hud.demo && hud.status === 'playing' && (
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 flex font-mono text-sm text-chalk/60"
+              className="game-controls pointer-events-none absolute inset-x-0 bottom-0 flex font-mono text-sm text-chalk/80"
             >
               <span className="flex h-16 w-1/4 items-center justify-center border-t border-r border-chalk/20">
                 ◀ {hud.bindings?.[0] ?? 'Left'}
@@ -395,7 +409,7 @@ export function PlayHost() {
                   ))}
                 </ol>
               )}
-              {hud.attempt > 1 && (
+              {!portal && hud.attempt > 1 && (
                 <ShareControls
                   label="Share last death"
                   share={shareNow}
@@ -403,26 +417,37 @@ export function PlayHost() {
                   onChannel={onChannel}
                 />
               )}
-              <LevelsLink />
-              <HomeLink />
+              {portal ? (
+                <SecondaryButton onClick={() => game.current?.goToLevel(0)}>
+                  Play from level 1
+                </SecondaryButton>
+              ) : (
+                <>
+                  <LevelsLink />
+                  <HomeLink />
+                </>
+              )}
             </Panel>
           )}
 
           {hud.status === 'cleared' && (
             <ClearedSlip
+              portal={portal}
               hud={hud}
               vs={vs}
               isLast={isLast}
               onNext={() => game.current?.goToLevel(isLast ? 0 : hud.levelIndex + 1)}
               onReplay={() => game.current?.restart()}
               share={
-                <ShareControls
-                  primary
-                  label="Share clip"
-                  share={shareNow}
-                  onShare={startShare}
-                  onChannel={onChannel}
-                />
+                !portal && (
+                  <ShareControls
+                    primary
+                    label="Share clip"
+                    share={shareNow}
+                    onShare={startShare}
+                    onChannel={onChannel}
+                  />
+                )
               }
             />
           )}
@@ -431,18 +456,21 @@ export function PlayHost() {
               is just input: it dismisses the lie (SECURITY.md §9) and the floor goes. */}
           {hud.fake === 'complete' && (
             <ClearedSlip
+              portal={portal}
               hud={hud}
               vs={vs}
               isLast={isLast}
               onAny={() => game.current?.nudge()}
               share={
-                <ShareControls
-                  primary
-                  label="Share clip"
-                  share={null}
-                  onShare={() => game.current?.nudge()}
-                  onChannel={() => {}}
-                />
+                !portal && (
+                  <ShareControls
+                    primary
+                    label="Share clip"
+                    share={null}
+                    onShare={() => game.current?.nudge()}
+                    onChannel={() => {}}
+                  />
+                )
               }
             />
           )}
@@ -456,12 +484,14 @@ export function PlayHost() {
       )}
       {hud?.fake === 'error' && <ErrorScreen onPointerDown={() => game.current?.nudge()} />}
 
-      <Link
-        href="/"
-        className="sr-only focus:not-sr-only focus:absolute focus:bottom-4 focus:left-4 focus:bg-chalk focus:px-3 focus:py-2 focus:text-carbon"
-      >
-        Back to home
-      </Link>
+      {!portal && (
+        <Link
+          href="/"
+          className="sr-only focus:not-sr-only focus:absolute focus:bottom-4 focus:left-4 focus:bg-chalk focus:px-3 focus:py-2 focus:text-carbon"
+        >
+          Back to home
+        </Link>
+      )}
     </main>
   );
 }
@@ -496,6 +526,7 @@ function ErrorScreen({ real, onPointerDown }: { real?: boolean; onPointerDown?: 
  * `onAny`, which turns every control into plain input instead of its real action.
  */
 function ClearedSlip({
+  portal = false,
   hud,
   vs,
   isLast,
@@ -504,6 +535,7 @@ function ClearedSlip({
   onReplay,
   onAny,
 }: {
+  portal?: boolean;
   hud: HudState;
   vs: { levelIndex: number; deaths: number } | null;
   isLast: boolean;
@@ -554,7 +586,7 @@ function ClearedSlip({
       {hud.daily ? (
         <p className="text-sm">A new trap tomorrow. Same time, same mistakes.</p>
       ) : (
-        isLast && <p className="text-sm">Chapter 4 coming soon.</p>
+        isLast && <p className="text-sm">All forty levels cleared. You made it.</p>
       )}
       {!hud.daily && (
         <PrimaryButton autoFocus onClick={next}>
@@ -563,7 +595,7 @@ function ClearedSlip({
       )}
       {share}
       <SecondaryButton onClick={replay}>Replay level</SecondaryButton>
-      <HomeLink onClick={onAny} />
+      {!portal && <HomeLink onClick={onAny} />}
     </Panel>
   );
 }
@@ -599,7 +631,7 @@ function Panel({
         role="dialog"
         aria-modal="true"
         aria-labelledby="panel-title"
-        className="flex w-full max-w-sm flex-col gap-3 border border-ink bg-paper p-6 text-ink"
+        className="flex max-h-full w-full max-w-sm flex-col gap-3 overflow-y-auto border border-ink bg-paper p-6 text-ink"
       >
         <h2 id="panel-title" className="font-display text-xl leading-none">
           {title}

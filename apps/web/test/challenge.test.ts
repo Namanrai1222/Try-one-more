@@ -24,7 +24,7 @@ describe('challenge links', () => {
     for (const bad of [
       '',
       'rage-0-3',
-      'rage-31-3', // past the last level
+      'rage-41-3', // past the last level
       'rage-7-023',
       'rage-7--1',
       'rage-7-3-1',

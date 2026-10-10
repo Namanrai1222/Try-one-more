@@ -21,6 +21,11 @@ export function createInputSource(surface: HTMLElement): InputSource {
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
+    if (
+      e.target instanceof Element &&
+      e.target.closest('[role="dialog"], input, textarea, select, [contenteditable="true"]')
+    )
+      return;
     if (keyCodeToInput(e.code) === 0) return;
     e.preventDefault(); // stop arrows/space scrolling the page
     heldKeys.add(e.code);
@@ -36,9 +41,9 @@ export function createInputSource(surface: HTMLElement): InputSource {
     if (document.hidden) releaseAll();
   };
 
-  // Mouse is deliberately ignored: desktop is keyboard-only (PRD.md §4.3).
+  // Pointer zones also accept a mouse so desktop players can use the visible controls.
   const onPointerDown = (e: PointerEvent) => {
-    if (e.pointerType === 'mouse') return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
     e.preventDefault();
     surface.setPointerCapture(e.pointerId);
     const { x, width } = localX(e);
@@ -63,6 +68,7 @@ export function createInputSource(surface: HTMLElement): InputSource {
   surface.addEventListener('pointermove', onPointerMove);
   surface.addEventListener('pointerup', onPointerEnd);
   surface.addEventListener('pointercancel', onPointerEnd);
+  surface.addEventListener('lostpointercapture', onPointerEnd);
 
   return {
     read() {
@@ -80,6 +86,7 @@ export function createInputSource(surface: HTMLElement): InputSource {
       surface.removeEventListener('pointermove', onPointerMove);
       surface.removeEventListener('pointerup', onPointerEnd);
       surface.removeEventListener('pointercancel', onPointerEnd);
+      surface.removeEventListener('lostpointercapture', onPointerEnd);
       releaseAll();
     },
   };

@@ -57,6 +57,8 @@ export interface HudState {
 
 export interface GameOptions {
   ctx: PlatformContext;
+  /** CrazyGames owns Escape while its fullscreen iframe is active. */
+  portal?: boolean;
   /** 0-based level to start on; clamped to the levels the player has unlocked. */
   levelIndex?: number;
   /** Opened from a challenge link: `levelIndex` may be played even if still locked. */
@@ -72,7 +74,7 @@ export interface GameController extends GameHandle {
   /**
    * Play this level's recorded run from the start, keys shown (a tutorial). Nothing it does
    * counts: no deaths, clear, unlock, best run or wallet. It hands the level back when it
-   * reaches the door, on Escape, or on `stopWatching`.
+   * reaches the door, on Escape outside a portal, or on `stopWatching`.
    */
   watchHow(): void;
   stopWatching(): void;

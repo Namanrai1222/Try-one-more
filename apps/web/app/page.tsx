@@ -2,71 +2,109 @@ import { title as push } from '@jom/game-push-party';
 import { title as rage } from '@jom/game-rage';
 import Link from 'next/link';
 import { DailyCard } from './daily-card';
+import { HomeScene } from './home-scene';
 import { InstallButton } from './pwa';
 import { WalletBadge } from './wallet-badge';
+import './home.css';
 
-/** Titles on the platform, in build order (PRD.md §4.9). The shell knows only this listing. */
 const TITLES = [rage, push];
 
-/**
- * Home, built for N titles (DESIGNING.md §3.1). The live global death counter needs the
- * server (Phase 2 backend) — until then no number is shown rather than a made-up one.
- */
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[68ch] flex-col px-4 py-6">
-      <header className="flex items-baseline justify-between gap-4 border-b border-ink pb-2">
-        <p className="font-display text-xl leading-none">Just One More</p>
-        <WalletBadge />
+    <main className="home-shell">
+      <header className="home-masthead">
+        <Link href="/" className="home-wordmark" aria-label="Just One More home">
+          <span className="home-wordmark-symbol" aria-hidden="true">
+            J/OM
+          </span>
+          <span>Just One More</span>
+        </Link>
+        <nav className="home-nav" aria-label="Main navigation">
+          <Link href="/play/rage/levels">All levels</Link>
+          <Link href="/party">Play with friends</Link>
+        </nav>
+        <div className="home-wallet">
+          <WalletBadge />
+        </div>
       </header>
 
-      <section className="flex flex-1 flex-col justify-center gap-6 py-12">
-        <h1 className="font-display text-xl leading-tight">A game that lies to you.</h1>
-        <p className="text-md">
-          Four chapters, forty levels. Each one looks fair. None of them are. Arrow keys and space
-          on a keyboard, or two thumbs on your phone.
-        </p>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <Link
-            href="/play/rage"
-            className="inline-block min-h-11 rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
-          >
-            Play
-          </Link>
-          <Link
-            href="/play/rage/levels"
-            className="inline-block min-h-11 border border-ink px-6 py-3 font-display text-md text-ink"
-          >
-            All levels
-          </Link>
-          <Link
-            href="/party"
-            className="inline-block min-h-11 border border-ink px-6 py-3 font-display text-md text-ink"
-          >
-            Play with friends
-          </Link>
-          <InstallButton />
+      <section className="home-feature" aria-labelledby="home-title">
+        <div className="home-feature-copy">
+          <div className="home-issue-line">
+            <span>Candidate notice / 001</span>
+            <span>Four chapters · Forty levels</span>
+          </div>
+          <div className="home-feature-main">
+            <p className="home-kicker">Your next attempt starts here</p>
+            <h1 id="home-title">
+              A game that
+              <br />
+              <span>lies to you.</span>
+            </h1>
+            <p className="home-description">
+              Every level looks fair. That is the first trap. Learn the rules, distrust the floor,
+              and try to reach the door before the game changes its mind.
+            </p>
+            <div className="home-actions">
+              <Link href="/play/rage" className="home-primary-link">
+                Play now <span aria-hidden="true">↗</span>
+              </Link>
+              <Link href="/play/rage/levels" className="home-text-link">
+                View all levels <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+          <div className="home-feature-footer">
+            <span>01 / Just One More</span>
+            <span>Arrow keys + Space · or touch</span>
+          </div>
+        </div>
+
+        <HomeScene />
+      </section>
+
+      <section className="home-shortcuts" aria-label="Ways to play">
+        <div className="home-shortcut home-daily">
+          <span className="home-shortcut-number">02 / Daily examination</span>
           <DailyCard />
+        </div>
+        <div className="home-shortcut home-party">
+          <span className="home-shortcut-number">03 / Group work</span>
+          <h2>Misery loves company.</h2>
+          <p>Bring friends into the same room. The traps become everyone’s problem.</p>
+          <Link href="/party">
+            Play with friends <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </section>
 
-      <section className="border-t border-dashed border-paper-shadow py-4">
-        <h2 className="pb-2 text-sm font-semibold">Games</h2>
+      <section className="home-index" aria-labelledby="home-index-title">
+        <div className="home-index-head">
+          <div>
+            <span className="home-index-label">The register / 04</span>
+            <h2 id="home-index-title">Choose your trouble.</h2>
+          </div>
+          <InstallButton />
+        </div>
         <ol>
-          {TITLES.map((t, i) => (
-            <li key={t.id}>
-              <Link
-                href={t.href ?? `/play/${t.id}`}
-                className="flex min-h-11 items-baseline gap-4 py-2"
-              >
-                <span className="font-mono text-sm">{String(i + 1).padStart(2, '0')}</span>
-                <span className="flex-1 font-display text-md">{t.displayName}</span>
-                <span className="text-sm">{t.players}</span>
+          {TITLES.map((title, index) => (
+            <li key={title.id}>
+              <Link href={title.href ?? '/play/' + title.id}>
+                <span className="home-index-number">{String(index + 1).padStart(2, '0')}</span>
+                <span className="home-index-name">{title.displayName}</span>
+                <span className="home-index-players">{title.players}</span>
+                <span className="home-index-arrow" aria-hidden="true">
+                  ↗
+                </span>
               </Link>
             </li>
           ))}
         </ol>
       </section>
+      <footer className="home-footer">
+        <span>Just One More</span>
+        <span>See you after the next attempt.</span>
+      </footer>
     </main>
   );
 }

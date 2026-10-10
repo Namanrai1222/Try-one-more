@@ -8,11 +8,21 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@jom/engine": "workspace:*",
+    "@jom/platform-sdk": "workspace:*",
+    "@jom/ui": "workspace:*",
+    "three": "0.186.0"
   },
   "devDependencies": {
     "@jom/config": "workspace:*",
+    "@types/node": "24.13.6",
+    "@types/three": "0.186.0",
     "eslint": "9.39.5",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "5.0.1"
   }
 }

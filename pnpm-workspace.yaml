@@ -2,6 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+allowBuilds:
+  msgpackr-extract: false
+  unrs-resolver: false
+
 # Dependency install scripts are blocked by default (supply-chain hygiene, SECURITY.md §7).
 # unrs-resolver (via eslint-config-next) ships its native binary as an optional dependency;
 # its postinstall is only a fallback downloader, so it stays disabled. Lint verified without it.

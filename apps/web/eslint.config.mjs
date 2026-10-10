@@ -14,5 +14,5 @@ export default defineConfig([
       'jom/no-private-env-in-client': 'error',
     },
   },
-  globalIgnores(['.next/**', 'out/**', 'next-env.d.ts', 'public/**']),
+  globalIgnores(['.next/**', 'out/**', 'dist/**', 'next-env.d.ts', 'public/**']),
 ]);

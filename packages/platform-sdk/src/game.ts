@@ -46,4 +46,6 @@ export interface PlatformContext {
   lastRealErrorAt: number | null;
   /** The coins/XP balance every title shares. */
   wallet: WalletApi;
+  /** Host audio preference takes priority over the player's saved sound setting. */
+  isAudioMuted?(): boolean;
 }

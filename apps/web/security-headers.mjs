@@ -48,13 +48,32 @@ export function buildCsp(directives = CSP_DIRECTIVES) {
 export const ENFORCED_CSP = "frame-ancestors 'none'; base-uri 'self'; object-src 'none'";
 
 /** @returns {{ key: string; value: string }[]} */
-export function securityHeaders() {
+export function securityHeaders({ embedded = false } = {}) {
+  // Only the submission entry can be embedded; the rest of the site stays protected.
+  const ancestors = ["'self'", 'https://crazygames.com', 'https://*.crazygames.com'];
   return [
-    { key: 'Content-Security-Policy', value: ENFORCED_CSP },
-    { key: 'Content-Security-Policy-Report-Only', value: buildCsp() },
+    {
+      key: 'Content-Security-Policy',
+      value: embedded
+        ? `frame-ancestors ${ancestors.join(' ')}; base-uri 'self'; object-src 'none'`
+        : ENFORCED_CSP,
+    },
+    {
+      key: 'Content-Security-Policy-Report-Only',
+      value: buildCsp(
+        embedded
+          ? {
+              ...CSP_DIRECTIVES,
+              'frame-ancestors': ancestors,
+              'script-src': ["'self'", 'https://sdk.crazygames.com'],
+              'connect-src': [...CSP_DIRECTIVES['connect-src'], 'https://*.crazygames.com'],
+            }
+          : CSP_DIRECTIVES,
+      ),
+    },
     { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
     { key: 'X-Content-Type-Options', value: 'nosniff' },
-    { key: 'X-Frame-Options', value: 'DENY' },
+    ...(!embedded ? [{ key: 'X-Frame-Options', value: 'DENY' }] : []),
     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
     { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
   ];

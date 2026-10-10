@@ -598,7 +598,7 @@ function Slip({ title, children }: { title: string; children: ReactNode }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="slip-title"
-        className="flex w-full max-w-sm flex-col gap-3 border border-ink bg-paper p-6 text-ink"
+        className="flex max-h-full w-full max-w-sm flex-col gap-3 overflow-y-auto border border-ink bg-paper p-6 text-ink"
       >
         <h2 id="slip-title" className="font-display text-xl leading-none">
           {title}

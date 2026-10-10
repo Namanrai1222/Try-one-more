@@ -16,7 +16,10 @@ const nextConfig: NextConfig = {
     '@jom/ui',
   ],
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders() }];
+    return [
+      { source: '/((?!crazygames(?:/|$)).*)', headers: securityHeaders() },
+      { source: '/crazygames/:path*', headers: securityHeaders({ embedded: true }) },
+    ];
   },
 };
 

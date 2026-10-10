@@ -52,7 +52,7 @@ const U = 1 / 32;
 /** Depth of the level slabs along z. */
 const DEPTH = 4;
 /** Minimum world units kept in view, vertically and horizontally (portrait phones). */
-const VIEW_H = 11;
+const VIEW_H = 9;
 const VIEW_W = 13;
 
 const col = (token: ColorToken, k = 1) => new Color(colors[token]).multiplyScalar(k);
@@ -501,7 +501,9 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     const tan = Math.tan(MathUtils.degToRad(camera.fov / 2));
-    distance = Math.max(viewH / (2 * tan), VIEW_W / (2 * tan * camera.aspect));
+    // Portrait phones show a shorter stretch of the course so the player and traps stay legible.
+    const viewWidth = w < h ? 6 : VIEW_W;
+    distance = Math.max(viewH / (2 * tan), viewWidth / (2 * tan * camera.aspect));
     halfH = distance * tan;
     halfW = halfH * camera.aspect;
     // Fog only thickens behind the play plane, whatever the screen shape.

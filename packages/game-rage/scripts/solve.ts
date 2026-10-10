@@ -96,7 +96,7 @@ if (!isMainThread) {
   const args = process.argv.slice(2);
   const jobsAt = args.indexOf('--jobs');
   const threads = jobsAt >= 0 ? Math.max(1, Number(args[jobsAt + 1])) : 4;
-  const prefix = args.find((a, i) => !a.startsWith('--') && i !== jobsAt + 1) ?? '';
+  const prefix = args.find((a, i) => !a.startsWith('--') && (jobsAt < 0 || i !== jobsAt + 1)) ?? '';
   const solutions: Record<string, Run> = existsSync(OUT)
     ? JSON.parse(readFileSync(OUT, 'utf8'))
     : {};

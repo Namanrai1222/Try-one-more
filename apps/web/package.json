@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:crazygames": "vite build --config crazygames/vite.config.mjs",
+    "package:crazygames": "pnpm build:crazygames && python3 ../../tooling/scripts/package-crazygames.py",
+    "preview:crazygames": "vite preview --config crazygames/vite.config.mjs --host 127.0.0.1 --port 4173",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -37,6 +40,7 @@
     "eslint-config-next": "16.3.6",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vitest": "5.0.1"
+    "vitest": "5.0.1",
+    "vite": "8.3.0"
   }
 }
