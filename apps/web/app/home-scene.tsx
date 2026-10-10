@@ -8,7 +8,7 @@ import { useSave } from './use-save';
 
 const IDS = LEVELS.map(({ file }) => file.id);
 
-export function HomeScene() {
+export function HomeScene({ onPlay }: { onPlay?: () => void } = {}) {
   const scene = useRef<HTMLAnchorElement>(null);
   const progress = useSave() ?? readProgress(null);
   const level = Math.min(unlockedIndex(progress, IDS), LEVELS.length - 1);
@@ -34,6 +34,13 @@ export function HomeScene() {
       href={`/play/rage?level=${level + 1}`}
       className="home-scene"
       aria-label={`Continue Just One More at level ${level + 1}: ${file.name}`}
+      onClick={
+        onPlay &&
+        ((event) => {
+          event.preventDefault();
+          onPlay();
+        })
+      }
       onPointerMove={tilt}
       onPointerLeave={resetTilt}
       onBlur={resetTilt}

@@ -53,13 +53,16 @@ html:has(.home-shell) {
   font-weight: 600;
 }
 .home-nav a,
+.home-nav button,
 .home-text-link,
-.home-shortcut a {
+.home-shortcut a,
+.home-shortcut button {
   text-decoration: underline;
   text-underline-offset: 5px;
   text-decoration-thickness: 1px;
 }
 .home-nav a:hover,
+.home-nav button:hover,
 .home-text-link:hover {
   text-decoration-thickness: 2px;
 }
@@ -470,7 +473,8 @@ html:has(.home-shell) {
   font-size: 15px;
   line-height: 1.45;
 }
-.home-shortcut a {
+.home-shortcut a,
+.home-shortcut button {
   margin-top: 16px;
   min-height: 44px;
   display: inline-flex;

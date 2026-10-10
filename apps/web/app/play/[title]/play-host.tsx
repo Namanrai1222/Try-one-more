@@ -57,7 +57,15 @@ const died = (n: number) => (n === 1 ? 'once' : `${n} times`);
  * Hosts the game on a full-screen surface and draws the HUD and menus as accessible DOM
  * around it. The game bundle — and Three.js with it — is fetched only here, via dynamic import.
  */
-export function PlayHost({ portal = false }: { portal?: boolean }) {
+export function PlayHost({
+  portal = false,
+  startDaily = false,
+  onBack,
+}: {
+  portal?: boolean;
+  startDaily?: boolean;
+  onBack?: () => void;
+}) {
   const surface = useRef<HTMLDivElement>(null);
   const game = useRef<GameController | null>(null);
   const lastDeath = useRef(0);
@@ -97,7 +105,7 @@ export function PlayHost({ portal = false }: { portal?: boolean }) {
     const challenge =
       levelIndex !== undefined && vsDeaths !== null ? { levelIndex, deaths: vsDeaths } : null;
     // ?daily=1: today's Daily Trap (the same level for everyone on this UTC day).
-    const daily = query.get('daily') === '1' ? utcDay() : undefined;
+    const daily = startDaily || query.get('daily') === '1' ? utcDay() : undefined;
     const storage = safeLocalStorage();
     const ctx = createDeviceContext({
       titleId: 'rage',
@@ -166,7 +174,7 @@ export function PlayHost({ portal = false }: { portal?: boolean }) {
       bridge.destroy();
       telemetry.destroy();
     };
-  }, [portal]);
+  }, [portal, startDaily]);
 
   // Help for a stuck player, paced so it never spoils a level early: a hint after 3 deaths (up
   // to 3 hints, one at a time), and "Watch how" after 6 deaths or once every hint is read.
@@ -234,7 +242,7 @@ export function PlayHost({ portal = false }: { portal?: boolean }) {
     <main className="game-surface fixed inset-0 overflow-hidden bg-carbon text-chalk">
       <div ref={surface} className="absolute inset-0 touch-none select-none" />
 
-      {status === 'error' && <ErrorScreen real />}
+      {status === 'error' && <ErrorScreen real onBack={onBack} />}
 
       {hud && (
         <>
@@ -418,9 +426,12 @@ export function PlayHost({ portal = false }: { portal?: boolean }) {
                 />
               )}
               {portal ? (
-                <SecondaryButton onClick={() => game.current?.goToLevel(0)}>
-                  Play from level 1
-                </SecondaryButton>
+                <>
+                  <SecondaryButton onClick={() => game.current?.goToLevel(0)}>
+                    Play from level 1
+                  </SecondaryButton>
+                  {onBack && <SecondaryButton onClick={onBack}>Back to dashboard</SecondaryButton>}
+                </>
               ) : (
                 <>
                   <LevelsLink />
@@ -508,15 +519,24 @@ function LoadingScreen({ onPointerDown }: { onPointerDown: () => void }) {
 }
 
 /** The real failure screen. Level 24 shows this same component; only `real` is announced. */
-function ErrorScreen({ real, onPointerDown }: { real?: boolean; onPointerDown?: () => void }) {
+function ErrorScreen({
+  real,
+  onPointerDown,
+  onBack,
+}: {
+  real?: boolean;
+  onPointerDown?: () => void;
+  onBack?: () => void;
+}) {
   return (
     <div
       onPointerDown={onPointerDown}
-      className="absolute inset-0 z-10 flex items-center justify-center bg-carbon px-4"
+      className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-carbon px-4"
     >
       <p role={real ? 'alert' : undefined} className="text-center text-md text-chalk">
         The game didn’t load. Reload the page to try again.
       </p>
+      {onBack && <SecondaryButton onClick={onBack}>Back to dashboard</SecondaryButton>}
     </div>
   );
 }

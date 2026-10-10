@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSave } from './use-save';
 
 /** Daily trap and streak, beside Play (DESIGNING.md §3.1). The date is the player's UTC day. */
-export function DailyCard() {
+export function DailyCard({ onPlay }: { onPlay?: () => void } = {}) {
   const save = useSave();
   const today = save ? utcDay() : null;
   const streak = save && today ? liveStreak(save.daily, today) : 0;
@@ -20,6 +20,13 @@ export function DailyCard() {
       </p>
       <Link
         href="/play/rage?daily=1"
+        onClick={
+          onPlay &&
+          ((event) => {
+            event.preventDefault();
+            onPlay();
+          })
+        }
         className="min-h-11 py-2 text-sm underline underline-offset-4"
       >
         Play today’s trap
