@@ -1,13 +1,11 @@
-"""Zip the standalone CrazyGames build with index.html at the archive root."""
+"""Validate the standalone files to upload through CrazyGames' file picker."""
 
 from pathlib import Path
-from zipfile import ZIP_DEFLATED, ZipFile
 import re
 
 
 root = Path(__file__).resolve().parents[2]
 source = root / "apps/web/dist/crazygames"
-target = root / "apps/web/dist/just-one-more-crazygames.zip"
 index = source / "index.html"
 if not index.is_file():
     raise SystemExit("Build first: pnpm --filter @jom/web build:crazygames")
@@ -26,14 +24,4 @@ for url in re.findall(r'(?:src|href)="([^"]+)"', html):
     if url.startswith("/") or not (source / url).is_file():
         raise SystemExit(f"Missing or absolute asset URL: {url}")
 
-with ZipFile(target, "w", ZIP_DEFLATED, compresslevel=9) as archive:
-    for path in files:
-        archive.write(path, path.relative_to(source))
-
-with ZipFile(target) as archive:
-    bad = archive.testzip()
-    if bad:
-        raise SystemExit(f"Corrupt archive member: {bad}")
-    assert "index.html" in archive.namelist()
-
-print(f"{target}: {len(files)} files, {bytes_total:,} uncompressed bytes")
+print(f"Upload the contents of {source}: {len(files)} files, {bytes_total:,} bytes")

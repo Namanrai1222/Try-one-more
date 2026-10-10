@@ -1,6 +1,6 @@
 # Just One More — CrazyGames pre-submission review
 
-Reviewed 4 October 2026. Target: **Basic Launch, single-player edition**. Upload `apps/web/dist/just-one-more-crazygames.zip`, which has `index.html` at its root. Upload the `-v2` files in `apps/web/crazygames/submission/` separately as portal covers and previews.
+Reviewed 4 October 2026. Target: **Basic Launch, single-player edition**. In the portal's **Upload files** area, upload the contents of `apps/web/dist/crazygames/`: select `index.html` and the `assets` folder together. Archive files are rejected by the portal. Upload the `-v2` files in `apps/web/crazygames/submission/` separately as portal covers and previews.
 
 ## Player review
 
@@ -19,7 +19,7 @@ The rough edge is readability: in a narrow portrait view the course still occupi
 | Challenge/daily/party | Web tests pass; 60 generated daily challenges clear; 20-room realtime load test passed. The CrazyGames build deliberately offers the standalone single-player title, so no server or friend flow is exposed there. |
 | SDK | Basic Launch lifecycle reports loading and gameplay transitions when the official SDK is available; loading continues if its script is blocked. Host mute preference is read at playback time. Mock lifecycle tests pass. |
 | Ads and links | No ad or reward CTA, other-game promotions, external game link, or in-game fullscreen control in the portal UI. |
-| Packaging | Relative asset paths; 12 files; under 1 MB uncompressed. ZIP integrity checked. This is far under CrazyGames' 20 MB mobile-homepage initial budget, 250 MB total limit and 1,500-file limit. |
+| Packaging | Relative asset paths; 12 files; under 1 MB uncompressed. The build validator checks the entry file and asset paths. This is far under CrazyGames' 20 MB mobile-homepage initial budget, 250 MB total limit and 1,500-file limit. |
 | Build quality | Full `pnpm verify` passes, including all 10 packages' typecheck, lint and tests, the Next production build and bundle check. The standalone Vite build also passes. |
 
 The unshipped Phase 6 `@jom/game-3d` climb prototype had a failing no-death route test. Moving its spike away from the landing, handling its vertical elevator correctly and checking the actual 32 m summit fixed it; the full repository check is now green.
@@ -36,8 +36,8 @@ Suggested portal description: “Run, jump and restart through 40 trap-filled pl
 
 Suggested controls: “Left/Right or A/D: move. Space, Up or W: jump. P: pause. R: restart. On touchscreens, use the on-screen Left, Right and Jump zones.”
 
-For **Full Launch**, additional work is required: CrazyGames account-linked progress, applicable user identity, the full SDK integration and ad flow if monetized, and CrazyGames friend/room integration if the multiplayer edition is offered. The current ZIP should be submitted as a single-player Basic Launch game, without claiming those Full Launch features.
+For **Full Launch**, additional work is required: CrazyGames account-linked progress, applicable user identity, the full SDK integration and ad flow if monetized, and CrazyGames friend/room integration if the multiplayer edition is offered. The current build should be submitted as a single-player Basic Launch game, without claiming those Full Launch features.
 
-Build the upload ZIP again with `pnpm --filter @jom/web package:crazygames`. Preview locally with `pnpm --filter @jom/web preview:crazygames` and open `http://127.0.0.1:4173/`. The source `apps/web/crazygames/index.html` is a Vite entrypoint; opening that source file with `file://` does not run the compiled game.
+Rebuild and validate the upload folder with `pnpm --filter @jom/web package:crazygames`. Preview locally with `pnpm --filter @jom/web preview:crazygames` and open `http://127.0.0.1:4173/`. The source `apps/web/crazygames/index.html` is a Vite entrypoint; opening that source file with `file://` does not run the compiled game.
 
 References: [technical](https://docs.crazygames.com/requirements/technical/), [gameplay](https://docs.crazygames.com/requirements/gameplay/), [ads](https://docs.crazygames.com/requirements/ads/), [launch stages](https://docs.crazygames.com/requirements/intro/), [covers and previews](https://docs.crazygames.com/requirements/game-covers/), [multiplayer](https://docs.crazygames.com/requirements/multiplayer/).
