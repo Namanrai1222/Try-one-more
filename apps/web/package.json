@@ -16,13 +16,13 @@
     "fonts": "node scripts/copy-fonts.mjs"
   },
   "dependencies": {
-    "@colyseus/sdk": "0.18.4",
+    "@colyseus/sdk": "0.18.5",
     "@jom/clip": "workspace:*",
     "@jom/game-push-party": "workspace:*",
     "@jom/game-rage": "workspace:*",
     "@jom/platform-sdk": "workspace:*",
     "@jom/ui": "workspace:*",
-    "next": "16.3.6",
+    "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "zod": "4.6.5"
@@ -37,10 +37,10 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.4.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vitest": "5.0.1",
-    "vite": "8.3.0"
+    "vitest": "5.0.3",
+    "vite": "8.3.4"
   }
 }
