@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Masthead } from '../../masthead';
 import { challengeLine, parseChallenge } from './challenge';
 
 type Props = { params: Promise<{ code: string }> };
@@ -24,28 +25,24 @@ export default async function ChallengePage({ params }: Props) {
   const { level, deaths, name } = challenge;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[68ch] flex-col px-4 py-6">
-      <header className="border-b border-ink pb-2">
-        <Link href="/" className="font-display text-xl leading-none">
-          Just One More
-        </Link>
-      </header>
-
-      <section className="flex flex-1 flex-col justify-center gap-6 py-12">
-        <p className="font-mono text-sm">
-          Level {level} · {name}
-        </p>
-        <h1 className="font-display text-xl leading-tight">{challengeLine(challenge)}</h1>
-        <p className="font-mono text-2xl leading-none">{deaths}</p>
-        <p className="text-md">Your turn. It looks fair. It isn’t.</p>
-        <div>
-          <Link
-            href={`/play/rage?level=${level}&vs=${deaths}`}
-            className="inline-block min-h-11 rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
-          >
-            Play level {level}
-          </Link>
+    <main className="desk-shell">
+      <Masthead />
+      <section className="slip challenge-slip" aria-labelledby="challenge-title">
+        <div className="slip-head">
+          <span>Challenge / Level {level}</span>
+          <span>{name}</span>
         </div>
+        <h1 id="challenge-title" className="mt-4 font-display text-xl leading-tight">
+          {challengeLine(challenge)}
+        </h1>
+        {/* The death number is the hero (DESIGNING.md §2.2): red pen, 61px mono. */}
+        <p className="death-figure mt-4" aria-hidden="true">
+          {deaths}
+        </p>
+        <p className="mt-2 text-md">Your turn. It looks fair. It isn’t.</p>
+        <Link href={`/play/rage?level=${level}&vs=${deaths}`} className="btn btn-ink mt-6">
+          Play level {level}
+        </Link>
       </section>
     </main>
   );

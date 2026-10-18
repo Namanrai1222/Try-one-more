@@ -1,0 +1,596 @@
+/*
+ * The invigilator's desk (DESIGN.md): every shell page is the dark desk; anything official —
+ * a level register, a room register, a daily form, a challenge — is a paper slip laid on it.
+ * Colours are tokens only. Paper slips use the paper/ink pairs; the desk uses the desk-* pairs.
+ */
+
+/* ---------------------------------------------------------------- ground */
+html:has(.desk-shell),
+body:has(.desk-shell) {
+  background: var(--desk);
+}
+
+.desk-shell {
+  width: min(100%, 1440px);
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding-inline: max(16px, min(4vw, 64px));
+  color: var(--desk-ink);
+}
+
+/* Red pen fails non-text contrast on the desk; its dark-ground twin carries focus here. */
+.desk-shell :focus-visible {
+  outline-color: var(--desk-fail);
+}
+
+.mono-label {
+  font: 500 12px/1.45 var(--family-mono);
+  color: var(--desk-muted);
+}
+
+.desk-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.desk-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------------------------------------------------------------- masthead */
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 72px;
+  border-bottom: 1px solid var(--desk-line);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  font: 700 26px/1 var(--family-display);
+  white-space: nowrap;
+}
+
+.wordmark-chip {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: var(--go);
+  color: var(--desk-deep);
+  font: 500 12px/1 var(--family-mono);
+  letter-spacing: -0.06em;
+}
+
+.masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: max(12px, min(3vw, 40px));
+  font-size: 15px;
+}
+
+.masthead-nav a,
+.masthead-nav button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  text-underline-offset: 6px;
+}
+
+.masthead-nav a:hover,
+.masthead-nav button:hover,
+.masthead-nav a[aria-current='page'] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.masthead-nav a[aria-current='page'] {
+  color: var(--go);
+}
+
+.masthead-wallet {
+  font: 500 13px/1 var(--family-mono);
+  color: var(--desk-muted);
+}
+
+/* ---------------------------------------------------------------- buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 22px;
+  border: 2px solid currentColor;
+  font: 700 22px/1 var(--family-display);
+  white-space: nowrap;
+  transition:
+    background 150ms ease-out,
+    color 150ms ease-out,
+    translate 150ms ease-out;
+}
+
+.btn:active {
+  translate: 1px 1px;
+}
+
+/* The two primaries — the only rounded corners in the shell (DESIGNING.md §2.3). */
+.btn-go {
+  border-color: var(--go);
+  border-radius: var(--radius-sm);
+  background: var(--go);
+  color: var(--desk-deep);
+}
+
+.btn-go:hover {
+  background: transparent;
+  color: var(--go);
+}
+
+.btn-ink {
+  border-color: var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-ink:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn-line {
+  background: transparent;
+}
+
+.btn-lg {
+  min-height: 60px;
+  padding: 12px 28px;
+  font-size: 27px;
+}
+
+/* ---------------------------------------------------------------- slips */
+/* A printed slip on the desk: paper, square corners, and a hard misregistration offset
+   instead of a soft shadow. A dashed perforation runs under its top edge. */
+.slip {
+  position: relative;
+  padding: max(20px, min(3vw, 32px));
+  padding-top: max(28px, min(3.6vw, 40px));
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 6px 6px 0 var(--desk-deep);
+}
+
+.slip::before {
+  content: '';
+  position: absolute;
+  inset: 12px 12px auto;
+  border-top: 1px dashed var(--paper-shadow);
+}
+
+.slip-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 500 12px/1.4 var(--family-mono);
+}
+
+.slip h2 {
+  margin-top: 14px;
+  font: 700 max(32px, min(3vw, 46px)) / 0.95 var(--family-display);
+}
+
+.slip p {
+  max-width: 52ch;
+}
+
+.slip-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* A rubber stamp: sentence case, ink, a little crooked (DESIGNING.md §2.2: no all-caps). */
+.stamp {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid currentColor;
+  font: 700 16px/1.1 var(--family-display);
+  rotate: -4deg;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- home: hero */
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: max(24px, min(4vw, 64px));
+  align-items: center;
+  padding-block: max(32px, min(5vw, 72px));
+  border-bottom: 1px solid var(--desk-line);
+}
+
+.home-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+}
+
+.home-returning {
+  font: 500 14px/1.45 var(--family-mono);
+  color: var(--desk-fail);
+}
+
+.home-copy h1 {
+  font: 700 max(64px, min(9vw, 150px)) / 0.82 var(--family-display);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.home-copy h1 span {
+  color: var(--go);
+  white-space: nowrap;
+}
+
+.home-lede {
+  max-width: 46ch;
+  font-size: max(16px, min(1.3vw, 19px));
+  line-height: 1.55;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+/* The figure: the Blender diorama of a level as an exam paper on the desk. */
+.home-figure {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--desk-line);
+  background: var(--desk-deep);
+  perspective: 1200px;
+}
+
+.home-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: rotateX(var(--fig-rx, 0deg)) rotateY(var(--fig-ry, 0deg)) scale(1.03);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-figure-cap,
+.home-figure-foot {
+  position: absolute;
+  inset-inline: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  font: 500 12px/1.4 var(--family-mono);
+  color: var(--desk-ink);
+}
+
+.home-figure-cap {
+  top: 0;
+  background: linear-gradient(var(--desk-deep), transparent);
+}
+
+.home-figure-foot {
+  bottom: 0;
+  align-items: flex-end;
+  background: linear-gradient(transparent, var(--desk-deep));
+}
+
+.home-figure-note {
+  position: absolute;
+  top: 15%;
+  left: 7%;
+  font: 700 max(26px, min(3vw, 44px)) / 0.92 var(--family-display);
+  color: var(--desk-ink);
+  rotate: -5deg;
+}
+
+.home-figure-go {
+  padding: 6px 10px;
+  border: 1px solid var(--go);
+  color: var(--go);
+}
+
+.home-figure:hover .home-figure-go {
+  background: var(--go);
+  color: var(--desk-deep);
+}
+
+.figure-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .figure-hover {
+    display: none;
+  }
+
+  .figure-touch {
+    display: inline;
+  }
+}
+
+/* ---------------------------------------------------------------- home: slips and register */
+.home-slips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: max(24px, min(4vw, 56px));
+  padding-block: max(40px, min(5vw, 72px));
+}
+
+.home-slips > :first-child {
+  rotate: -0.6deg;
+}
+
+.home-slips > :last-child {
+  rotate: 0.5deg;
+}
+
+.home-slips .slip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.streak-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.streak-days {
+  display: flex;
+  gap: 6px;
+}
+
+.streak-days span {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--ink);
+}
+
+.streak-days span[data-done] {
+  background: var(--ink);
+}
+
+.home-register {
+  padding-block: 8px 48px;
+}
+
+.home-register h2 {
+  padding-bottom: 20px;
+  font: 700 max(40px, min(5vw, 76px)) / 0.9 var(--family-display);
+}
+
+.register-row a {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  border-top: 1px solid var(--desk-line);
+  transition:
+    color 150ms ease-out,
+    padding 150ms ease-out;
+}
+
+.register-row:last-child a {
+  border-bottom: 1px solid var(--desk-line);
+}
+
+.register-row a:hover {
+  padding-left: 8px;
+  color: var(--go);
+}
+
+.register-name {
+  font: 700 max(28px, min(3vw, 40px)) / 1 var(--family-display);
+}
+
+.desk-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 20px 28px;
+  border-top: 1px solid var(--desk-line);
+}
+
+/* ---------------------------------------------------------------- inner pages */
+.page-head {
+  display: grid;
+  gap: 16px;
+  padding-block: max(32px, min(5vw, 64px)) 32px;
+}
+
+.page-head h1 {
+  font: 700 max(56px, min(8vw, 112px)) / 0.85 var(--family-display);
+  letter-spacing: -0.03em;
+}
+
+.page-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+
+.record-summary {
+  font: 500 14px/1.5 var(--family-mono);
+}
+
+.record-summary strong {
+  color: var(--desk-fail);
+  font-weight: 500;
+}
+
+.chapters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: max(24px, min(3vw, 48px));
+  padding-bottom: 64px;
+}
+
+.chapter-slip h2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  font-size: var(--t-lg);
+}
+
+.chapter-slip h2 small {
+  font: 500 12px/1 var(--family-mono);
+}
+
+.level-row > a,
+.level-row > div {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto 92px;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--paper-shadow);
+}
+
+.level-row > a {
+  transition: padding 150ms ease-out;
+}
+
+.level-row > a:hover {
+  padding-left: 6px;
+}
+
+.level-row[data-next] > a {
+  box-shadow: inset 4px 0 0 var(--marigold);
+  padding-left: 10px;
+}
+
+.level-row .stamp {
+  justify-self: end;
+  font-size: 14px;
+}
+
+.level-row[data-locked] .level-name {
+  text-decoration: line-through;
+}
+
+.room-slip {
+  max-width: 760px;
+  margin: 32px auto 64px;
+}
+
+.challenge-slip {
+  max-width: 640px;
+  margin: max(32px, min(6vw, 80px)) auto;
+  rotate: -0.6deg;
+}
+
+.challenge-slip .death-figure {
+  font: 500 var(--t-2xl) / 1 var(--family-mono);
+  color: var(--red-pen);
+}
+
+/* ---------------------------------------------------------------- responsive */
+@media (max-width: 1000px) {
+  .chapters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .home-hero,
+  .home-slips {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-slips > :first-child,
+  .home-slips > :last-child {
+    rotate: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .masthead {
+    flex-wrap: wrap;
+    padding-block: 12px 4px;
+  }
+
+  .masthead-nav {
+    order: 3;
+    width: 100%;
+    gap: 24px;
+  }
+
+  .wordmark {
+    font-size: 23px;
+  }
+
+  .home-copy {
+    gap: 20px;
+  }
+
+  .register-row a {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+  }
+
+  .streak-days span {
+    width: 24px;
+    height: 24px;
+  }
+
+  .register-row a > :last-child {
+    display: none;
+  }
+
+  .level-row > a,
+  .level-row > div {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+  }
+
+  .level-row .level-deaths {
+    display: none;
+  }
+
+  .desk-footer {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-figure img {
+    transform: none;
+  }
+}

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { PlayHost } from '../app/play/[title]/play-host';
 import { CrazyHome } from './home';
 import '../app/globals.css';
+import '../app/desk.css';
 
 function PortalApp() {
   const [screen, setScreen] = useState<'home' | 'game' | 'daily'>('home');

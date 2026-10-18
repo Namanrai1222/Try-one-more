@@ -41,7 +41,7 @@ export default async function Image({ params }: { params: Promise<{ code: string
       }}
     >
       <div style={{ display: 'flex', fontSize: 34 }}>
-        {`Just One More · Level ${level} · ${name}`}
+        {`Just One More / Level ${level} / ${name}`}
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 40 }}>
         <div style={{ display: 'flex', fontSize: 280, lineHeight: 0.9 }}>{String(deaths)}</div>

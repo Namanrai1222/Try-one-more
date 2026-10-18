@@ -8,7 +8,7 @@ describe('web app manifest', () => {
     const m = manifest();
     expect(m.display).toBe('standalone');
     expect(m.start_url).toBe('/');
-    expect(m.background_color).toBe(colors.paper);
+    expect(m.background_color).toBe(colors.desk);
     const built = new Set(generateStaticParams().map((p) => `/icons/${p.name}`));
     for (const icon of m.icons ?? []) expect(built.has(icon.src)).toBe(true);
     expect(m.icons?.some((i) => i.purpose === 'maskable')).toBe(true);

@@ -28,16 +28,18 @@ export const colors = {
   lemon: '#F0E442',
   cobalt: '#0072B2',
   vermilion: '#D55E00',
-  /** Dashboard palette: dark game board, bright play affordance, and a distinct party surface. */
-  'home-ink': '#F4F1E6',
-  'home-paper': '#111A2E',
-  'home-paper-shadow': '#596B86',
-  'home-red-pen': '#FF7766',
-  'home-marigold': '#DBF367',
-  'home-carbon': '#090F1D',
-  'home-saw': '#8497B0',
-  'home-party': '#91A5FF',
-  'home-stage': '#14233E',
+  /**
+   * The invigilator's desk (DESIGN.md): the dark ground under every shell page. Paper slips
+   * (paper/ink) sit on it; `go` is the one bright affordance; `desk-fail` is red pen on dark.
+   */
+  'desk-ink': '#F4F1E6',
+  desk: '#111A2E',
+  'desk-raised': '#14233E',
+  'desk-deep': '#090F1D',
+  'desk-line': '#596B86',
+  'desk-muted': '#8497B0',
+  'desk-fail': '#FF7766',
+  go: '#DBF367',
 } as const;
 
 export type ColorToken = keyof typeof colors;

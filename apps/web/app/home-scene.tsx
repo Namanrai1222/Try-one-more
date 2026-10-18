@@ -1,39 +1,41 @@
 'use client';
 
-import { readProgress, unlockedIndex } from '@jom/game-rage';
 import { LEVELS } from '@jom/game-rage/levels';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { useSave } from './use-save';
+import { useRecord } from './use-save';
 
-const IDS = LEVELS.map(({ file }) => file.id);
+// The Blender diorama (tooling/blender/home_diorama.py): a level as an exam paper on the desk.
+const FIGURE = new URL('./art/home-diorama.webp', import.meta.url).href;
+const FIGURE_SMALL = new URL('./art/home-diorama-800.webp', import.meta.url).href;
 
+/** Fig. 01: the continue level, as a diorama. Tilts towards a mouse; a tap or click plays. */
 export function HomeScene({ onPlay }: { onPlay?: () => void } = {}) {
-  const scene = useRef<HTMLAnchorElement>(null);
-  const progress = useSave() ?? readProgress(null);
-  const level = Math.min(unlockedIndex(progress, IDS), LEVELS.length - 1);
-  const file = LEVELS[level]!.file;
+  const figure = useRef<HTMLAnchorElement>(null);
+  const { next } = useRecord();
+  const file = LEVELS[next]!.file;
+  const number = String(next + 1).padStart(2, '0');
 
   function tilt(event: React.PointerEvent<HTMLAnchorElement>) {
-    if (event.pointerType !== 'mouse' || !scene.current) return;
-    const bounds = scene.current.getBoundingClientRect();
+    if (event.pointerType !== 'mouse' || !figure.current) return;
+    const bounds = figure.current.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width - 0.5;
     const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-    scene.current.style.setProperty('--scene-ry', `${x * 13}deg`);
-    scene.current.style.setProperty('--scene-rx', `${-y * 10}deg`);
+    figure.current.style.setProperty('--fig-ry', `${x * 6}deg`);
+    figure.current.style.setProperty('--fig-rx', `${-y * 5}deg`);
   }
 
   function resetTilt() {
-    scene.current?.style.removeProperty('--scene-ry');
-    scene.current?.style.removeProperty('--scene-rx');
+    figure.current?.style.removeProperty('--fig-ry');
+    figure.current?.style.removeProperty('--fig-rx');
   }
 
   return (
     <Link
-      ref={scene}
-      href={`/play/rage?level=${level + 1}`}
-      className="home-scene"
-      aria-label={`Continue Just One More at level ${level + 1}: ${file.name}`}
+      ref={figure}
+      href={`/play/rage?level=${next + 1}`}
+      className="home-figure"
+      aria-label={`Play level ${next + 1}: ${file.name}`}
       onClick={
         onPlay &&
         ((event) => {
@@ -45,47 +47,37 @@ export function HomeScene({ onPlay }: { onPlay?: () => void } = {}) {
       onPointerLeave={resetTilt}
       onBlur={resetTilt}
     >
-      <div className="home-scene-head">
+      {/* A plain img: this component also ships in the CrazyGames Vite build, without next/image. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={FIGURE}
+        srcSet={`${FIGURE_SMALL} 800w, ${FIGURE} 1600w`}
+        sizes="(max-width: 900px) 100vw, 50vw"
+        width={1600}
+        height={1600}
+        alt=""
+        fetchPriority="high"
+      />
+      <span className="home-figure-cap" aria-hidden="true">
         <span>
-          Level {String(level + 1).padStart(2, '0')} / {file.name}
+          Fig. {number} / {file.name}
         </span>
         <span>
-          {level + 1} of {LEVELS.length} unlocked
+          {next + 1} of {LEVELS.length} unlocked
         </span>
-      </div>
-      <div className="home-scene-world" aria-hidden="true">
-        <div className="home-scene-orbit home-scene-orbit-a" />
-        <div className="home-scene-orbit home-scene-orbit-b" />
-        <span className="home-scene-coordinate">Scene / 001</span>
-        <div className="home-scene-grid">
-          <div className="home-scene-note">
-            Looks easy,
-            <br />
-            doesn’t it?
-          </div>
-          <div className="home-scene-door">
-            <span>Exit</span>
-          </div>
-          <div className="home-scene-player">
-            <span />
-          </div>
-          <div className="home-scene-spikes">
-            <i />
-            <i />
-            <i />
-            <i />
-          </div>
-          <div className="home-scene-impact">Again.</div>
-          <div className="home-scene-ground" />
-        </div>
-        <span className="home-scene-card-label">Tilt to inspect / tap to play</span>
-      </div>
-      <div className="home-scene-foot">
+      </span>
+      <span className="home-figure-note" aria-hidden="true">
+        Looks easy,
+        <br />
+        doesn’t it?
+      </span>
+      <span className="home-figure-foot" aria-hidden="true">
         <span>Trust nothing</span>
-        <span className="home-scene-enter">
-          Enter level <span aria-hidden="true">↗</span>
+        <span className="home-figure-go">
+          <span className="figure-hover">Click to play</span>
+          <span className="figure-touch">Tap to play</span>
         </span>
-      </div>
+      </span>
     </Link>
   );
 }

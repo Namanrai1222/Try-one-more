@@ -5,7 +5,7 @@
   "index": 3,
   "name": "False Trust",
   "bounds": {
-    "w": 3672,
+    "w": 2941,
     "h": 540
   },
   "spawn": {
@@ -13,7 +13,7 @@
     "y": 400
   },
   "goal": {
-    "x": 3592,
+    "x": 2861,
     "y": 384,
     "w": 40,
     "h": 64
@@ -23,7 +23,7 @@
       "id": "a",
       "x": 0,
       "y": 448,
-      "w": 288,
+      "w": 304,
       "h": 92
     },
     {
@@ -44,7 +44,7 @@
       "id": "d",
       "x": 704,
       "y": 448,
-      "w": 501,
+      "w": 517,
       "h": 92
     },
     {
@@ -72,7 +72,7 @@
       "id": "d-x3-rb1",
       "x": 2311,
       "y": 448,
-      "w": 1361,
+      "w": 630,
       "h": 92
     }
   ],
@@ -112,38 +112,6 @@
       "triggerX": 420,
       "fallTo": 408,
       "speed": 20
-    },
-    {
-      "type": "saw",
-      "x": 2387,
-      "y": -64,
-      "w": 40,
-      "h": 40,
-      "triggerX": 2317,
-      "fallTo": 408,
-      "speed": 20
-    },
-    {
-      "type": "spike",
-      "x": 2965,
-      "y": 424,
-      "w": 40,
-      "h": 24,
-      "erupt": {
-        "on": "near",
-        "distance": 90
-      }
-    },
-    {
-      "type": "spike",
-      "x": 3232,
-      "y": 424,
-      "w": 40,
-      "h": 24,
-      "erupt": {
-        "on": "near",
-        "distance": 90
-      }
     }
   ],
   "taunts": {
@@ -151,8 +119,8 @@
   },
   "hints": [
     "It looks like the last level. Look up.",
-    "Saws drop from the ceiling: one after the first gap, one near the end. Two spikes hide just before the door.",
-    "When a saw drops, stop, let it land, then jump it. Near the door, hop each spike as it pops up."
+    "A saw drops from the ceiling after the first gap.",
+    "When it drops, stop, let it land, then jump it. The rest is exactly the level you remember."
   ],
   "meta": {
     "targetDeaths": 5,

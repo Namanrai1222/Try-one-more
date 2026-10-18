@@ -13,6 +13,7 @@ import type { InputLog } from '@jom/engine';
 import { describe, expect, it } from 'vitest';
 import { LEVELS } from '../levels/index.ts';
 import solutions from '../levels/solutions.json' with { type: 'json' };
+import { timingTolerance } from '../scripts/solver.ts';
 
 const recorded = solutions as unknown as Record<string, { frames: number; inputLog: InputLog }>;
 const byId = Object.fromEntries(LEVELS.map((l) => [l.file.id, l]));
@@ -153,5 +154,12 @@ describe('chapters 1–4', () => {
     for (let f = 0; f < run.frames && s.deaths === 0; f++) step(s, inputs.maskAt(f), level);
     expect(s.deaths).toBe(1);
     expect(s.lastDeath.cause).toBe(DeathCause.Saw);
+  });
+
+  it('level 3 leaves enough timing margin to finish without frame-perfect inputs', () => {
+    const level = byId['ch1-l03-false-trust']!.sim;
+    expect(
+      timingTolerance(level, recorded['ch1-l03-false-trust']!, { variants: 100 }),
+    ).toBeGreaterThanOrEqual(0.35);
   });
 });

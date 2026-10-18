@@ -108,6 +108,17 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
   let run = 0;
   let presses = 0;
   let lastMask = 0;
+  /**
+   * Keys still held from before the last death. They are ignored until released, so holding
+   * Right through an instant respawn doesn't run the player straight back into the same trap.
+   */
+  let stale = 0;
+  /** The player has jumped and moved 200px this session: the controls hint can go. */
+  let taught = false;
+  let jumpedOnce = false;
+  let spawnX = 0;
+  /** Levels whose start pan has played this session: it shows once, not on every restart. */
+  const introduced = new Set<string>();
   let deathEnd = 0;
   let clearEnd = 0;
   let shown = ''; // last emitted countdown + bindings, so the HUD updates only on change
@@ -170,6 +181,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
     hints: day ? [] : (level.file.hints ?? []),
     canWatch: runFor(level, demo ? resumeAttempt : state.attempt) !== undefined,
     demo: demo ? { keys: demoKeys } : null,
+    taught,
   });
   const emit = () => {
     shown = `${timer()}|${keys()?.join()}|${demoKeys}`;
@@ -188,7 +200,9 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
   };
 
   function tick(): void {
-    const mask = demo ? demo.maskAt(state.frame) : input.read() | nudge;
+    const held = demo ? 0 : input.read() | nudge;
+    stale &= held; // a released key is live again on its next press
+    const mask = demo ? demo.maskAt(state.frame) : held & ~stale;
     nudge = 0;
     if (demo) demoKeys = mask;
     if (
@@ -210,6 +224,11 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
     if (events & SimEvent.Jumped) {
       sfx.jump();
       view.jumped();
+      if (!demo) jumpedOnce = true;
+    }
+    if (!taught && jumpedOnce && !demo && Math.abs(toPx(state.player.x - spawnX)) >= 200) {
+      taught = true;
+      emit();
     }
     if (events & SimEvent.Landed) view.landed();
     if (events & SimEvent.TrapFired) sfx.trap();
@@ -229,6 +248,7 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
       sfx.death();
       view.died(state);
       if (!demo) {
+        stale = held;
         deathEnd = state.frame;
         if (level.sim.view?.ghosts) {
           view.setGhosts(attemptTracks(level.sim, seedOf(level), recorder.log, state.frame));
@@ -320,15 +340,18 @@ export function createGame(container: HTMLElement, options: GameOptions): GameCo
       : createSimState(level.sim, seedOf(level), attempt);
     prevX = state.player.x;
     prevY = state.player.y;
+    spawnX = state.player.x;
     recorder.reset();
     run++;
-    presses = lastMask = deathEnd = clearEnd = 0;
+    presses = lastMask = deathEnd = clearEnd = stale = 0;
     paused = false;
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     taunt = null;
     armMetaTrap();
     driver.reset();
-    view.setLevel(level.sim);
+    const intro = !demo && attempt === 1 && !introduced.has(level.file.id);
+    introduced.add(level.file.id);
+    view.setLevel(level.sim, intro);
     if (demo) ctx.emit('level_watch', { level: level.file.id });
     else ctx.emit('level_start', { level: level.file.id });
     emit();

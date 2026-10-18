@@ -53,6 +53,8 @@ export interface HudState {
   canWatch: boolean;
   /** Playing the recorded run: the keys it is pressing right now (Input bits), for the shell. */
   demo: { keys: number } | null;
+  /** The player has jumped and moved a little this session, so the controls hint can go. */
+  taught: boolean;
 }
 
 export interface GameOptions {

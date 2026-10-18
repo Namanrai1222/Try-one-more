@@ -24,6 +24,14 @@ relative-luminance formula. `packages/ui/test/contrast.test.ts` fails CI if any 
 | `--cobalt` | `--carbon` | 3.77:1 | non-text | ≥ 3 | pass | Seat 6 body in Push Party |
 | `--vermilion` | `--carbon` | 5.06:1 | non-text | ≥ 3 | pass | Seat 7 body in Push Party |
 | `--ink` | `--paper` | 11.68:1 | non-text | ≥ 3 | pass | Seat swatch outline (the fill is a seat colour; the label carries the number) |
+| `--desk-ink` | `--desk` | 15.34:1 | text | ≥ 4.5 | pass | Shell text on the desk |
+| `--desk-ink` | `--desk-raised` | 13.86:1 | text | ≥ 4.5 | pass | Text on raised desk panels |
+| `--desk-muted` | `--desk` | 5.81:1 | text | ≥ 4.5 | pass | Captions and mono microcopy on the desk |
+| `--go` | `--desk` | 14.06:1 | text | ≥ 4.5 | pass | Play affordance text and the hero accent line |
+| `--desk-deep` | `--go` | 15.51:1 | text | ≥ 4.5 | pass | Label on the filled Play button |
+| `--desk-fail` | `--desk` | 6.67:1 | text | ≥ 4.5 | pass | Death counts on the desk (red pen on dark) |
+| `--desk-line` | `--desk` | 3.20:1 | non-text | ≥ 3 | pass | Rules and outlines on the desk |
+| `--paper` | `--desk` | 12.66:1 | non-text | ≥ 3 | pass | A paper slip against the desk |
 | `--marigold` | `--paper` | 1.55:1 | never-text | < 4.5 (forbidden) | pass | Forbidden for text (DESIGNING.md §2.1) |
 
 ## Findings

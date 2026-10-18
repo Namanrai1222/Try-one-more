@@ -18,6 +18,7 @@ import {
   HemisphereLight,
   MathUtils,
   Mesh,
+  MeshBasicMaterial,
   MeshStandardMaterial,
   PCFShadowMap,
   PMREMGenerator,
@@ -28,10 +29,11 @@ import {
   SRGBColorSpace,
   Scene,
   SphereGeometry,
+  TextureLoader,
   Vector3,
   WebGLRenderer,
 } from 'three';
-import type { Material, Object3D } from 'three';
+import type { Material, Object3D, Texture } from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import {
   LEADER_GATE,
@@ -52,8 +54,27 @@ const U = 1 / 32;
 /** Depth of the level slabs along z. */
 const DEPTH = 4;
 /** Minimum world units kept in view, vertically and horizontally (portrait phones). */
-const VIEW_H = 9;
+const VIEW_H = 8;
 const VIEW_W = 13;
+/** How far ahead of the runner the camera looks, as a share of the half-width in view. */
+const LOOKAHEAD = 0.28;
+/** Level-start pan (first visit only): a beat on the far end, then back to the runner. */
+const INTRO_HOLD = 0.45;
+const INTRO_PAN = 1.0;
+/**
+ * The rooms behind each chapter (tooling/blender/backdrops.py): seamless 16-unit tiles. They
+ * are dim scenery, faded into the sky at the top and never brighter than the course.
+ */
+const BACKDROPS: Record<number, string> = {
+  1: new URL('../assets/backdrop-ch1.webp', import.meta.url).href,
+  2: new URL('../assets/backdrop-ch2.webp', import.meta.url).href,
+  3: new URL('../assets/backdrop-ch3.webp', import.meta.url).href,
+  4: new URL('../assets/backdrop-ch4.webp', import.meta.url).href,
+};
+/** World units one tile covers: smaller than the view, so the hall reads large and far away. */
+const BACKDROP_TILE = 14;
+/** How far behind the course the hall stands (z); fog softens it at this depth. */
+const BACKDROP_Z = -DEPTH / 2 - 18;
 
 const col = (token: ColorToken, k = 1) => new Color(colors[token]).multiplyScalar(k);
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -238,7 +259,8 @@ const TURN = 1.15;
 
 export interface View {
   readonly canvas: HTMLCanvasElement;
-  setLevel(level: SimLevel): void;
+  /** `intro`: pan to the far end and back before play (first visit to a level). */
+  setLevel(level: SimLevel, intro?: boolean): void;
   /** px/py: interpolated top-left of the player in level pixels. dt in seconds. */
   render(state: SimState, px: number, py: number, dt: number, showPlayer?: boolean): void;
   jumped(): void;
@@ -327,9 +349,50 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
     new PlaneGeometry(400, 120),
     new MeshStandardMaterial({ color: col('ink', 1.9), roughness: 1 }),
   );
-  wall.position.set(0, 20, -DEPTH / 2 - 7);
+  wall.position.set(0, 20, BACKDROP_Z - 6);
   wall.receiveShadow = true;
   scene.add(wall);
+
+  // The chapter's room, just in front of the wall: far enough back for real parallax, unlit
+  // (the light is baked into the render), and faded into the sky over its top quarter.
+  const fade = document.createElement('canvas');
+  fade.width = 1;
+  fade.height = 64;
+  const fadeCtx = fade.getContext('2d');
+  if (fadeCtx) {
+    const g = fadeCtx.createLinearGradient(0, 0, 0, 64);
+    g.addColorStop(0, colors.carbon); // alpha maps read brightness: dark = transparent
+    g.addColorStop(0.3, colors.chalk);
+    g.addColorStop(1, colors.chalk);
+    fadeCtx.fillStyle = g;
+    fadeCtx.fillRect(0, 0, 1, 64);
+  }
+  const backdropMat = new MeshBasicMaterial({
+    color: col('chalk', 0.55),
+    alphaMap: new CanvasTexture(fade),
+    transparent: true,
+    depthWrite: false,
+    toneMapped: false,
+  });
+  const backdrop = new Mesh(new PlaneGeometry(1, BACKDROP_TILE), backdropMat);
+  backdrop.position.z = BACKDROP_Z;
+  backdrop.visible = false;
+  scene.add(backdrop);
+  const backdropTextures = new Map<number, Texture>();
+  const loader = new TextureLoader();
+  const showBackdrop = (chapter: number) => {
+    const url = BACKDROPS[chapter] ?? BACKDROPS[1]!;
+    let tex = backdropTextures.get(chapter);
+    if (!tex) {
+      tex = loader.load(url);
+      tex.colorSpace = SRGBColorSpace;
+      tex.wrapS = RepeatWrapping;
+      backdropTextures.set(chapter, tex);
+    }
+    backdropMat.map = tex;
+    backdropMat.needsUpdate = true;
+    return tex;
+  };
 
   const grain = grainTexture();
   const spikeMat = new MeshStandardMaterial({
@@ -495,6 +558,10 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
   let viewH = VIEW_H;
   let fullHeight = false;
   let spinAngle = 0;
+  let look = 0;
+  /** Seconds into the level-start pan; < 0 when there is none. */
+  let intro = -1;
+  let introFrom = 0;
   const resize = () => {
     const w = fixed?.w ?? (container.clientWidth || 1);
     const h = fixed?.h ?? (container.clientHeight || 1);
@@ -561,7 +628,11 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
     return m;
   };
 
-  function setLevel(next: SimLevel): void {
+  function setLevel(next: SimLevel, withIntro = false): void {
+    look = 0;
+    // No pan where it would give a lie away (Small World's fake end) or show nothing (darkness).
+    intro = withIntro && !next.view?.frameW && !next.view?.dark && !next.view?.spin ? 0 : -1;
+    introFrom = toPx(next.spawn.x);
     disposeTree(levelGroup, true);
     scene.remove(levelGroup);
     levelGroup = new Group();
@@ -592,6 +663,17 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
     fog.color = bg;
     spinAngle = 0;
     ghostTracks = [];
+
+    // The room behind the course: wide enough for the camera and the parallax at both ends.
+    const levelW = toPx(next.bounds.w) * U;
+    const roomW = levelW + 90;
+    const tex = showBackdrop(v?.chapter ?? 1);
+    tex.repeat.x = roomW / BACKDROP_TILE;
+    backdrop.scale.x = roomW;
+    backdrop.position.x = levelW / 2;
+    backdrop.visible = !dark;
+    wall.position.x = levelW / 2;
+    wall.scale.x = Math.max(1, (levelW + 260) / 400);
 
     solids = next.solids.map((s, i) => {
       const [x, y, w, h] = [toPx(s.x), toPx(s.y), toPx(s.w), toPx(s.h)];
@@ -893,14 +975,30 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
     // the end the level pretends to have, until the player walks through it.
     const lie = level.view?.frameW;
     const levelW = lie && cx < lie * U ? lie * U : toPx(level.bounds.w) * U;
-    const tx = levelW <= 2 * halfW ? levelW / 2 : MathUtils.clamp(cx, halfW, levelW - halfW);
+    // Look ahead the way the runner is going, so a closer camera still shows what's coming.
+    const moving = Math.abs(vx) > 0.2;
+    look += (facing * halfW * LOOKAHEAD * (moving ? 1 : 0.5) - look) * ease(2.2, dt);
+    let aim = cx + look;
+    if (intro >= 0) {
+      // Any movement hands the camera straight back to the player.
+      if (Math.abs(px - introFrom) > 2) {
+        intro = -1;
+      } else {
+        intro += dt;
+        const t = MathUtils.clamp((intro - INTRO_HOLD) / INTRO_PAN, 0, 1);
+        const k = t * t * (3 - 2 * t);
+        aim = levelW + (cx - levelW) * k;
+        if (t >= 1) intro = -1;
+      }
+    }
+    const tx = levelW <= 2 * halfW ? levelW / 2 : MathUtils.clamp(aim, halfW, levelW - halfW);
     // Keep the player's feet ~30% up from the bottom on any screen shape (portrait included).
     const ty = fullHeight ? (H * U) / 2 : feet + state.gravity * halfH * 0.4;
     if (Number.isNaN(camX)) {
       camX = tx;
       camY = ty;
     }
-    camX += (tx - camX) * ease(5, dt);
+    camX += (tx - camX) * ease(intro >= 0 ? 9 : 5, dt);
     camY += (ty - camY) * ease(4, dt);
     shake = Math.max(0, shake - dt);
     const jitter = shake > 0 ? 0.08 : 0;
@@ -915,6 +1013,8 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
       spinAngle += MathUtils.degToRad(spin) * dt;
       camera.rotateZ(spinAngle);
     }
+    // The hall's floor line (a quarter up the tile) sits just behind the course's far edge.
+    backdrop.position.y = camY - 3;
     sun.position.set(camX - 7, camY + 16, 12);
     sun.target.position.set(camX, camY - 3, 0);
 
@@ -961,6 +1061,8 @@ export function createView(container: HTMLElement, fixed?: { w: number; h: numbe
       ro.disconnect();
       disposeTree(scene, false);
       grain.dispose();
+      for (const tex of backdropTextures.values()) tex.dispose();
+      backdropMat.alphaMap?.dispose();
       envMap.dispose();
       renderer.dispose();
       renderer.forceContextLoss();

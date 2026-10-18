@@ -47,7 +47,7 @@ export function InstallButton() {
         await prompt.prompt();
         setPrompt(null);
       }}
-      className="inline-block min-h-11 border border-ink px-6 py-3 font-display text-md text-ink"
+      className="btn btn-line"
     >
       Install
     </button>

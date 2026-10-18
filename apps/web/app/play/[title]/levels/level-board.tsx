@@ -3,55 +3,86 @@
 import { readProgress, unlockedIndex } from '@jom/game-rage';
 import { CHAPTERS, LEVELS } from '@jom/game-rage/levels';
 import Link from 'next/link';
-import { useSave } from '../../../use-save';
+import { useRecord, useSave } from '../../../use-save';
+
+/** The record line under the title, and the way back in. */
+export function RecordSummary() {
+  const { deaths, cleared, next } = useRecord();
+  return (
+    <div className="page-head-row">
+      <p className="record-summary">
+        {cleared} of {LEVELS.length} passed · <strong>{deaths.toLocaleString('en-IN')}</strong>{' '}
+        {deaths === 1 ? 'death' : 'deaths'} on this device
+      </p>
+      <Link href={`/play/rage?level=${next + 1}`} className="btn btn-go">
+        {cleared === 0 && deaths === 0 ? 'Start level 1' : `Continue level ${next + 1}`}
+      </Link>
+    </div>
+  );
+}
 
 /**
- * The notice board (DESIGNING.md §3.2): a ruled list per chapter, not a grid of cards. Locked
- * levels are printed but struck through. A global median column arrives with the server.
+ * The result sheets (DESIGNING.md §3.2): one slip per chapter, a ruled row per level with your
+ * deaths and a stamp. Locked levels are printed but struck through. A global median column
+ * arrives with the server.
  */
 export function LevelBoard() {
   const progress = useSave() ?? readProgress(null);
-  const chapters = [...new Set(LEVELS.map((l) => l.file.chapter))];
   const unlocked = unlockedIndex(
     progress,
     LEVELS.map((l) => l.file.id),
   );
+  const chapters = [...new Set(LEVELS.map((l) => l.file.chapter))];
 
-  return chapters.map((chapter) => (
-    <section key={chapter} className="pb-6">
-      <h2 className="border-b border-ink pb-1 font-display text-lg">
-        Chapter {chapter} · {CHAPTERS[chapter]}
-      </h2>
-      <ol>
-        {LEVELS.map(({ file }, i) => {
-          if (file.chapter !== chapter) return null;
-          const locked = i > unlocked;
-          const deaths = progress.deaths[file.id] ?? 0;
-          const row = (
-            <>
-              <span className="w-8 font-mono text-sm">{String(i + 1).padStart(2, '0')}</span>
-              <span className={`flex-1 ${locked ? 'line-through' : ''}`}>{file.name}</span>
-              <span className="font-mono text-sm">
-                {locked ? 'Locked' : `${deaths} ${deaths === 1 ? 'death' : 'deaths'}`}
+  return (
+    <div className="chapters">
+      {chapters.map((chapter) => {
+        const rows = LEVELS.map((l, i) => ({ ...l, i })).filter((l) => l.file.chapter === chapter);
+        const passed = rows.filter(({ file, i }) => i < unlocked || progress.best[file.id]).length;
+        return (
+          <section key={chapter} className="slip chapter-slip" aria-labelledby={`ch-${chapter}`}>
+            <div className="slip-head">
+              <span>Result sheet / Chapter {chapter}</span>
+              <span>
+                {passed} of {rows.length} passed
               </span>
-            </>
-          );
-          return (
-            <li key={file.id} className="border-b border-paper-shadow">
-              {locked ? (
-                <div className="flex min-h-11 items-center gap-4 py-2">{row}</div>
-              ) : (
-                <Link
-                  href={`/play/rage?level=${i + 1}`}
-                  className="flex min-h-11 items-center gap-4 py-2"
-                >
-                  {row}
-                </Link>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-    </section>
-  ));
+            </div>
+            <h2 id={`ch-${chapter}`}>
+              {CHAPTERS[chapter]}
+              <small>Deaths</small>
+            </h2>
+            <ol>
+              {rows.map(({ file, i }) => {
+                const locked = i > unlocked;
+                const done = !locked && (i < unlocked || !!progress.best[file.id]);
+                const deaths = progress.deaths[file.id] ?? 0;
+                const row = (
+                  <>
+                    <span className="font-mono text-sm">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="level-name">{file.name}</span>
+                    <span className="level-deaths font-mono text-sm">{locked ? '' : deaths}</span>
+                    <span className="stamp">{locked ? 'Locked' : done ? 'Passed' : 'Up next'}</span>
+                  </>
+                );
+                return (
+                  <li
+                    key={file.id}
+                    className="level-row"
+                    data-locked={locked ? '' : undefined}
+                    data-next={!locked && !done ? '' : undefined}
+                  >
+                    {locked ? (
+                      <div>{row}</div>
+                    ) : (
+                      <Link href={`/play/rage?level=${i + 1}`}>{row}</Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        );
+      })}
+    </div>
+  );
 }

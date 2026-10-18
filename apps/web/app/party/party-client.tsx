@@ -6,6 +6,7 @@ import type { PartyHud } from '@jom/game-rage';
 import { createConsoleTransport, createDeviceContext, createTelemetryBus } from '@jom/platform-sdk';
 import type { RoomLink, StorageLike } from '@jom/platform-sdk';
 import Link from 'next/link';
+import { Masthead } from '../masthead';
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -259,7 +260,7 @@ export function PartyClient() {
         <header className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4 font-mono text-sm">
           <div className="leading-snug">
             <p>
-              {MODES[round.mode].name} · Round {round.round}
+              {MODES[round.mode].name} / Round {round.round}
             </p>
             <p className="text-marigold" aria-live="polite">
               {round.mode === 'push'
@@ -270,7 +271,7 @@ export function PartyClient() {
                   : ''
                 : round.mode === 'race'
                   ? hud?.place
-                    ? `Position ${hud.place} of ${connected}${hud.leader ? ' · in front, so the traps are for you' : ''}`
+                    ? `Position ${hud.place} of ${connected}${hud.leader ? ' / in front, so the traps are for you' : ''}`
                     : ''
                   : iRun
                     ? 'You run. They arm the traps.'
@@ -332,7 +333,7 @@ export function PartyClient() {
             </ol>
             {earned && (
               <p className="font-mono text-sm">
-                {`${earned.coins > 0 ? `+${earned.coins} coins · ` : ''}+${earned.xp} XP`}
+                {`${earned.coins > 0 ? `+${earned.coins} coins / ` : ''}+${earned.xp} XP`}
               </p>
             )}
             {you?.host ? (
@@ -361,158 +362,165 @@ export function PartyClient() {
 
   // ---------------------------------------------------------------- paper shell
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[68ch] flex-col px-4 py-6">
-      <header className="border-b border-ink pb-2">
-        <Link href="/" className="font-display text-xl leading-none">
-          Just One More
-        </Link>
-      </header>
+    <main className="desk-shell">
+      <Masthead current="party" />
+      <div className="slip room-slip">
+        <div className="slip-head">
+          <span>Form G / Group examination</span>
+          <span>{lobby ? `Room ${lobby.code}` : 'No room yet'}</span>
+        </div>
 
-      {status === 'choose' && (
-        <section className="flex flex-col gap-6 py-10">
-          <h1 className="font-display text-xl">Play with friends</h1>
-          <p className="text-md">Start a room, then send the link.</p>
-          <div className="flex flex-col gap-3">
-            {(['race', 'sabotage', 'push'] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => void connect({ mode: m })}
-                className="flex min-h-11 flex-col items-start border border-ink px-4 py-3 text-left"
-              >
-                <span className="font-display text-lg">{MODES[m].start}</span>
-                <span className="text-sm">{MODES[m].line}</span>
-              </button>
-            ))}
-          </div>
-          <form
-            className="flex flex-wrap items-end gap-3 border-t border-dashed border-paper-shadow pt-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const code = codeInput.trim().toUpperCase();
-              if (CODE.test(code)) void connect({ code });
-              else toast('A room code is six letters and numbers.');
-            }}
-          >
-            <label className="flex flex-col gap-1 text-sm">
-              Room code
-              <input
-                value={codeInput}
-                onChange={(e) => setCodeInput(e.target.value)}
-                maxLength={6}
-                autoCapitalize="characters"
-                autoComplete="off"
-                spellCheck={false}
-                className="min-h-11 w-40 border border-ink bg-paper px-3 font-mono text-md text-ink uppercase"
-              />
-            </label>
-            <button
-              type="submit"
-              className="min-h-11 rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
+        {status === 'choose' && (
+          <section className="flex flex-col gap-6 pt-6">
+            <h1 className="font-display text-xl">Play with friends</h1>
+            <p className="text-md">Start a room, then send the link.</p>
+            <div className="border-y-2 border-ink">
+              {(['race', 'sabotage', 'push'] as const).map((m, index) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => void connect({ mode: m })}
+                  className="grid min-h-20 w-full grid-cols-[2rem_1fr] items-start gap-3 border-b border-paper-shadow py-4 text-left last:border-b-0"
+                >
+                  <span className="pt-1 font-mono text-xs">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="flex flex-col">
+                    <span className="font-display text-lg">{MODES[m].start}</span>
+                    <span className="text-sm">{MODES[m].line}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+            <form
+              className="flex flex-wrap items-end gap-3 border-t border-dashed border-paper-shadow pt-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const code = codeInput.trim().toUpperCase();
+                if (CODE.test(code)) void connect({ code });
+                else toast('A room code is six letters and numbers.');
+              }}
             >
-              Join
-            </button>
-          </form>
-          <Toasts toasts={toasts} paper />
-        </section>
-      )}
+              <label className="flex flex-col gap-1 text-sm">
+                Room code
+                <input
+                  value={codeInput}
+                  onChange={(e) => setCodeInput(e.target.value)}
+                  maxLength={6}
+                  autoCapitalize="characters"
+                  autoComplete="off"
+                  spellCheck={false}
+                  className="min-h-11 w-40 border border-ink bg-paper px-3 font-mono text-md text-ink uppercase"
+                />
+              </label>
+              <button
+                type="submit"
+                className="min-h-11 rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
+              >
+                Join
+              </button>
+            </form>
+            <Toasts toasts={toasts} paper />
+          </section>
+        )}
 
-      {status === 'connecting' && (
-        <p className="py-10 font-mono text-sm" role="status">
-          Connecting
-        </p>
-      )}
-
-      {status === 'error' && (
-        <section className="flex flex-col gap-4 py-10">
-          <p role="alert" className="text-md">
-            {error}
+        {status === 'connecting' && (
+          <p className="pt-6 font-mono text-sm" role="status">
+            Connecting
           </p>
-          <button
-            type="button"
-            onClick={() => {
-              window.history.replaceState(null, '', '/party');
-              setError(null);
-              setLobby(null);
-              setStatus('choose');
-            }}
-            className="min-h-11 w-fit border border-ink px-6 py-3 font-display text-md"
-          >
-            Back
-          </button>
-        </section>
-      )}
+        )}
 
-      {status === 'in' && lobby && (
-        <section className="flex flex-col gap-6 py-10">
-          <div>
-            <p className="text-sm">{MODES[lobby.mode].name} room</p>
-            <h1 className="font-mono text-2xl leading-none">{lobby.code}</h1>
-            <p className="pt-2 text-sm">{MODES[lobby.mode].line}</p>
-          </div>
-
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        {status === 'error' && (
+          <section className="flex flex-col gap-4 pt-6">
+            <p role="alert" className="text-md">
+              {error}
+            </p>
             <button
               type="button"
               onClick={() => {
-                void navigator.clipboard?.writeText(invite);
-                setCopied(true);
+                window.history.replaceState(null, '', '/party');
+                setError(null);
+                setLobby(null);
+                setStatus('choose');
               }}
-              className="min-h-11 underline underline-offset-4"
+              className="min-h-11 w-fit border border-ink px-6 py-3 font-display text-md"
             >
-              {copied ? 'Link copied' : 'Copy the invite link'}
+              Back
             </button>
-            <a
-              href={whatsappUrl(`Join my Just One More room: ${invite}`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex min-h-11 items-center underline underline-offset-4"
-            >
-              Send it on WhatsApp
-            </a>
-          </div>
+          </section>
+        )}
 
-          <ol className="border-t border-ink" aria-label="Players">
-            {Array.from({ length: lobby.size }, (_, n) => {
-              const s = lobby.seats.find((x) => x.seat === n);
-              return (
-                <li
-                  key={n}
-                  className="flex min-h-11 items-center gap-3 border-b border-paper-shadow"
-                >
-                  <Swatch seat={n} />
-                  <span className="flex-1">{s ? `Player ${n + 1}` : 'Empty seat'}</span>
-                  <span className="font-mono text-sm">
-                    {[
-                      s && you?.seat === n && 'you',
-                      s && lobby.host === n && 'host',
-                      s && !s.connected && 'away',
-                    ]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
+        {status === 'in' && lobby && (
+          <section className="flex flex-col gap-6 pt-6">
+            <div>
+              <p className="text-sm">{MODES[lobby.mode].name} room</p>
+              <h1 className="font-mono text-2xl leading-none">{lobby.code}</h1>
+              <p className="pt-2 text-sm">{MODES[lobby.mode].line}</p>
+            </div>
 
-          {!you?.host ? (
-            <p className="text-sm">The host starts the round.</p>
-          ) : connected < 2 ? (
-            <p className="text-sm">Waiting for one more player.</p>
-          ) : (
-            <button
-              type="button"
-              onClick={() => room.current?.send('start')}
-              className="min-h-11 w-fit rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
-            >
-              Start
-            </button>
-          )}
-          <EmoteBar paper onEmote={(id) => room.current?.send('emote', { id })} />
-          <Toasts toasts={toasts} paper />
-        </section>
-      )}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              <button
+                type="button"
+                onClick={() => {
+                  void navigator.clipboard?.writeText(invite);
+                  setCopied(true);
+                }}
+                className="min-h-11 underline underline-offset-4"
+              >
+                {copied ? 'Link copied' : 'Copy the invite link'}
+              </button>
+              <a
+                href={whatsappUrl(`Join my Just One More room: ${invite}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-11 items-center underline underline-offset-4"
+              >
+                Send it on WhatsApp
+              </a>
+            </div>
+
+            <ol className="border-t border-ink" aria-label="Players">
+              {Array.from({ length: lobby.size }, (_, n) => {
+                const s = lobby.seats.find((x) => x.seat === n);
+                return (
+                  <li
+                    key={n}
+                    className="flex min-h-11 items-center gap-3 border-b border-paper-shadow"
+                  >
+                    <Swatch seat={n} />
+                    <span className="flex-1">{s ? `Player ${n + 1}` : 'Empty seat'}</span>
+                    <span className="font-mono text-sm">
+                      {[
+                        s && you?.seat === n && 'you',
+                        s && lobby.host === n && 'host',
+                        s && !s.connected && 'away',
+                      ]
+                        .filter(Boolean)
+                        .join(' / ')}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+
+            {!you?.host ? (
+              <p className="text-sm">The host starts the round.</p>
+            ) : connected < 2 ? (
+              <p className="text-sm">Waiting for one more player.</p>
+            ) : (
+              <button
+                type="button"
+                onClick={() => room.current?.send('start')}
+                className="min-h-11 w-fit rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
+              >
+                Start
+              </button>
+            )}
+            <EmoteBar paper onEmote={(id) => room.current?.send('emote', { id })} />
+            <Toasts toasts={toasts} paper />
+          </section>
+        )}
+      </div>
     </main>
   );
 }

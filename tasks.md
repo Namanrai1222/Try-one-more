@@ -2,28 +2,136 @@
 
 Sequential, never reused. Newest entry at the top of the log.
 
-**Next task number: TASK-015**
+**Next task number: TASK-017**
 
 Status values: `COMPLETED` · `PARTIAL` · `BLOCKED` · `CANCELLED`
 
 ## Index
 
-| #        | Date       | Title                                            | Status    |
-| -------- | ---------- | ------------------------------------------------ | --------- |
-| TASK-014 | 2026-09-28 | Chapter 4 "After The End": levels 31–40          | COMPLETED |
-| TASK-013 | 2026-09-27 | Rage-bait traps from level 1 + human character   | COMPLETED |
-| TASK-012 | 2026-09-27 | Difficulty rebalance: longer levels, more traps  | COMPLETED |
-| TASK-011 | 2026-09-26 | Hints, "Watch how" tutorials, level fairness     | COMPLETED |
-| TASK-010 | 2026-09-26 | Phase 5b — Push Party, wallet, load test (local) | PARTIAL   |
-| TASK-009 | 2026-09-26 | Phase 5a — multiplayer rooms, local              | PARTIAL   |
-| TASK-008 | 2026-09-25 | Phase 4a — chapters 2–3 + retention, offline     | PARTIAL   |
-| TASK-007 | 2026-09-25 | Phase 3a — viral layer, offline                  | PARTIAL   |
-| TASK-006 | 2026-09-24 | Phase 2a — chapter 1 complete, offline           | PARTIAL   |
-| TASK-005 | 2026-09-24 | Phase 1 core loop, in 3D                         | PARTIAL   |
-| TASK-004 | 2026-09-23 | English spec docs + rename to Just One More      | COMPLETED |
-| TASK-003 | 2026-09-23 | Switch all copy to English                       | COMPLETED |
-| TASK-002 | 2026-09-23 | Phase 0 foundation                               | PARTIAL   |
-| TASK-001 | 2026-09-23 | Documentation system bootstrap                   | COMPLETED |
+| #        | Date       | Title                                             | Status    |
+| -------- | ---------- | ------------------------------------------------- | --------- |
+| TASK-016 | 2026-10-18 | Launch redesign: the invigilator's desk + Blender | COMPLETED |
+| TASK-015 | 2026-10-12 | Review "Now" fixes: death feedback, input, shell  | COMPLETED |
+| TASK-014 | 2026-09-28 | Chapter 4 "After The End": levels 31–40           | COMPLETED |
+| TASK-013 | 2026-09-27 | Rage-bait traps from level 1 + human character    | COMPLETED |
+| TASK-012 | 2026-09-27 | Difficulty rebalance: longer levels, more traps   | COMPLETED |
+| TASK-011 | 2026-09-26 | Hints, "Watch how" tutorials, level fairness      | COMPLETED |
+| TASK-010 | 2026-09-26 | Phase 5b — Push Party, wallet, load test (local)  | PARTIAL   |
+| TASK-009 | 2026-09-26 | Phase 5a — multiplayer rooms, local               | PARTIAL   |
+| TASK-008 | 2026-09-25 | Phase 4a — chapters 2–3 + retention, offline      | PARTIAL   |
+| TASK-007 | 2026-09-25 | Phase 3a — viral layer, offline                   | PARTIAL   |
+| TASK-006 | 2026-09-24 | Phase 2a — chapter 1 complete, offline            | PARTIAL   |
+| TASK-005 | 2026-09-24 | Phase 1 core loop, in 3D                          | PARTIAL   |
+| TASK-004 | 2026-09-23 | English spec docs + rename to Just One More       | COMPLETED |
+| TASK-003 | 2026-09-23 | Switch all copy to English                        | COMPLETED |
+| TASK-002 | 2026-09-23 | Phase 0 foundation                                | PARTIAL   |
+| TASK-001 | 2026-09-23 | Documentation system bootstrap                    | COMPLETED |
+
+---
+
+## TASK-016 — Launch redesign: the invigilator's desk + Blender art
+
+- **Date:** 2026-10-18
+- **Status:** COMPLETED
+
+### User request
+
+"use design tool and plugins and redesign the whole ui better and make the ui and user and
+gaming experience better … launch ready". Answers to the direction questions:
+
+- the Invigilator's Desk direction;
+- "use blender to design and then code";
+- gameplay scope: camera and world only (no audio, progression or physics changes).
+
+### Implementation
+
+- **Design system:** `home-*` tokens renamed to desk roles (`desk`, `desk-ink`, `desk-raised`,
+  `desk-deep`, `desk-line`, `desk-muted`, `desk-fail`, `go`); `home-party` removed. Eight new
+  pairings in `PAIRINGS`, all passing.
+- **Shell:** `apps/web/app/desk.css` replaces `home.css` and the 2026-10-14 `sheet-*` rules.
+  - Shared `Masthead`, `.btn-go` / `.btn-ink` / `.btn-line`, `.slip`, `.stamp`.
+  - Home: the hero with `PlayButton` ("Continue level N") and `DeathCounter` (the
+    returning-player line), Fig. 01 (the Blender diorama), the Daily and party forms as slips,
+    and the register.
+  - Levels: one result-sheet slip per chapter with Passed / Up next / Locked stamps.
+  - Party and challenge pages: one slip each.
+  - CrazyGames home: mirrors the web home without party or outbound links.
+- **In-level:**
+  - a bigger attempt counter that ticks over;
+  - (later removed at the user's request: the progress ruler, the death slash and ✗ marks)
+  - a progress ruler along the top edge (`GameController.progress()`): the runner's position and
+    a red tick per death;
+  - touch zones that light up while held;
+  - the pause slip regrouped (Resume, then Restart / Hint / Watch, then links);
+  - the result slip prints line by line.
+- **Stage (`render.ts`):**
+  - camera: 8 units of height in view (was 9) plus a 28% look-ahead;
+  - a level-start pan on first visit, skipped on Small World, dark and Spin levels;
+  - chapter backdrops on a plane 18 units behind the course, faded into the sky, hidden on dark
+    levels.
+- **Blender (`tooling/blender/`):**
+  - `jom.py`: token colours and primitives, plus the runner built like `makeHuman`;
+  - `home_diorama.py`: Fig. 01;
+  - `backdrops.py`: four seamless chapter tiles.
+  - Removed the stale 2026-10-14 outputs (`public/art/home-diorama.jpg`, `assets/blender/*.blend`).
+- `DESIGN.md` rewritten as the desk contract, with named rules and a decisions log.
+
+### Verification
+
+- `pnpm verify` exit 0: 467 tests; the largest initial JS is 194.9KB (home); the Three.js chunk
+  is still lazy.
+- `pnpm --filter @jom/web package:crazygames`: 18 files, 1.1MB, validator passed. The portal
+  build loads the backdrop by relative path (200).
+- Browser (prod and dev builds):
+  - home at 1440 and 375 (no horizontal scroll, nothing under 12px, all taps ≥ 44px);
+  - levels, party and challenge;
+  - level 1 at 1280×720: backdrop, slash, ✗ mark, ruler tick;
+  - the cleared slip, reached by replaying the solution;
+  - portrait level 2.
+- **Not verified:**
+  - a real phone and frame times on a mid-range Android (the backdrop adds one textured plane);
+  - the level-start pan, seen only from its first frames;
+  - chapters 2–4 backdrops in-game, seen only as renders.
+
+---
+
+## TASK-015 — Review "Now" fixes: death feedback, input, shell
+
+- **Date:** 2026-10-12
+- **Status:** COMPLETED
+
+### User request
+
+"start with the Now fixes" (the eight items in `docs/review-2026-10-12/REVIEW.md` §5).
+
+### Implementation
+
+- **A2 held input after a death:** `game.ts` ignores keys held through a death until they are
+  released (`stale`), before `recorder.record`, so logs and replays stay exact.
+- **A3 red-pen slash:** `.game-slash` (globals.css), keyed by `deathId` in `play-host.tsx`;
+  drawn in 120ms, gone by 400ms, hidden under reduced motion.
+- **A4 death marks:** `View.markDeath` (render.ts) leaves a red-pen ✗ at each death, kept across
+  restarts and "Watch how", cleared on a different level, capped at 60. Falls are marked at the
+  height the player fell from.
+- **A8 controls hint:** shown until the player has jumped and moved 200px (`HudState.taught`),
+  instead of only on level 1 attempt 1.
+- **C3 portal touch zones:** on CrazyGames they still show for mouse players, but hide once a
+  game key is pressed. (The review said "coarse pointer only"; the zones are deliberately mouse
+  controls on desktop portal, so they stay until the keyboard is used.)
+- **D1 result slip:** deaths as one 61px mono red-pen figure; the Attempts row is gone. Level 15's
+  fake renders the same component, so it changed with it.
+- **E1:** the levels page masthead links home.
+- **E4 home:** "Tap to play" on touch (`hover: none`), no all-caps labels, 12px floor, and the
+  wallet badge is hidden while coins and XP are both 0.
+
+### Verification
+
+- `pnpm verify` exit 0 (208 game-rage tests, 146 engine, 14 web, the rest unchanged).
+- Browser (prod build): holding → gives one death, not a loop; one slash per death; the hint
+  survives a death; a ✗ is left; home labels ≥ 12px, no uppercase, no zero wallet, "Tap to play"
+  at 375px with no horizontal scroll; levels masthead links to `/`.
+- **Not seen in the browser:** the new slip layout and the fall-mark height (the preview pane
+  was hidden, which pauses the game). Check both on the next play-through.
 
 ---
 

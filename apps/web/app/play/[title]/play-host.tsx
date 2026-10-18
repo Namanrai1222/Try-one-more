@@ -38,6 +38,8 @@ const useTouch = () =>
   );
 
 const TAUNT_MS = 1800;
+/** Keys the game reads (input/keyboard.ts): pressing one means the player has a keyboard. */
+const GAME_KEYS = /^(Arrow(Left|Right|Up|Down)|Key[WASD]|Space)$/;
 /** Lifetime deaths on a level before a hint is offered, and before "Watch how" is. */
 const HINT_AFTER_DEATHS = 3;
 const WATCH_AFTER_DEATHS = 6;
@@ -78,9 +80,15 @@ export function PlayHost({
   // Hints read so far, per level (index). ponytail: in memory, so a reload starts at hint 1.
   const [hintsRead, setHintsRead] = useState<Record<number, number>>({});
   const [yourTurn, setYourTurn] = useState(false);
+  // CrazyGames on desktop: the mouse zones show until the player picks up the keyboard.
+  const [usedKeys, setUsedKeys] = useState(false);
   const wasWatching = useRef(false);
   const emit = useRef<(name: string, props?: TelemetryProps) => void>(() => {});
   const touch = useTouch();
+  // Touch zones light up while held (bits: 1 left, 2 right, 4 jump), the same split as
+  // game-rage/src/input/touch.ts: left half moves (outer quarter left), right half jumps.
+  const [held, setHeld] = useState(0);
+  const pointers = useRef(new Map<number, number>());
 
   useEffect(() => {
     const container = surface.current;
@@ -164,10 +172,15 @@ export function PlayHost({
 
     const flush = () => void telemetry.flush();
     window.addEventListener('pagehide', flush);
+    const onKey = (e: KeyboardEvent) => {
+      if (GAME_KEYS.test(e.code)) setUsedKeys(true);
+    };
+    window.addEventListener('keydown', onKey);
 
     return () => {
       cancelled = true;
       window.removeEventListener('pagehide', flush);
+      window.removeEventListener('keydown', onKey);
       clearTimeout(tauntTimer.current);
       game.current?.destroy();
       game.current = null;
@@ -175,6 +188,30 @@ export function PlayHost({
       telemetry.destroy();
     };
   }, [portal, startDaily]);
+
+  const zoneAt = (e: React.PointerEvent) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    return x < r.width / 4 ? 1 : x < r.width / 2 ? 2 : 4;
+  };
+  const updateHeld = () => setHeld([...pointers.current.values()].reduce((m, z) => m | z, 0));
+  const onZoneDown = (e: React.PointerEvent) => {
+    if (e.pointerType === 'mouse' && !portal) return;
+    pointers.current.set(e.pointerId, zoneAt(e));
+    updateHeld();
+  };
+  const onZoneMove = (e: React.PointerEvent) => {
+    const z = pointers.current.get(e.pointerId);
+    if (z === undefined || z === 4) return; // a jump touch stays a jump (touch.ts)
+    const next = zoneAt(e);
+    if (next !== 4 && next !== z) {
+      pointers.current.set(e.pointerId, next);
+      updateHeld();
+    }
+  };
+  const onZoneUp = (e: React.PointerEvent) => {
+    if (pointers.current.delete(e.pointerId)) updateHeld();
+  };
 
   // Help for a stuck player, paced so it never spoils a level early: a hint after 3 deaths (up
   // to 3 hints, one at a time), and "Watch how" after 6 deaths or once every hint is read.
@@ -192,7 +229,7 @@ export function PlayHost({
   const watch = () => game.current?.watchHow();
 
   const isLast = hud ? hud.levelIndex + 1 >= hud.levelCount : false;
-  const firstRun = hud?.levelIndex === 0 && hud.attempt === 1 && hud.status === 'playing';
+  const showControls = !!hud && !hud.taught && !hud.demo && hud.status === 'playing';
   const shareKey = hud ? `${hud.run}:${hud.attempt}:${hud.status}` : '';
   const shareNow = share?.key === shareKey ? share : null;
 
@@ -240,7 +277,14 @@ export function PlayHost({
 
   return (
     <main className="game-surface fixed inset-0 overflow-hidden bg-carbon text-chalk">
-      <div ref={surface} className="absolute inset-0 touch-none select-none" />
+      <div
+        ref={surface}
+        className="absolute inset-0 touch-none select-none"
+        onPointerDown={onZoneDown}
+        onPointerMove={onZoneMove}
+        onPointerUp={onZoneUp}
+        onPointerCancel={onZoneUp}
+      />
 
       {status === 'error' && <ErrorScreen real onBack={onBack} />}
 
@@ -248,13 +292,13 @@ export function PlayHost({
         <>
           <header className="game-hud pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4">
             <div className="font-mono text-sm leading-snug">
-              <p>
+              <p className="text-chalk/80">
                 {hud.daily
-                  ? `Daily Trap · ${hud.daily.day}`
-                  : `Level ${hud.levelIndex + 1} · ${hud.levelName}`}
+                  ? `Daily Trap / ${hud.daily.day}`
+                  : `Level ${hud.levelIndex + 1} / ${hud.levelName}`}
               </p>
-              <p className="text-marigold" aria-live="polite">
-                Attempt {hud.attempt}
+              <p className="game-attempt text-marigold" aria-live="polite">
+                Attempt <span key={hud.attempt}>{hud.attempt}</span>
               </p>
               {hud.bindings && !touch && (
                 // Levels 11 and 26: say plainly what the keys do now.
@@ -329,7 +373,7 @@ export function PlayHost({
           {hud.demo && (
             // "Watch how": the recorded run plays; the keys it presses light up.
             <div className="pointer-events-none absolute inset-x-4 bottom-6 flex flex-col items-center gap-2 font-mono text-sm">
-              <p className="text-chalk">Watching how it’s done · Esc to stop</p>
+              <p className="text-chalk">Watching how it’s done / Esc to stop</p>
               <div className="flex gap-2" aria-hidden="true">
                 {(
                   [
@@ -371,45 +415,61 @@ export function PlayHost({
             </p>
           )}
 
-          {firstRun && !touch && (
+          {showControls && !touch && (
             <p
               className={`game-keyboard-hint pointer-events-none absolute inset-x-4 ${portal ? 'bottom-20' : 'bottom-6'} mx-auto w-fit max-w-[calc(100%-2rem)] bg-ink/85 px-3 py-2 text-center font-mono text-sm text-chalk`}
             >
-              ← → to move · Space to jump · {portal ? 'P' : 'Esc'} to pause · R to restart
+              Arrow keys to move / Space to jump / {portal ? 'P' : 'Esc'} to pause / R to restart
             </p>
           )}
 
-          {(touch || portal) && !hud.demo && hud.status === 'playing' && (
+          {(touch || (portal && !usedKeys)) && !hud.demo && hud.status === 'playing' && (
             <div
               aria-hidden="true"
               className="game-controls pointer-events-none absolute inset-x-0 bottom-0 flex font-mono text-sm text-chalk/80"
             >
-              <span className="flex h-16 w-1/4 items-center justify-center border-t border-r border-chalk/20">
-                ◀ {hud.bindings?.[0] ?? 'Left'}
+              <span
+                data-held={held & 1 ? '' : undefined}
+                className="game-zone flex h-16 w-1/4 items-center justify-center border-t border-r border-chalk/20"
+              >
+                {hud.bindings?.[0] ?? 'Left'}
               </span>
-              <span className="flex h-16 w-1/4 items-center justify-center border-t border-chalk/20">
-                {hud.bindings?.[1] ?? 'Right'} ▶
+              <span
+                data-held={held & 2 ? '' : undefined}
+                className="game-zone flex h-16 w-1/4 items-center justify-center border-t border-chalk/20"
+              >
+                {hud.bindings?.[1] ?? 'Right'}
               </span>
-              <span className="flex h-16 w-1/2 items-center justify-center border-t border-l border-chalk/20">
-                {hud.bindings?.[2] ?? 'Jump'} ▲
+              <span
+                data-held={held & 4 ? '' : undefined}
+                className="game-zone flex h-16 w-1/2 items-center justify-center border-t border-l border-chalk/20"
+              >
+                {hud.bindings?.[2] ?? 'Jump'}
               </span>
             </div>
           )}
 
           {hud.status === 'paused' && (
             <Panel title="Paused">
+              <p className="font-mono text-sm">
+                {hud.daily
+                  ? `Daily Trap / ${hud.daily.day}`
+                  : `Level ${hud.levelIndex + 1} / ${hud.levelName}`}
+                {' · '}attempt {hud.attempt}
+              </p>
               <PrimaryButton autoFocus onClick={() => game.current?.resume()}>
                 Resume
               </PrimaryButton>
-              <SecondaryButton onClick={() => game.current?.restart()}>
-                Restart level
-              </SecondaryButton>
-              {nextHint !== null && (
-                <SecondaryButton onClick={showHint}>
-                  {nextHint === 1 ? 'Show a hint' : `Show hint ${nextHint} of ${hud.hints.length}`}
-                </SecondaryButton>
-              )}
-              {canWatch && <SecondaryButton onClick={watch}>Watch how it’s done</SecondaryButton>}
+              {/* One primary; everything else is a smaller choice underneath it. */}
+              <div className="grid grid-cols-2 gap-2">
+                <SecondaryButton onClick={() => game.current?.restart()}>Restart</SecondaryButton>
+                {nextHint !== null && (
+                  <SecondaryButton onClick={showHint}>
+                    {nextHint === 1 ? 'Hint' : `Hint ${nextHint} of ${hud.hints.length}`}
+                  </SecondaryButton>
+                )}
+                {canWatch && <SecondaryButton onClick={watch}>Watch how</SecondaryButton>}
+              </div>
               {read > 0 && (
                 <ol className="list-decimal pl-5 text-sm">
                   {hud.hints.slice(0, read).map((h) => (
@@ -425,19 +485,21 @@ export function PlayHost({
                   onChannel={onChannel}
                 />
               )}
-              {portal ? (
-                <>
-                  <SecondaryButton onClick={() => game.current?.goToLevel(0)}>
-                    Play from level 1
-                  </SecondaryButton>
-                  {onBack && <SecondaryButton onClick={onBack}>Back to dashboard</SecondaryButton>}
-                </>
-              ) : (
-                <>
-                  <LevelsLink />
-                  <HomeLink />
-                </>
-              )}
+              <div className="flex flex-wrap justify-between gap-x-6 border-t border-dashed border-paper-shadow pt-1">
+                {portal ? (
+                  <>
+                    <TextButton onClick={() => game.current?.goToLevel(0)}>
+                      Play from level 1
+                    </TextButton>
+                    {onBack && <TextButton onClick={onBack}>Back to dashboard</TextButton>}
+                  </>
+                ) : (
+                  <>
+                    <LevelsLink />
+                    <HomeLink />
+                  </>
+                )}
+              </div>
             </Panel>
           )}
 
@@ -568,11 +630,14 @@ function ClearedSlip({
   const replay = onAny ?? onReplay ?? (() => {});
   const deaths = hud.attempt - 1;
   return (
-    <Panel title="Level cleared" onAny={onAny}>
+    <Panel title="Level cleared" onAny={onAny} print>
       <p className="font-display text-lg">{hud.levelName}</p>
+      {/* The death number is the hero (DESIGNING.md §2.2): one huge red-pen figure, all else quiet. */}
+      <p className="flex items-baseline gap-3">
+        <span className="font-mono text-2xl leading-none text-red-pen">{deaths}</span>
+        <span className="text-sm">{deaths === 1 ? 'death' : 'deaths'} before the door</span>
+      </p>
       <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 border-y border-dashed border-paper-shadow py-3 font-mono text-sm">
-        <dt>Attempts</dt>
-        <dd className="text-right">{hud.attempt}</dd>
         <dt>Time</dt>
         <dd className="text-right">{((hud.clearMs ?? 0) / 1000).toFixed(2)}s</dd>
         <dt>Deaths here, ever</dt>
@@ -624,7 +689,7 @@ function LevelsLink() {
   return (
     <Link
       href="/play/rage/levels"
-      className="min-h-11 border border-ink px-6 py-3 text-center font-display text-md text-ink"
+      className="min-h-11 py-3 text-center text-sm underline underline-offset-4"
     >
       All levels
     </Link>
@@ -636,11 +701,14 @@ function Panel({
   title,
   children,
   onAny,
+  print,
 }: {
   title: string;
   children: ReactNode;
   /** Meta-trap fakes only: any press anywhere on the slip is input. */
   onAny?: () => void;
+  /** The slip types itself out, line by line (DESIGNING.md §2.3's one moment of theatre). */
+  print?: boolean;
 }) {
   return (
     <div
@@ -651,7 +719,7 @@ function Panel({
         role="dialog"
         aria-modal="true"
         aria-labelledby="panel-title"
-        className="flex max-h-full w-full max-w-sm flex-col gap-3 overflow-y-auto border border-ink bg-paper p-6 text-ink"
+        className={`game-slip flex max-h-full w-full max-w-sm flex-col gap-3 overflow-y-auto bg-paper p-6 pt-8 text-ink ${print ? 'game-slip-print' : ''}`}
       >
         <h2 id="panel-title" className="font-display text-xl leading-none">
           {title}
@@ -671,6 +739,18 @@ function PrimaryButton({ onClick, children, autoFocus }: ButtonProps) {
       autoFocus={autoFocus}
       onClick={onClick}
       className="min-h-11 rounded-button bg-ink px-6 py-3 font-display text-md text-paper"
+    >
+      {children}
+    </button>
+  );
+}
+
+function TextButton({ onClick, children }: ButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="min-h-11 py-3 text-sm underline underline-offset-4"
     >
       {children}
     </button>

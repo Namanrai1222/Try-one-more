@@ -21,9 +21,10 @@ export function WalletBadge() {
     () => {},
     'shell',
   ).read();
+  if (coins === 0 && xp === 0) return null; // a row of zeros tells a new player nothing
   return (
-    <p className="font-mono text-sm" aria-label={`${coins} coins, ${xp} XP`}>
-      {coins} coins · {xp} XP
+    <p aria-label={`${coins} coins, ${xp} XP`}>
+      {coins} coins / {xp} XP
     </p>
   );
 }

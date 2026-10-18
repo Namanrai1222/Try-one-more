@@ -21,6 +21,14 @@
   --color-lemon: var(--lemon);
   --color-cobalt: var(--cobalt);
   --color-vermilion: var(--vermilion);
+  --color-desk: var(--desk);
+  --color-desk-ink: var(--desk-ink);
+  --color-desk-raised: var(--desk-raised);
+  --color-desk-deep: var(--desk-deep);
+  --color-desk-line: var(--desk-line);
+  --color-desk-muted: var(--desk-muted);
+  --color-desk-fail: var(--desk-fail);
+  --color-go: var(--go);
 
   --font-*: initial;
   --font-display: var(--family-display);

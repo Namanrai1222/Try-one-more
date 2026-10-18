@@ -38,6 +38,16 @@
     color: var(--ink);
     font-family: var(--family-body);
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--marigold);
+    color: var(--carbon);
   }
 
   /* DESIGNING.md §5: visible focus, 2px red-pen offset — the one non-failure use of red. */
@@ -79,6 +89,86 @@
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+/* The attempt number ticks over (150ms, the one allowed motion); reduced motion keeps it still. */
+.game-attempt {
+  font-size: var(--t-lg);
+  line-height: 1.1;
+}
+
+.game-attempt span {
+  display: inline-block;
+  animation: game-tick 150ms ease-out;
+}
+
+@keyframes game-tick {
+  from {
+    translate: 0 -30%;
+    opacity: 0;
+  }
+}
+
+.game-zone[data-held] {
+  background: color-mix(in srgb, var(--chalk) 14%, transparent);
+  color: var(--chalk);
+}
+
+/* Menus are printed slips: square paper, a perforation under the top edge, and a hard
+   misregistration offset instead of a soft shadow (DESIGNING.md §2.3). */
+.game-slip {
+  position: relative;
+  box-shadow: 6px 6px 0 var(--carbon);
+}
+
+.game-slip::before {
+  content: '';
+  position: absolute;
+  inset: 12px 12px auto;
+  border-top: 1px dashed var(--paper-shadow);
+}
+
+/* The result slip prints line by line, like a dot-matrix result: ~60ms a line, under 800ms. */
+.game-slip-print > * {
+  animation: game-print 160ms ease-out both;
+}
+
+.game-slip-print > :nth-child(2) {
+  animation-delay: 60ms;
+}
+.game-slip-print > :nth-child(3) {
+  animation-delay: 120ms;
+}
+.game-slip-print > :nth-child(4) {
+  animation-delay: 180ms;
+}
+.game-slip-print > :nth-child(5) {
+  animation-delay: 240ms;
+}
+.game-slip-print > :nth-child(6) {
+  animation-delay: 300ms;
+}
+.game-slip-print > :nth-child(7) {
+  animation-delay: 360ms;
+}
+.game-slip-print > :nth-child(n + 8) {
+  animation-delay: 420ms;
+}
+
+@keyframes game-print {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-attempt span,
+  .game-slip-print > * {
+    animation: none;
+  }
 }
 
 @media (max-width: 600px) {

@@ -41,6 +41,57 @@ Newest entry at the top.
 
 ## Log
 
+### 2026-10-18 — TASK-016 — Invigilator's desk redesign, Blender art pipeline
+
+- **Change:** Every shell page is now the dark desk with paper slips. Fig. 01 and four chapter
+  backdrops are rendered in Blender. In-level: progress ruler, look-ahead camera, level-start
+  pan, bigger attempt counter. See `DESIGN.md`.
+- **Reason:** The user asked for a launch-ready redesign, chose the Invigilator's Desk, and
+  asked for Blender art.
+- **Technical details:**
+  - **User decision (2026-10-18):** the desk replaces DESIGNING.md's all-paper shell. Paper
+    appears only as slips.
+  - Found on 2026-10-18, made by a 2026-10-14 session and not logged:
+    - a paper-direction pass (`DESIGN.md`, `PRODUCT.md`, `.impeccable/`, the sheet styles);
+    - Next 16.3.8;
+    - level 2/3 edits: level 3 shortened, saw and two spikes removed, plus a new level-3
+      timing-tolerance test.
+    - The level edits were kept (tests pass, 209); the paper styling was replaced.
+  - Blender: `/Applications/Blender.app/Contents/MacOS/Blender -b --python tooling/blender/…`
+    (5.4 alpha, EEVEE). Renders take ~1–5s. Seamless tiles need an orthographic camera and sun
+    light only, with the bay built three times; screen-space effects (raytracing) break the seam.
+  - Assets use `new URL('./x.webp', import.meta.url)`, which works in Next (Turbopack) and in
+    the CrazyGames Vite build.
+  - The game auto-pauses when the window loses focus. The preview pane often opens it paused;
+    click Resume.
+  - `.claude/launch.json` has `web-dev` (hot reload) and `crazygames-preview` entries.
+  - **User decision (2026-10-18, later):** the red death slash and the ✗ death marks are
+    removed, and so is the progress ruler along the top edge. Deaths show only as the attempt
+    number.
+  - Local testing trap: a production build run on a localhost port registers `sw.js`, which
+    serves `/_next/static/*` cache-first. A dev server later started on the same port then shows
+    stale code. Unregister the worker and clear `jom-shell-v1` (DevTools) before trusting dev.
+    Real deploys are unaffected because build files are content-hashed.
+- **Future impact:** if a backdrop ever competes with the course, dim it in Blender or lower
+  `backdropMat`'s colour factor (0.55). Keep backdrops free of red.
+
+### 2026-10-12 — TASK-015 — Review "Now" fixes
+
+- **Change:** Red-pen slash and ✗ death marks, keys held through a death ignored until
+  released, controls hint until the player has moved, deaths as the slip's hero number,
+  levels page links home, home label/wallet fixes. Review report in `docs/review-2026-10-12/`.
+- **Reason:** The user asked for the "Now" list from the product review.
+- **Technical details:**
+  - Held-input filtering happens in `game.ts` before recording: the input log is the filtered
+    mask, so clips, ghosts and the level-18 clone replay what the sim actually saw.
+  - Death marks are render-only (`View.markDeath`); no sim, fixture or solution changed.
+  - CrazyGames desktop keeps its mouse zones until a game key is pressed.
+  - Dev machine note (macOS): pnpm is not installed globally; `corepack pnpm` works, and turbo
+    needs a `pnpm` on PATH that forwards to it. `.claude/launch.json` has a `web-node` entry
+    (Node + local Next binary, `autoPort`) because port 3000 is often taken.
+- **Future impact:** The slip layout and fall-mark height still need a visual check in a
+  visible browser.
+
 ### 2026-09-28 — TASK-014 — Chapter 4 "After The End": levels 31–40
 
 - **Change:** Ten new levels after level 30, each 4,700–8,000px with 11–25 traps. Unlock progress

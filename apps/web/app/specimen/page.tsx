@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 /** One-page visual reference for every design token (DESIGNING.md §8 Phase 0). */
 export default function SpecimenPage() {
   return (
-    <main className="mx-auto max-w-[68ch] px-4 py-6">
+    <main className="mx-auto min-h-dvh max-w-[68ch] bg-paper px-4 py-6 text-ink">
       <h1 className="border-b border-ink pb-2 font-display text-xl">Token specimen</h1>
 
       <section className="py-6">
@@ -30,7 +30,7 @@ export default function SpecimenPage() {
         {Object.entries(typeScale).map(([name, size]) => (
           <p key={name} className="leading-tight" style={{ fontSize: `var(--t-${name})` }}>
             <span className="font-mono text-xs">
-              --t-{name} · {size}
+              --t-{name} / {size}
             </span>{' '}
             <span className="font-display">Everyone dies on this level</span>
           </p>

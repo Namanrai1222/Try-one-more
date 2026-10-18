@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { LevelBoard } from './level-board';
+import { Masthead } from '../../../masthead';
+import { LevelBoard, RecordSummary } from './level-board';
 
 export const dynamicParams = false;
 
@@ -14,12 +15,13 @@ export default async function LevelsPage({ params }: { params: Promise<{ title: 
   const { title } = await params;
   if (title !== 'rage') notFound();
   return (
-    <main className="mx-auto min-h-dvh max-w-[68ch] px-4 py-6">
-      <header className="border-b border-ink pb-2">
-        <p className="font-display text-xl leading-none">Just One More</p>
+    <main className="desk-shell">
+      <Masthead current="levels" />
+      <header className="page-head">
+        <p className="mono-label">Candidate record / Just One More</p>
+        <h1>All levels</h1>
+        <RecordSummary />
       </header>
-      <h1 className="pt-6 font-display text-xl">All levels</h1>
-      <p className="pb-4 text-sm">Every level looks fair. Your deaths are counted here.</p>
       <LevelBoard />
     </main>
   );
