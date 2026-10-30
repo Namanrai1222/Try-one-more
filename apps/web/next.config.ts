@@ -3,6 +3,8 @@ import { securityHeaders } from './security-headers.mjs';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Docker builds a self-contained server (Dockerfile); local and CI builds stay as they are.
+  output: process.env.NEXT_STANDALONE === '1' ? 'standalone' : undefined,
   poweredByHeader: false,
   // SECURITY.md §4.4: no source maps in production.
   productionBrowserSourceMaps: false,

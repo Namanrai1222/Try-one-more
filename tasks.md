@@ -2,7 +2,7 @@
 
 Sequential, never reused. Newest entry at the top of the log.
 
-**Next task number: TASK-017**
+**Next task number: TASK-018**
 
 Status values: `COMPLETED` · `PARTIAL` · `BLOCKED` · `CANCELLED`
 
@@ -10,6 +10,7 @@ Status values: `COMPLETED` · `PARTIAL` · `BLOCKED` · `CANCELLED`
 
 | #        | Date       | Title                                             | Status    |
 | -------- | ---------- | ------------------------------------------------- | --------- |
+| TASK-017 | 2026-10-30 | Docker images, compose, CD to GHCR                | COMPLETED |
 | TASK-016 | 2026-10-18 | Launch redesign: the invigilator's desk + Blender | COMPLETED |
 | TASK-015 | 2026-10-12 | Review "Now" fixes: death feedback, input, shell  | COMPLETED |
 | TASK-014 | 2026-09-28 | Chapter 4 "After The End": levels 31–40           | COMPLETED |
@@ -26,6 +27,44 @@ Status values: `COMPLETED` · `PARTIAL` · `BLOCKED` · `CANCELLED`
 | TASK-003 | 2026-09-23 | Switch all copy to English                        | COMPLETED |
 | TASK-002 | 2026-09-23 | Phase 0 foundation                                | PARTIAL   |
 | TASK-001 | 2026-09-23 | Documentation system bootstrap                    | COMPLETED |
+
+---
+
+## TASK-017 — Docker images, compose, CD to GHCR
+
+- **Date:** 2026-10-30
+- **Status:** COMPLETED
+
+### User request
+
+"I have to show this as my devops project in which I have to push on github, make a ci/cd
+pipeline, host on docker and run it."
+
+### Implementation
+
+- `Dockerfile`: one file, two targets.
+  - `web`: Next.js standalone server, switched on only by `NEXT_STANDALONE=1` in the image.
+    Includes `apps/web/assets` (OG fonts read at request time).
+  - `realtime`: Colyseus. It runs its TypeScript directly, keeping the workspace layout and a
+    `--prod` filtered install.
+  - Both images run as `node` and have a HEALTHCHECK.
+- `.dockerignore` and `docker-compose.yml` (`WEB_PORT` overrides 3000).
+- `.github/workflows/cd.yml`: runs after `ci` passes on main (or by hand).
+  - Builds both images with the GitHub Actions cache.
+  - Pushes them to `ghcr.io/namanrai1222/try-one-more-{web,realtime}` tagged `latest` and with
+    the commit SHA.
+  - Then pulls them, runs compose `--wait` and curls the site, the OG image and the realtime
+    server.
+- README: "Run with Docker" and "CI/CD" sections.
+
+### Verification
+
+- `docker compose build` in ~33s. Images: web 416MB, realtime 548MB.
+- `WEB_PORT=8080 docker compose up -d --wait`: both containers healthy.
+- `/`, `/play/rage/levels` and the OG image return 200.
+- Browser: the dockerised site created a race room on the dockerised realtime server.
+- `pnpm verify` exit 0.
+- **Not verified:** the first GitHub Actions run of `cd.yml`.
 
 ---
 

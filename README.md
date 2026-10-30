@@ -34,6 +34,38 @@ pnpm dev          # http://localhost:3000
 | `pnpm check:hex`               | Fails on any hardcoded colour outside `packages/ui` tokens |
 | `pnpm verify`                  | Everything CI runs, locally                                |
 
+## Run with Docker
+
+Two images from one [`Dockerfile`](Dockerfile): `web` (the Next.js site, port 3000) and
+`realtime` (the Colyseus party server, port 2567). [`docker-compose.yml`](docker-compose.yml)
+runs both.
+
+```bash
+docker compose up --build -d      # build locally and start; open http://localhost:3000
+WEB_PORT=8080 docker compose up -d   # if port 3000 is taken
+docker compose pull && docker compose up -d --no-build   # run the images CD published
+docker compose down
+```
+
+Both containers have a health check; `docker compose ps` shows `healthy` once they answer.
+
+## CI/CD
+
+```
+push / PR ──► ci (.github/workflows/ci.yml)
+              format · colour tokens · fonts · typecheck · lint · tests · build · bundle budgets · audit
+                │ passes on main
+                ▼
+              cd (.github/workflows/cd.yml)
+              build web + realtime images ──► push to ghcr.io (tags: latest, commit SHA)
+                │
+                ▼
+              smoke: docker compose pull + up --wait ──► curl the site, the OG image, the party server
+```
+
+`security.yml` runs gitleaks on every push. Images:
+`ghcr.io/namanrai1222/try-one-more-web` and `ghcr.io/namanrai1222/try-one-more-realtime`.
+
 ## Layout
 
 ```

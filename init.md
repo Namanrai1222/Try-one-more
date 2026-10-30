@@ -43,24 +43,26 @@ docs/                      PRD, TECH_STACK, SECURITY, DESIGNING, 3D_MODELING (ha
 
 Toolchain: Node 24 (verified v24.13.0), pnpm 10.34.5 (installed globally via npm on this machine).
 
-| Purpose             | Command                                                       | Verified                                                             |
-| ------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Install             | `pnpm install`                                                | yes (2026-09-23)                                                     |
-| Dev server          | `pnpm dev` → http://localhost:3000                            | UNVERIFIED (prod server via `pnpm --filter @jom/web start` verified) |
-| Build               | `pnpm build`                                                  | yes                                                                  |
-| Test                | `pnpm test` (373 tests across 9 packages)                     | yes                                                                  |
-| Realtime server     | `pnpm --filter @jom/realtime dev` → :2567                     | yes — `node src/index.ts`, with `/party` on `next start`             |
-| Load + abuse test   | `pnpm --filter @jom/realtime load-test [rooms] [s] [workers]` | yes — runs; 200 rooms fails on this laptop (see memory.md)           |
-| Lint / typecheck    | `pnpm lint` / `pnpm typecheck`                                | yes                                                                  |
-| Everything CI runs  | `pnpm verify`                                                 | yes — exit 0                                                         |
-| Bundle budgets      | `pnpm check:bundle` (after build)                             | yes                                                                  |
-| Regenerate tokens   | `pnpm --filter @jom/ui generate`                              | yes                                                                  |
-| Regenerate fixtures | `pnpm --filter @jom/engine fixtures:update`                   | yes — intentional physics changes only                               |
-| Headless replay     | `pnpm --filter @jom/engine replay:headless`                   | yes — 50/50 frame-exact                                              |
-| Solve levels        | `pnpm --filter @jom/game-rage solve [id] [--jobs N]`          | yes — per level and attempt layout; merges into `solutions.json`     |
-| Human-timing audit  | `pnpm --filter @jom/game-rage fairness [id]`                  | yes — recorded runs survive ±2-frame timing 18–100%                  |
-| Check Daily Traps   | `pnpm --filter @jom/game-rage daily:check`                    | yes — 60/60 days clearable (~5s per day)                             |
-| Fonts               | `pnpm --filter @jom/web fonts`                                | yes                                                                  |
+| Purpose              | Command                                                       | Verified                                                             |
+| -------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Install              | `pnpm install`                                                | yes (2026-09-23)                                                     |
+| Dev server           | `pnpm dev` → http://localhost:3000                            | UNVERIFIED (prod server via `pnpm --filter @jom/web start` verified) |
+| Build                | `pnpm build`                                                  | yes                                                                  |
+| Test                 | `pnpm test` (373 tests across 9 packages)                     | yes                                                                  |
+| Realtime server      | `pnpm --filter @jom/realtime dev` → :2567                     | yes — `node src/index.ts`, with `/party` on `next start`             |
+| Load + abuse test    | `pnpm --filter @jom/realtime load-test [rooms] [s] [workers]` | yes — runs; 200 rooms fails on this laptop (see memory.md)           |
+| Lint / typecheck     | `pnpm lint` / `pnpm typecheck`                                | yes                                                                  |
+| Everything CI runs   | `pnpm verify`                                                 | yes — exit 0                                                         |
+| Bundle budgets       | `pnpm check:bundle` (after build)                             | yes                                                                  |
+| Regenerate tokens    | `pnpm --filter @jom/ui generate`                              | yes                                                                  |
+| Regenerate fixtures  | `pnpm --filter @jom/engine fixtures:update`                   | yes — intentional physics changes only                               |
+| Headless replay      | `pnpm --filter @jom/engine replay:headless`                   | yes — 50/50 frame-exact                                              |
+| Solve levels         | `pnpm --filter @jom/game-rage solve [id] [--jobs N]`          | yes — per level and attempt layout; merges into `solutions.json`     |
+| Human-timing audit   | `pnpm --filter @jom/game-rage fairness [id]`                  | yes — recorded runs survive ±2-frame timing 18–100%                  |
+| Check Daily Traps    | `pnpm --filter @jom/game-rage daily:check`                    | yes — 60/60 days clearable (~5s per day)                             |
+| Fonts                | `pnpm --filter @jom/web fonts`                                | yes                                                                  |
+| Docker (whole stack) | `docker compose up --build -d` → :3000 (`WEB_PORT` to change) | yes (2026-10-30) — web + realtime healthy, party room created        |
+| CD (images → GHCR)   | `.github/workflows/cd.yml`, after `ci` passes on main         | UNVERIFIED until its first GitHub run                                |
 
 Note: `pnpm ci` is a reserved pnpm command — the aggregate script is `pnpm verify`.
 

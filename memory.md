@@ -41,6 +41,26 @@ Newest entry at the top.
 
 ## Log
 
+### 2026-10-30 — TASK-017 — Docker + CD
+
+- **Change:**
+  - `Dockerfile` (targets `web`, `realtime`), `docker-compose.yml`, `.dockerignore`.
+  - `.github/workflows/cd.yml`: after `ci` passes on main, it publishes both images to GHCR
+    and smoke-tests them.
+- **Technical details:**
+  - The realtime image must keep the workspace layout. Node refuses to strip types for files
+    under `node_modules`, so `pnpm deploy` (which copies workspace packages into
+    `node_modules`) would break it.
+  - `COPY --chown=node:node`: macOS checkouts here carry 700 folder modes. A root-owned copy is
+    unreadable to the `node` user (the realtime container crashed with MODULE_NOT_FOUND).
+  - `output: 'standalone'` only when `NEXT_STANDALONE=1` (set in the Dockerfile), so
+    `next start` and CI are unchanged.
+  - New GHCR packages start private. Make them public in the GitHub package settings to pull
+    without logging in.
+- **Future impact:** a real host (Railway/Fly/a VM) can run these same images. The realtime
+  server needs `TRUST_PROXY=1` behind a proxy, and the web image needs `NEXT_PUBLIC_REALTIME_URL`
+  as a build arg pointing at the public wss:// URL.
+
 ### 2026-10-18 — TASK-016 — Invigilator's desk redesign, Blender art pipeline
 
 - **Change:** Every shell page is now the dark desk with paper slips. Fig. 01 and four chapter
