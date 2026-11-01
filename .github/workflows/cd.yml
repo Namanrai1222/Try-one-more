@@ -46,7 +46,7 @@ jobs:
 
       # Tags: latest, and the commit SHA so every deploy can be traced and rolled back.
       - id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/try-one-more-${{ matrix.target }}
           tags: |
