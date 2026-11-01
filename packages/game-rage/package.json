@@ -20,7 +20,7 @@
     "@jom/engine": "workspace:*",
     "@jom/platform-sdk": "workspace:*",
     "@jom/ui": "workspace:*",
-    "three": "0.186.0"
+    "three": "0.186.1"
   },
   "devDependencies": {
     "@jom/config": "workspace:*",
@@ -28,6 +28,6 @@
     "@types/three": "0.186.0",
     "eslint": "9.39.5",
     "typescript": "6.0.3",
-    "vitest": "5.0.1"
+    "vitest": "5.0.5"
   }
 }
